@@ -22,9 +22,9 @@ public class MixedSecondStep {
         }
 
         double xMin = xVector[0];
-        for (int k = 0; k < xVector.length; k++) {
-            if (xMin > xVector[k]) {
-                xMin = xVector[k];
+        for (double v : xVector) {
+            if (xMin > v) {
+                xMin = v;
             }
         }
 
@@ -43,9 +43,9 @@ public class MixedSecondStep {
         }
 
         double yMax = yVector[0];
-        for (int k = 0; k < yVector.length; k++) {
-            if (yMax < yVector[k]) {
-                yMax = yVector[k];
+        for (double v : yVector) {
+            if (yMax < v) {
+                yMax = v;
             }
         }
 
