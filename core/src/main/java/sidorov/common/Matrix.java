@@ -11,12 +11,12 @@ public class Matrix {
         return matrix[i][j];
     }
 
-    public int columnLength() {
+    public int rowsNumber() {
         return matrix.length;
     }
 
-    public int rowLength(int rowNumber) {
-        return matrix[rowNumber].length;
+    public int columnsNumber() {
+        return matrix[0].length;
     }
 
     public Element getElement(int i, int j) {

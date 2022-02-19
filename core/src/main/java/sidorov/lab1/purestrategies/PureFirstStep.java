@@ -1,4 +1,4 @@
-package sidorov.lab1.steps;
+package sidorov.lab1.purestrategies;
 
 import com.sun.istack.internal.Nullable;
 import sidorov.common.*;
@@ -6,22 +6,22 @@ import sidorov.common.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirstStep {
+public class PureFirstStep {
 
     private final Matrix matrix;
 
-    public FirstStep(Matrix matrix) {
+    public PureFirstStep(Matrix matrix) {
         this.matrix = matrix;
     }
 
     @Nullable
     public Element execute() {
-        for (int i = 0; i < matrix.columnLength(); i++) {
+        for (int i = 0; i < matrix.rowsNumber(); i++) {
 
             List<Element> minElementsInRow = new ArrayList<>();
             int min = matrix.get(i, 0);
 
-            for (int j = 0; j < matrix.rowLength(i); j++) {
+            for (int j = 0; j < matrix.columnsNumber(); j++) {
 
                 if (min > matrix.get(i, j)) {
                     min = matrix.get(i, j);
@@ -39,7 +39,7 @@ public class FirstStep {
 
                 boolean isMax = true;
 
-                for (int row = 0; row < matrix.columnLength(); row++) {
+                for (int row = 0; row < matrix.rowsNumber(); row++) {
                     if (max < matrix.get(row, column)) {
                         isMax = false;
                         break;

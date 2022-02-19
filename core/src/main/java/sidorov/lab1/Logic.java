@@ -3,13 +3,12 @@ package sidorov.lab1;
 import sidorov.common.Element;
 import sidorov.common.ExcelReader;
 import sidorov.common.Matrix;
-import sidorov.lab1.steps.FirstStep;
-import sidorov.lab1.steps.FourthStep;
-import sidorov.lab1.steps.SecondStep;
-import sidorov.lab1.steps.ThirdStep;
+import sidorov.lab1.mixedstrategies.MixedFirstStep;
+import sidorov.lab1.mixedstrategies.MixedSecondStep;
+import sidorov.lab1.mixedstrategies.MixedSecondStepResult;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Arrays;
 
 public class Logic {
 
@@ -27,6 +26,31 @@ public class Logic {
 
 
     public static void main(String[] args) {
+
+        Matrix matrix = new Matrix(new int[][]{
+                {8, -1, -7},
+                {3, -5, 8},
+                {3, -4, 6},
+                {-4, -2, -5}
+        });
+
+        MixedFirstStep mixedFirstStep = new MixedFirstStep(matrix);
+
+        Element V1 = mixedFirstStep.findV1();
+        Element V2 = mixedFirstStep.findV2();
+
+        System.out.println("{" + (V1.i + 1) + " " + (V1.j + 1) + "} " + V1.value);
+        System.out.println("{" + (V2.i + 1) + " " + (V2.j + 1) + "} " + V2.value);
+
+        double[] pVector = new double[]{ 0.625, 0, 0.375, 0 };
+        double[] qVector = new double[]{ 0, 0.8125, 0.1875 };
+
+        MixedSecondStep mixedSecondStep = new MixedSecondStep(matrix);
+        MixedSecondStepResult xResult = mixedSecondStep.calcDataX(pVector);
+        MixedSecondStepResult yResult = mixedSecondStep.calcDataY(qVector);
+
+        System.out.println(xResult.value + " :" + Arrays.toString(xResult.vector));
+        System.out.println(yResult.value + " :" + Arrays.toString(yResult.vector));
         /*
         Matrix matrix = new Matrix(new int[][]{
                 {0, 1, 1, 0},
@@ -47,6 +71,8 @@ public class Logic {
         }
 
          */
+
+        /*
         try {
             ExcelReader.read();
         } catch (IOException e) {
@@ -54,6 +80,9 @@ public class Logic {
         }
         String currentDir = System.getProperty("user.dir");
         System.out.println("Current dir using System:" + currentDir);
+
+
+         */
     }
 
 }

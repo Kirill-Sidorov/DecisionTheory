@@ -1,4 +1,4 @@
-package sidorov.lab1.steps;
+package sidorov.lab1.purestrategies;
 
 import sidorov.common.Element;
 import sidorov.common.Matrix;
@@ -6,11 +6,11 @@ import sidorov.common.Matrix;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThirdStep {
+public class PureThirdStep {
 
     private final Matrix matrix;
 
-    public ThirdStep(Matrix matrix) {
+    public PureThirdStep(Matrix matrix) {
         this.matrix = matrix;
     }
 
@@ -24,7 +24,7 @@ public class ThirdStep {
         int column = H.j;
         int value = H.value;
 
-        for (int i = startRow; i < matrix.columnLength(); i++) {
+        for (int i = startRow; i < matrix.rowsNumber(); i++) {
             if (value == matrix.get(i, column)) {
                 elementsWithEqualValues.add(matrix.getElement(i, column));
             }
@@ -36,7 +36,7 @@ public class ThirdStep {
 
             boolean isMin = true;
 
-            for (int j = 0; j < matrix.rowLength(row); j++) {
+            for (int j = 0; j < matrix.columnsNumber(); j++) {
                 if (min > matrix.get(row, j)) {
                     isMin = false;
                     break;
