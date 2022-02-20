@@ -20,9 +20,11 @@ public class PureStrategiesLogic implements Logic {
     @Override
     public Result uploadData() {
         matrix = new Matrix(new int[][]{
-                {0, 1, 1, 0},
-                {2, 1, 3, 1},
-                {1, 1, 1, 1}
+                {0, 0, 7, 0, 0},
+                {-8, -3, -7, -3, -2},
+                {1, 6, -8, -7, 0},
+                {-4, -2, 6, 0, -5},
+                {0, 6, 1, 0, 0}
         });
         return new Result(Status.DATA_UPLOADED, matrix.toText());
     }
