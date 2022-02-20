@@ -2,11 +2,11 @@ package sidorov.lab1.mixedstrategies;
 
 public class MixedSecondStepResult {
 
-    public final double value;
+    public final double limitValue;
     public final double[] vector;
 
-    public MixedSecondStepResult(double value, double[] vector) {
-        this.value = value;
+    public MixedSecondStepResult(double limitValue, double[] vector) {
+        this.limitValue = limitValue;
         this.vector = vector;
     }
 }
