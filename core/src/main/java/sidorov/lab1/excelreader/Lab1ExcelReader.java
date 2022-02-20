@@ -20,67 +20,70 @@ public class Lab1ExcelReader {
     public List<List<Double>> readDataForPureStrategies() throws IOException {
         FileInputStream inputStream = new FileInputStream(new File(path));
         Workbook workbook = new XSSFWorkbook(inputStream);
+        inputStream.close();
+        if (workbook.getNumberOfSheets() == 0) {
+            workbook.close();
+            throw new IOException();
+        }
         Sheet firstSheet = workbook.getSheetAt(0);
         workbook.close();
-        inputStream.close();
 
-        List<List<Double>> matrix = new ArrayList<>();
-
-        for (Row row : firstSheet) {
-            List<Double> rowValues = new ArrayList<>();
-            for (Cell cell : row) {
-                if (CellType.NUMERIC == cell.getCellType()) {
-                    rowValues.add(cell.getNumericCellValue());
-                }
-            }
-            if (!rowValues.isEmpty()) {
-                matrix.add(rowValues);
-            }
-        }
-        return matrix;
+        return getMatrix(firstSheet);
     }
 
     public MixedStrategiesData readDataForMixedStrategies() throws IOException {
         FileInputStream inputStream = new FileInputStream(new File(path));
         Workbook workbook = new XSSFWorkbook(inputStream);
-        Sheet secondSheet = workbook.getSheetAt(0);
-        workbook.close();
         inputStream.close();
+        if (workbook.getNumberOfSheets() < 2) {
+            workbook.close();
+            throw new IOException();
+        }
+        Sheet secondSheet = workbook.getSheetAt(1);
+        workbook.close();
 
+        List<List<Double>> matrix = getMatrix(secondSheet);
+        List<Double> pVector = getVector(secondSheet, "p");
+        List<Double> qVector = getVector(secondSheet, "q");
+
+        return new MixedStrategiesData(matrix, pVector, qVector);
+    }
+
+    private List<List<Double>> getMatrix(Sheet sheet) {
         List<List<Double>> matrix = new ArrayList<>();
-        List<Double> pVector = new ArrayList<>();
-        List<Double> qVector = new ArrayList<>();
-
-        for (Row row : secondSheet) {
+        for (Row row : sheet) {
             List<Double> rowValues = new ArrayList<>();
             for (Cell cell : row) {
                 if (CellType.NUMERIC == cell.getCellType()) {
                     rowValues.add(cell.getNumericCellValue());
                 }
                 if (CellType.STRING == cell.getCellType()) {
-                    if (cell.getStringCellValue().toLowerCase().contains("p")) {
-                        fillVector(pVector, row);
-                        break;
-                    }
-                    if (cell.getStringCellValue().toLowerCase().contains("q")) {
-                        fillVector(qVector, row);
-                        break;
+                    String value = cell.getStringCellValue().toLowerCase();
+                    if (value.contains("p") || value.contains("q")) {
+                        return matrix;
                     }
                 }
             }
-            if (!rowValues.isEmpty()) {
-                matrix.add(rowValues);
-            }
+            matrix.add(rowValues);
         }
-
-        return new MixedStrategiesData(matrix, pVector, qVector);
+        return matrix;
     }
 
-    private void fillVector(List<Double> vector, Row row) {
-        for (Cell cell : row) {
-            if (CellType.NUMERIC == cell.getCellType()) {
-                vector.add(cell.getNumericCellValue());
+    private List<Double> getVector(Sheet sheet, String vectorSymbol) {
+        List<Double> vector = new ArrayList<>();
+        for (Row row : sheet) {
+            for (Cell cell : row) {
+                if (CellType.STRING == cell.getCellType()
+                        && cell.getStringCellValue().toLowerCase().contains(vectorSymbol)) {
+                    for (Cell vectorCell : row) {
+                        if (CellType.NUMERIC == vectorCell.getCellType()) {
+                            vector.add(vectorCell.getNumericCellValue());
+                        }
+                    }
+                    return vector;
+                }
             }
         }
+        return vector;
     }
 }

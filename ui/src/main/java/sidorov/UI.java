@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 
 public class UI extends JFrame {
 
-    private final JTextArea taskInfo;
-    private final JTextArea resultInfo;
+    private final JTextArea initialDataText;
+    private final JTextArea resultText;
     private final JButton uploadDataButton;
     private final JButton solveTaskButton;
 
@@ -17,19 +17,19 @@ public class UI extends JFrame {
 
         setLayout(null);
 
-        taskInfo = new JTextArea();
-        taskInfo.setLineWrap(true);
-        taskInfo.setWrapStyleWord(true);
-        taskInfo.setEditable(false);
-        taskInfo.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        initialDataText = new JTextArea();
+        initialDataText.setLineWrap(true);
+        initialDataText.setWrapStyleWord(true);
+        initialDataText.setEditable(false);
+        initialDataText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
-        resultInfo = new JTextArea();
-        resultInfo.setLineWrap(true);
-        resultInfo.setWrapStyleWord(true);
-        resultInfo.setEditable(false);
-        resultInfo.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        resultText = new JTextArea();
+        resultText.setLineWrap(true);
+        resultText.setWrapStyleWord(true);
+        resultText.setEditable(false);
+        resultText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(taskInfo), new JScrollPane(resultInfo));
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(initialDataText), new JScrollPane(resultText));
         splitPane.setBounds(45, 30, 700, 350);
         splitPane.setResizeWeight(0.5);
 
@@ -45,9 +45,9 @@ public class UI extends JFrame {
         JPanel panelRadio = new JPanel(new GridLayout(0, 1, 0, 0));
         panelRadio.setBorder(BorderFactory.createTitledBorder("Задача"));
         ButtonGroup buttonGroup = new ButtonGroup();
-        for (Task task : Task.values()) {
-            JRadioButton radioButton = new JRadioButton(task.text());
-            radioButton.setActionCommand(task.name());
+        for (Mode mode : Mode.values()) {
+            JRadioButton radioButton = new JRadioButton(mode.text());
+            radioButton.setActionCommand(mode.name());
             radioButton.addActionListener(radioButtonsActionListener);
             panelRadio.add(radioButton);
             buttonGroup.add(radioButton);
@@ -75,12 +75,12 @@ public class UI extends JFrame {
         setResizable(false);
     }
 
-    public JTextArea getTaskInfo() {
-        return taskInfo;
+    public JTextArea getInitialDataText() {
+        return initialDataText;
     }
 
-    public JTextArea getResultInfo() {
-        return resultInfo;
+    public JTextArea getResultText() {
+        return resultText;
     }
 
     public JButton getUploadDataButton() {

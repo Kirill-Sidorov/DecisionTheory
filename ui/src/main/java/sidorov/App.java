@@ -2,6 +2,8 @@ package sidorov;
 
 import sidorov.common.Logic;
 import sidorov.common.result.Result;
+import sidorov.task.SolveTask;
+import sidorov.task.UploadTask;
 
 import java.awt.event.ActionEvent;
 
@@ -9,44 +11,46 @@ public class App {
 
     private final UI UI;
 
-    private Task currentTask;
+    private Mode currentMode;
     private Logic currentLogic;
 
     public App() {
-        currentTask = Task.values()[0];
-        UI = new UI(this::selectTask, this::uploadData, this::solveTask);
+        currentMode = Mode.values()[0];
+        UI = new UI(this::selectMode, this::uploadData, this::solveTask);
         UI.setFocusable(true);
         UI.setVisible(true);
     }
 
-    private void selectTask(ActionEvent event) {
-        currentTask = Task.valueOf(event.getActionCommand());
+    private void selectMode(ActionEvent event) {
+        currentMode = Mode.valueOf(event.getActionCommand());
         UI.getSolveTaskButton().setEnabled(false);
     }
 
     private void uploadData(ActionEvent event) {
-        currentLogic = currentTask.getLogic();
-        processResult(currentLogic.uploadData());
-        UI.getSolveTaskButton().setEnabled(true);
+        currentLogic = currentMode.getLogic();
+        new UploadTask(currentLogic, this::processResult).execute();
     }
 
     private void solveTask(ActionEvent event) {
-        processResult(currentLogic.solveTask());
+        new SolveTask(currentLogic, this::processResult).execute();
     }
 
     private void processResult(Result result) {
         switch (result.status) {
             case TASK_SOLVED:
-                UI.getResultInfo().setText(result.text);
+                UI.getResultText().setText(result.text);
                 break;
             case DATA_UPLOADED:
-                UI.getTaskInfo().setText(result.text);
+                UI.getInitialDataText().setText(result.text);
+                UI.getSolveTaskButton().setEnabled(true);
                 break;
             case INFO:
                 UI.showInfoMessage(result.text);
                 break;
             case ERROR:
                 UI.showErrorMessage(result.text);
+                UI.getSolveTaskButton().setEnabled(false);
+                UI.getInitialDataText().setText("");
                 break;
         }
     }

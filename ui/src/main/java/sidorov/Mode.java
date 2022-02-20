@@ -4,7 +4,7 @@ import sidorov.common.Logic;
 import sidorov.lab1.MixedStrategiesLogic;
 import sidorov.lab1.PureStrategiesLogic;
 
-public enum Task {
+public enum Mode {
     PURE_STRATEGIES("Чистые стратегии") {
         @Override
         public Logic getLogic() {
@@ -20,7 +20,7 @@ public enum Task {
 
     private final String text;
 
-    Task(String text) {
+    Mode(String text) {
         this.text = text;
     }
 
