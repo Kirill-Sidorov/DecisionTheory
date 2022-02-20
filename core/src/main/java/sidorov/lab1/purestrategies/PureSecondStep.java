@@ -22,21 +22,21 @@ public class PureSecondStep {
 
         int row = H.i;
         int startColumn = H.j + 1;
-        int value = H.value;
+        double value = H.value;
 
-        for (int j = startColumn; j < matrix.columnsNumber(); j++) {
+        for (int j = startColumn; j < matrix.numberColumns(); j++) {
             if (value == matrix.get(row, j)) {
                 elementsWithEqualValues.add(matrix.getElement(row, j));
             }
         }
 
         for (Element element : elementsWithEqualValues) {
-            int max = element.value;
+            double max = element.value;
             int column = element.j;
 
             boolean isMax = true;
 
-            for (int i = 0; i < matrix.rowsNumber(); i++) {
+            for (int i = 0; i < matrix.numberRows(); i++) {
                 if (max < matrix.get(i, column)) {
                     isMax = false;
                     break;

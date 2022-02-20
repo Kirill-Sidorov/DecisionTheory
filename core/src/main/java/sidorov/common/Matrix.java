@@ -1,37 +1,45 @@
 package sidorov.common;
 
-public class Matrix {
-    private final int[][] matrix;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Matrix(int[][] matrix) {
+public class Matrix {
+    private final List<List<Double>> matrix;
+
+    public Matrix() {
+        this.matrix = new ArrayList<>();
+        matrix.add(new ArrayList<>());
+    }
+
+    public Matrix(List<List<Double>> matrix) {
         this.matrix = matrix;
     }
 
-    public int get(int i, int j) {
-        return matrix[i][j];
+    public double get(int i, int j) {
+        return matrix.get(i).get(j);
     }
 
-    public int rowsNumber() {
-        return matrix.length;
+    public int numberRows() {
+        return matrix.size();
     }
 
-    public int columnsNumber() {
-        return matrix[0].length;
+    public int numberColumns() {
+        return matrix.get(0).size();
     }
 
     public Element getElement(int i, int j) {
-        return new Element(i, j, matrix[i][j]);
+        return new Element(i, j, matrix.get(i).get(j));
     }
 
     public String toText() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Матрица:\n");
-        for (int[] row : matrix) {
+        for (List<Double> row : matrix) {
             stringBuilder.append("[");
-            for (int value : row) {
-                stringBuilder.append(String.format("%5d", value));
+            for (double value : row) {
+                stringBuilder.append(String.format("%5.1f", value));
             }
-            stringBuilder.append("    ]\n");
+            stringBuilder.append("  ]\n");
         }
         return stringBuilder.toString();
     }

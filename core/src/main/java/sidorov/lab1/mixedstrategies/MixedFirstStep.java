@@ -17,9 +17,9 @@ public class MixedFirstStep {
     public Element findV1() {
         List<Element> minRowElements = new ArrayList<>();
 
-        for (int i = 0; i < matrix.rowsNumber(); i++) {
+        for (int i = 0; i < matrix.numberRows(); i++) {
             Element min = matrix.getElement(i, 0);
-            for (int j = 0; j < matrix.columnsNumber(); j++) {
+            for (int j = 0; j < matrix.numberColumns(); j++) {
                 if (min.value > matrix.get(i, j)) {
                     min = matrix.getElement(i, j);
                 }
@@ -40,9 +40,9 @@ public class MixedFirstStep {
     public Element findV2() {
         List<Element> maxColumnElements = new ArrayList<>();
 
-        for (int j = 0; j < matrix.columnsNumber(); j++) {
+        for (int j = 0; j < matrix.numberColumns(); j++) {
             Element max = matrix.getElement(0, j);
-            for (int i = 0; i < matrix.rowsNumber(); i++) {
+            for (int i = 0; i < matrix.numberRows(); i++) {
                 if (max.value < matrix.get(i, j)) {
                     max = matrix.getElement(i, j);
                 }

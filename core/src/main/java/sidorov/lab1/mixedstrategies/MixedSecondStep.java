@@ -2,6 +2,8 @@ package sidorov.lab1.mixedstrategies;
 
 import sidorov.common.Matrix;
 
+import java.util.List;
+
 public class MixedSecondStep {
 
     private final Matrix matrix;
@@ -10,13 +12,13 @@ public class MixedSecondStep {
         this.matrix = matrix;
     }
 
-    public MixedSecondStepResult calcDataX(double[] pVector) {
-        double[] xVector = new double[matrix.columnsNumber()];
+    public MixedSecondStepResult calcDataX(List<Double> pVector) {
+        double[] xVector = new double[matrix.numberColumns()];
 
-        for (int j = 0; j < matrix.columnsNumber(); j++) {
+        for (int j = 0; j < matrix.numberColumns(); j++) {
             double sum = 0;
-            for (int i = 0; i < matrix.rowsNumber(); i++) {
-                sum += matrix.get(i, j) * pVector[i];
+            for (int i = 0; i < matrix.numberRows(); i++) {
+                sum += matrix.get(i, j) * pVector.get(i);
             }
             xVector[j] = sum;
         }
@@ -31,13 +33,13 @@ public class MixedSecondStep {
         return new MixedSecondStepResult(xMin, xVector);
     }
 
-    public MixedSecondStepResult calcDataY(double[] qVector) {
-        double[] yVector = new double[matrix.rowsNumber()];
+    public MixedSecondStepResult calcDataY(List<Double> qVector) {
+        double[] yVector = new double[matrix.numberRows()];
 
-        for (int i = 0; i < matrix.rowsNumber(); i++) {
+        for (int i = 0; i < matrix.numberRows(); i++) {
             double sum = 0;
-            for (int j = 0; j < matrix.columnsNumber(); j++) {
-                sum += matrix.get(i, j) * qVector[j];
+            for (int j = 0; j < matrix.numberColumns(); j++) {
+                sum += matrix.get(i, j) * qVector.get(j);
             }
             yVector[i] = sum;
         }

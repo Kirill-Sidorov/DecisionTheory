@@ -22,21 +22,21 @@ public class PureThirdStep {
 
         int startRow = H.i + 1;
         int column = H.j;
-        int value = H.value;
+        double value = H.value;
 
-        for (int i = startRow; i < matrix.rowsNumber(); i++) {
+        for (int i = startRow; i < matrix.numberRows(); i++) {
             if (value == matrix.get(i, column)) {
                 elementsWithEqualValues.add(matrix.getElement(i, column));
             }
         }
 
         for (Element element : elementsWithEqualValues) {
-            int min = element.value;
+            double min = element.value;
             int row = element.i;
 
             boolean isMin = true;
 
-            for (int j = 0; j < matrix.columnsNumber(); j++) {
+            for (int j = 0; j < matrix.numberColumns(); j++) {
                 if (min > matrix.get(row, j)) {
                     isMin = false;
                     break;

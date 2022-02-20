@@ -6,7 +6,7 @@ public class TextHelper {
     private TextHelper() {
     }
 
-    public static String getSaddlePointsView(List<Element> saddlePoints) {
+    public static String getSaddlePointsText(List<Element> saddlePoints) {
         StringBuilder result = new StringBuilder();
         result.append("Z = X * Y = { ");
         for (Element point : saddlePoints) {

@@ -16,12 +16,12 @@ public class PureFirstStep {
 
     @Nullable
     public Element execute() {
-        for (int i = 0; i < matrix.rowsNumber(); i++) {
+        for (int i = 0; i < matrix.numberRows(); i++) {
 
             List<Element> minElementsInRow = new ArrayList<>();
-            int min = matrix.get(i, 0);
+            double min = matrix.get(i, 0);
 
-            for (int j = 0; j < matrix.columnsNumber(); j++) {
+            for (int j = 0; j < matrix.numberColumns(); j++) {
 
                 if (min > matrix.get(i, j)) {
                     min = matrix.get(i, j);
@@ -34,12 +34,12 @@ public class PureFirstStep {
             }
 
             for (Element element : minElementsInRow) {
-                int max = element.value;
+                double max = element.value;
                 int column = element.j;
 
                 boolean isMax = true;
 
-                for (int row = 0; row < matrix.rowsNumber(); row++) {
+                for (int row = 0; row < matrix.numberRows(); row++) {
                     if (max < matrix.get(row, column)) {
                         isMax = false;
                         break;
