@@ -38,7 +38,7 @@ public class Reduction {
                     if (!deletedRows.contains(i) && row != i) {
                         boolean isNeedDeleteRow = true;
                         for (int j = 0; j < matrix.numberColumns; j++) {
-                            if (!deletedColumns.contains(j) && rowsCompare.compare(row, i, j)) {
+                            if (!deletedColumns.contains(j) && !rowsCompare.compare(row, i, j)) {
                                 isNeedDeleteRow = false;
                                 break;
                             }
@@ -49,7 +49,6 @@ public class Reduction {
                             break;
                         }
                     }
-
                 }
                 if (isContinue) {
                     break;
@@ -63,7 +62,7 @@ public class Reduction {
                     if (!deletedColumns.contains(j) && column != j) {
                         boolean isNeedDeleteColumn = true;
                         for (int i = 0; i < matrix.numberRows; i++) {
-                            if (!deletedRows.contains(i) && columnsCompare.compare(column, i, j)) {
+                            if (!deletedRows.contains(i) && !columnsCompare.compare(column, i, j)) {
                                 isNeedDeleteColumn = false;
                                 break;
                             }
@@ -74,7 +73,6 @@ public class Reduction {
                             break;
                         }
                     }
-
                 }
                 if (isContinue) {
                     break;

@@ -46,11 +46,11 @@ public class ReductionLogic implements Logic {
         ReductionResult completeReductionResult = reduction.perform(false);
 
         StringBuilder result = new StringBuilder();
-        result.append("Матрица A (строгая редукция):\n");
-        result.append(matrix.toTextWithDeletedRowsAndColumns(strictReductionResult.deletedColumns, strictReductionResult.deletedRows));
-        result.append("\n");
-        result.append("Матрица B (полная редукция):\n");
+        result.append("Матрица A (полная редукция):\n");
         result.append(matrix.toTextWithDeletedRowsAndColumns(completeReductionResult.deletedColumns, completeReductionResult.deletedRows));
+        result.append("\n");
+        result.append("Матрица B (строгая редукция):\n");
+        result.append(matrix.toTextWithDeletedRowsAndColumns(strictReductionResult.deletedColumns, strictReductionResult.deletedRows));
         result.append("\n");
         return new Result(Status.TASK_SOLVED, result.toString());
     }
