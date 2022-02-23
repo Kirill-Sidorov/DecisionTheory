@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 
 public class UI extends JFrame {
 
-    private final JTextArea initialDataText;
-    private final JTextArea resultText;
-    private final JButton uploadDataButton;
-    private final JButton solveTaskButton;
+    public final JTextArea initialDataText;
+    public final JTextArea resultText;
+    public final JButton uploadDataButton;
+    public final JButton solveTaskButton;
 
     public UI(ActionListener radioButtonsActionListener,
               ActionListener uploadDataButtonActionListener,
@@ -73,22 +73,6 @@ public class UI extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
-    }
-
-    public JTextArea getInitialDataText() {
-        return initialDataText;
-    }
-
-    public JTextArea getResultText() {
-        return resultText;
-    }
-
-    public JButton getUploadDataButton() {
-        return uploadDataButton;
-    }
-
-    public JButton getSolveTaskButton() {
-        return solveTaskButton;
     }
 
     public void showErrorMessage(String text) {

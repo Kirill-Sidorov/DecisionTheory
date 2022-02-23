@@ -1,18 +1,38 @@
-package sidorov.common;
+package sidorov.common.excelreader;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExcelHelper {
-    private ExcelHelper() {
+public class ExcelReader {
+
+    private final String path = "C:\\Users\\user\\IdeaProjects\\DecisionTheory\\core\\src\\main\\resources\\data.xlsx";
+
+    private TaskSheet taskSheet;
+    private Sheet sheet;
+
+    public ExcelReader(TaskSheet taskSheet) throws IOException, SheetNotFoundException {
+        loadSheet(taskSheet);
     }
 
-    public static List<List<Double>> getMatrix(Sheet sheet) {
+    public void loadSheet(TaskSheet taskSheet) throws IOException, SheetNotFoundException {
+        FileInputStream inputStream = new FileInputStream(new File(path));
+        Workbook workbook = new XSSFWorkbook(inputStream);
+        inputStream.close();
+        if (workbook.getNumberOfSheets() < taskSheet.ordinal()) {
+            workbook.close();
+            throw new SheetNotFoundException();
+        }
+        sheet = workbook.getSheetAt(taskSheet.ordinal());
+        workbook.close();
+    }
+
+    public List<List<Double>> getMatrixFromSheet() {
         List<List<Double>> matrix = new ArrayList<>();
         for (Row row : sheet) {
             List<Double> rowValues = new ArrayList<>();
@@ -32,7 +52,7 @@ public class ExcelHelper {
         return matrix;
     }
 
-    public static List<Double> getVector(Sheet sheet, String vectorSymbol) {
+    public List<Double> getVectorFromSheet(String vectorSymbol) {
         List<Double> vector = new ArrayList<>();
         for (Row row : sheet) {
             for (Cell cell : row) {

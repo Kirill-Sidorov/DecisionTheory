@@ -23,7 +23,7 @@ public class App {
 
     private void selectMode(ActionEvent event) {
         currentMode = Mode.valueOf(event.getActionCommand());
-        UI.getSolveTaskButton().setEnabled(false);
+        UI.solveTaskButton.setEnabled(false);
     }
 
     private void uploadData(ActionEvent event) {
@@ -38,19 +38,20 @@ public class App {
     private void processResult(Result result) {
         switch (result.status) {
             case TASK_SOLVED:
-                UI.getResultText().setText(result.text);
+                UI.resultText.setText(result.text);
                 break;
             case DATA_UPLOADED:
-                UI.getInitialDataText().setText(result.text);
-                UI.getSolveTaskButton().setEnabled(true);
+                UI.initialDataText.setText(result.text);
+                UI.resultText.setText("");
+                UI.solveTaskButton.setEnabled(true);
                 break;
             case INFO:
                 UI.showInfoMessage(result.text);
                 break;
             case ERROR:
                 UI.showErrorMessage(result.text);
-                UI.getSolveTaskButton().setEnabled(false);
-                UI.getInitialDataText().setText("");
+                UI.solveTaskButton.setEnabled(false);
+                UI.initialDataText.setText("");
                 break;
         }
     }

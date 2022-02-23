@@ -24,7 +24,7 @@ public class PureSecondStep {
         int startColumn = H.j + 1;
         double value = H.value;
 
-        for (int j = startColumn; j < matrix.numberColumns(); j++) {
+        for (int j = startColumn; j < matrix.numberColumns; j++) {
             if (value == matrix.get(row, j)) {
                 elementsWithEqualValues.add(matrix.getElement(row, j));
             }
@@ -36,7 +36,7 @@ public class PureSecondStep {
 
             boolean isMax = true;
 
-            for (int i = 0; i < matrix.numberRows(); i++) {
+            for (int i = 0; i < matrix.numberRows; i++) {
                 if (max < matrix.get(i, column)) {
                     isMax = false;
                     break;

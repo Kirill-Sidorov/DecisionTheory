@@ -24,7 +24,7 @@ public class PureThirdStep {
         int column = H.j;
         double value = H.value;
 
-        for (int i = startRow; i < matrix.numberRows(); i++) {
+        for (int i = startRow; i < matrix.numberRows; i++) {
             if (value == matrix.get(i, column)) {
                 elementsWithEqualValues.add(matrix.getElement(i, column));
             }
@@ -36,7 +36,7 @@ public class PureThirdStep {
 
             boolean isMin = true;
 
-            for (int j = 0; j < matrix.numberColumns(); j++) {
+            for (int j = 0; j < matrix.numberColumns; j++) {
                 if (min > matrix.get(row, j)) {
                     isMin = false;
                     break;

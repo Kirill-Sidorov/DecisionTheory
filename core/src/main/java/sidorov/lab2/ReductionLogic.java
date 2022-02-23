@@ -1,20 +1,20 @@
-package sidorov.lab1;
+package sidorov.lab2;
 
-import sidorov.common.*;
+import sidorov.common.Logic;
+import sidorov.common.Matrix;
+import sidorov.common.MatrixValidator;
 import sidorov.common.excelreader.ExcelReader;
 import sidorov.common.excelreader.SheetNotFoundException;
 import sidorov.common.excelreader.TaskSheet;
 import sidorov.common.result.Result;
 import sidorov.common.result.Status;
-import sidorov.lab1.purestrategies.PureFirstStep;
-import sidorov.lab1.purestrategies.PureFourthStep;
-import sidorov.lab1.purestrategies.PureSecondStep;
-import sidorov.lab1.purestrategies.PureThirdStep;
+import sidorov.lab2.reduction.Reduction;
+import sidorov.lab2.reduction.ReductionResult;
 
 import java.io.IOException;
 import java.util.List;
 
-public class PureStrategiesLogic implements Logic {
+public class ReductionLogic implements Logic {
 
     private Matrix matrix = new Matrix();
 
@@ -22,7 +22,7 @@ public class PureStrategiesLogic implements Logic {
     public Result uploadData() {
         ExcelReader excelReader;
         try {
-            excelReader = new ExcelReader(TaskSheet.PURE_STRATEGIES);
+            excelReader = new ExcelReader(TaskSheet.REDUCTION);
         } catch (SheetNotFoundException e) {
             return new Result(Status.ERROR, "Лист с данными задания не найден");
         } catch (IOException e) {
@@ -41,17 +41,17 @@ public class PureStrategiesLogic implements Logic {
 
     @Override
     public Result solveTask() {
-        Element H = new PureFirstStep(matrix).execute();
-        if (H == null) {
-            return new Result(Status.INFO, "Игра не имеет решений в чистых стратегиях");
-        }
-        List<Element> elementsY = new PureSecondStep(matrix).execute(H);
-        List<Element> elementsX = new PureThirdStep(matrix).execute(H);
-        List<Element> saddlePoints = new PureFourthStep(matrix).execute(elementsX, elementsY);
+        Reduction reduction = new Reduction(matrix);
+        ReductionResult strictReductionResult = reduction.perform(true);
+        ReductionResult completeReductionResult = reduction.perform(false);
 
         StringBuilder result = new StringBuilder();
-        result.append(TextHelper.getSaddlePointsText(saddlePoints));
-        result.append(String.format("V = h%d%d = %.4f", H.i + 1, H.j + 1, H.value));
+        result.append("Матрица A (строгая редукция):\n");
+        result.append(matrix.toTextWithDeletedRowsAndColumns(strictReductionResult.deletedColumns, strictReductionResult.deletedRows));
+        result.append("\n");
+        result.append("Матрица B (полная редукция):\n");
+        result.append(matrix.toTextWithDeletedRowsAndColumns(completeReductionResult.deletedColumns, completeReductionResult.deletedRows));
+        result.append("\n");
         return new Result(Status.TASK_SOLVED, result.toString());
     }
 }

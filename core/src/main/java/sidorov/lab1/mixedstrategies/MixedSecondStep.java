@@ -13,11 +13,11 @@ public class MixedSecondStep {
     }
 
     public MixedSecondStepResult calcDataX(List<Double> pVector) {
-        double[] xVector = new double[matrix.numberColumns()];
+        double[] xVector = new double[matrix.numberColumns];
 
-        for (int j = 0; j < matrix.numberColumns(); j++) {
+        for (int j = 0; j < matrix.numberColumns; j++) {
             double sum = 0;
-            for (int i = 0; i < matrix.numberRows(); i++) {
+            for (int i = 0; i < matrix.numberRows; i++) {
                 sum += matrix.get(i, j) * pVector.get(i);
             }
             xVector[j] = sum;
@@ -34,11 +34,11 @@ public class MixedSecondStep {
     }
 
     public MixedSecondStepResult calcDataY(List<Double> qVector) {
-        double[] yVector = new double[matrix.numberRows()];
+        double[] yVector = new double[matrix.numberRows];
 
-        for (int i = 0; i < matrix.numberRows(); i++) {
+        for (int i = 0; i < matrix.numberRows; i++) {
             double sum = 0;
-            for (int j = 0; j < matrix.numberColumns(); j++) {
+            for (int j = 0; j < matrix.numberColumns; j++) {
                 sum += matrix.get(i, j) * qVector.get(j);
             }
             yVector[i] = sum;

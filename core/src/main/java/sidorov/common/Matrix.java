@@ -4,27 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Matrix {
+    public final int numberRows;
+    public final int numberColumns;
     private final List<List<Double>> matrix;
 
     public Matrix() {
         this.matrix = new ArrayList<>();
-        matrix.add(new ArrayList<>());
+        List<Double> column = new ArrayList<>();
+        column.add(0d);
+        matrix.add(column);
+        this.numberRows = 1;
+        this.numberColumns = 1;
     }
 
     public Matrix(List<List<Double>> matrix) {
         this.matrix = matrix;
+        this.numberRows = matrix.size();;
+        this.numberColumns = matrix.get(0).size();
     }
 
     public double get(int i, int j) {
         return matrix.get(i).get(j);
-    }
-
-    public int numberRows() {
-        return matrix.size();
-    }
-
-    public int numberColumns() {
-        return matrix.get(0).size();
     }
 
     public Element getElement(int i, int j) {
@@ -35,11 +35,25 @@ public class Matrix {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Матрица:\n");
         for (List<Double> row : matrix) {
-            stringBuilder.append("[");
             for (double value : row) {
-                stringBuilder.append(String.format("%5.1f", value));
+                stringBuilder.append(String.format("%6.1f", value));
             }
-            stringBuilder.append("  ]\n");
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
+    public String toTextWithDeletedRowsAndColumns(List<Integer> deletedColumns, List<Integer> deletedRows) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < numberRows; i++) {
+            if (!deletedRows.contains(i)) {
+                for (int j = 0; j < numberColumns; j++) {
+                    if (!deletedColumns.contains(j)) {
+                        stringBuilder.append(String.format("%6.1f", matrix.get(i).get(j)));
+                    }
+                }
+                stringBuilder.append("\n");
+            }
         }
         return stringBuilder.toString();
     }

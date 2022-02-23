@@ -3,6 +3,7 @@ package sidorov;
 import sidorov.common.Logic;
 import sidorov.lab1.MixedStrategiesLogic;
 import sidorov.lab1.PureStrategiesLogic;
+import sidorov.lab2.ReductionLogic;
 
 public enum Mode {
     PURE_STRATEGIES("Чистые стратегии") {
@@ -11,10 +12,16 @@ public enum Mode {
             return new PureStrategiesLogic();
         }
     },
-    MIXED_STRATEGIES("Смешанные стратегии"){
+    MIXED_STRATEGIES("Смешанные стратегии") {
         @Override
         public Logic getLogic() {
             return new MixedStrategiesLogic();
+        }
+    },
+    REDUCTION("Редукция") {
+        @Override
+        public Logic getLogic() {
+            return new ReductionLogic();
         }
     };
 
@@ -25,6 +32,7 @@ public enum Mode {
     }
 
     public abstract Logic getLogic();
+
     public String text() {
         return text;
     }
