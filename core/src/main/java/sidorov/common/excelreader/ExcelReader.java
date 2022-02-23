@@ -13,7 +13,6 @@ public class ExcelReader {
 
     private final String path = "C:\\Users\\user\\IdeaProjects\\DecisionTheory\\core\\src\\main\\resources\\data.xlsx";
 
-    private TaskSheet taskSheet;
     private Sheet sheet;
 
     public ExcelReader(TaskSheet taskSheet) throws IOException, SheetNotFoundException {
