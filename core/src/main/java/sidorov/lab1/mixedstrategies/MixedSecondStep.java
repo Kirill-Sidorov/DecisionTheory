@@ -1,5 +1,6 @@
 package sidorov.lab1.mixedstrategies;
 
+import org.apache.commons.math3.util.Precision;
 import sidorov.common.Matrix;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class MixedSecondStep {
             for (int i = 0; i < matrix.numberRows; i++) {
                 sum += matrix.get(i, j) * pVector.get(i);
             }
-            xVector[j] = sum;
+            xVector[j] = Precision.round(sum, 4);
         }
 
         double xMin = xVector[0];
@@ -41,7 +42,7 @@ public class MixedSecondStep {
             for (int j = 0; j < matrix.numberColumns; j++) {
                 sum += matrix.get(i, j) * qVector.get(j);
             }
-            yVector[i] = sum;
+            yVector[i] = Precision.round(sum, 4);
         }
 
         double yMax = yVector[0];

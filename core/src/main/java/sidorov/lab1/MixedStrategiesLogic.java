@@ -24,6 +24,22 @@ public class MixedStrategiesLogic implements Logic {
     private List<Double> pVector = new ArrayList<>();
     private List<Double> qVector = new ArrayList<>();
 
+    public MixedStrategiesLogic() {
+        this.pVector.add(0d);
+        this.qVector.add(0d);
+    }
+
+    public MixedStrategiesLogic(Matrix matrix, List<Double> pVector, List<Double> qVector) {
+        if (matrix != null && pVector != null && qVector != null) {
+            this.matrix = matrix;
+            this.pVector = pVector;
+            this.qVector = qVector;
+        } else {
+            this.pVector.add(0d);
+            this.qVector.add(0d);
+        }
+    }
+
     @Override
     public Result uploadData() {
         ExcelReader excelReader;
@@ -81,7 +97,7 @@ public class MixedStrategiesLogic implements Logic {
         result.append(String.format("Вектор y = %s\nyMax = %.4f\n", Arrays.toString(yResult.vector), yResult.limitValue));
 
         if (xResult.limitValue == yResult.limitValue) {
-            result.append("Так как xMin = yMax - ситуация <p,q> в смешанные стратегиях является седловой точкой в смешанные стратегиях.\n");
+            result.append("Так как xMin = yMax - ситуация <p,q> в смешанных стратегиях является седловой точкой в смешанных стратегиях.\n");
             result.append(String.format("W = xMin = yMax = %.4f\n", xResult.limitValue));
         }
 

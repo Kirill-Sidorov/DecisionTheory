@@ -23,6 +23,13 @@ public class MatrixValidator {
         return false;
     }
 
+    public boolean validateThatMatrix2x2Size() {
+        if (validateMatrix()) {
+            return matrix.size() == 2 && matrix.get(0).size() == 2;
+        }
+        return false;
+    }
+
     public boolean validatePVector(List<Double> pVector) {
         return pVector != null && !pVector.isEmpty() && pVector.size() == matrix.size();
     }
