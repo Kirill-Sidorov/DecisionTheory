@@ -30,6 +30,13 @@ public class MatrixValidator {
         return false;
     }
 
+    public boolean validateThatMatrix2xNSize() {
+        if (validateMatrix()) {
+            return matrix.size() == 2;
+        }
+        return false;
+    }
+
     public boolean validatePVector(List<Double> pVector) {
         return pVector != null && !pVector.isEmpty() && pVector.size() == matrix.size();
     }

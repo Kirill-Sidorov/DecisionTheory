@@ -8,6 +8,6 @@ public class Runner {
 
     public static void main(String[] args) {
         FlatIntelliJLaf.setup();
-        new App();
+        new AppController();
     }
 }

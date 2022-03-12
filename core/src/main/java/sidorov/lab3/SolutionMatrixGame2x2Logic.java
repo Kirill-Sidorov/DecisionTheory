@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnalyticalSolutionMatrixGame2x2Logic implements Logic {
+public class SolutionMatrixGame2x2Logic implements Logic {
 
     private Matrix matrix = new Matrix();
 
@@ -22,7 +22,7 @@ public class AnalyticalSolutionMatrixGame2x2Logic implements Logic {
     public Result uploadData() {
         ExcelReader excelReader;
         try {
-            excelReader = new ExcelReader(TaskSheet.ANALYTICAL_SOLUTION_MATRIX_GAME_2X2);
+            excelReader = new ExcelReader(TaskSheet.SOLUTION_MATRIX_GAME_2X2);
         } catch (SheetNotFoundException e) {
             return new Result(Status.ERROR, "Лист с данными задания не найден");
         } catch (IOException e) {

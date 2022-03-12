@@ -2,19 +2,20 @@ package sidorov;
 
 import sidorov.common.Logic;
 import sidorov.common.result.Result;
+import sidorov.common.result.ResultWithChartData;
 import sidorov.task.SolveTask;
 import sidorov.task.UploadTask;
 
 import java.awt.event.ActionEvent;
 
-public class App {
+public class AppController {
 
     private final UI UI;
 
     private Mode currentMode;
     private Logic currentLogic;
 
-    public App() {
+    public AppController() {
         currentMode = Mode.values()[0];
         UI = new UI(this::selectMode, this::uploadData, this::solveTask);
         UI.setFocusable(true);
@@ -38,7 +39,7 @@ public class App {
     private void processResult(Result result) {
         switch (result.status) {
             case TASK_SOLVED:
-                UI.resultText.setText(result.text);
+                processTaskSolved(result);
                 break;
             case DATA_UPLOADED:
                 UI.initialDataText.setText(result.text);
@@ -53,6 +54,14 @@ public class App {
                 UI.solveTaskButton.setEnabled(false);
                 UI.initialDataText.setText("");
                 break;
+        }
+    }
+
+    private void processTaskSolved(Result result) {
+        UI.resultText.setText(result.text);
+        if (result instanceof ResultWithChartData) {
+            ResultWithChartData resultWithChartData = (ResultWithChartData) result;
+            new ChartFrame(resultWithChartData.functions);
         }
     }
 }

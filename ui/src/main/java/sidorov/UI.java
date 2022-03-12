@@ -1,7 +1,18 @@
 package sidorov;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
 public class UI extends JFrame {
@@ -34,15 +45,15 @@ public class UI extends JFrame {
         splitPane.setResizeWeight(0.5);
 
         uploadDataButton = new JButton("Загрузить данные");
-        uploadDataButton.setBounds(50, 440, 150, 30);
+        uploadDataButton.setBounds(400, 405, 140, 30);
         uploadDataButton.addActionListener(uploadDataButtonActionListener);
 
         solveTaskButton = new JButton("Решить задачу");
-        solveTaskButton.setBounds(220, 440, 150, 30);
+        solveTaskButton.setBounds(400, 440, 140, 30);
         solveTaskButton.addActionListener(solveTaskButtonActionListener);
         solveTaskButton.setEnabled(false);
 
-        JPanel panelRadio = new JPanel(new GridLayout(0, 1, 0, 0));
+        JPanel panelRadio = new JPanel(new GridLayout(0, 2, 0, 0));
         panelRadio.setBorder(BorderFactory.createTitledBorder("Задача"));
         ButtonGroup buttonGroup = new ButtonGroup();
         for (Mode mode : Mode.values()) {
@@ -53,7 +64,7 @@ public class UI extends JFrame {
             buttonGroup.add(radioButton);
         }
         buttonGroup.getElements().nextElement().setSelected(true);
-        panelRadio.setBounds(400, 410, 350, 150);
+        panelRadio.setBounds(45, 400, 350, 150);
 
         JLabel label1 = new JLabel("Исходные данные");
         JLabel label2 = new JLabel("Результат");
