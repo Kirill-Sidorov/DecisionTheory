@@ -37,6 +37,13 @@ public class MatrixValidator {
         return false;
     }
 
+    public boolean validateThatMatrixNx2Size() {
+        if (validateMatrix()) {
+            return matrix.get(0).size() == 2;
+        }
+        return false;
+    }
+
     public boolean validatePVector(List<Double> pVector) {
         return pVector != null && !pVector.isEmpty() && pVector.size() == matrix.size();
     }

@@ -19,4 +19,9 @@ public class ReductionMode extends Mode {
         }
         return logic;
     }
+
+    @Override
+    public ModeType getModeType() {
+        return ModeType.REDUCTION;
+    }
 }

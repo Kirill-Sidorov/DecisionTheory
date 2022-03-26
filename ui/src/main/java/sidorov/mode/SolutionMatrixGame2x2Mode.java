@@ -19,4 +19,9 @@ public class SolutionMatrixGame2x2Mode extends Mode {
         }
         return logic;
     }
+
+    @Override
+    public ModeType getModeType() {
+        return ModeType.SOLUTION_MATRIX_GAME_2x2;
+    }
 }

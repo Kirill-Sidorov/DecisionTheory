@@ -31,7 +31,7 @@ public class CreateChartTask extends SwingWorker<ResultWithChartData, Void> {
     protected void done() {
         try {
             ResultWithChartData result = get();
-            if (result.status == Status.TASK_SOLVED) {
+            if (result.status == Status.SUCCESS) {
                 new ChartFrame(get().functions);
             }
         } catch (Exception ignored) {

@@ -63,11 +63,11 @@ public class SolutionMatrixGame2x2Logic implements Logic {
         result.append(String.format("<p,q> \u2248 < (%.4f;%.4f)T, (%.4f;%.4f)T >\n", p1, 1 - p1, q1, 1 - q1));
         result.append(String.format("W \u2248 %.4f\n", W));
 
-        if (mixedStrategiesResult.status == Status.TASK_SOLVED) {
+        if (mixedStrategiesResult.status == Status.SUCCESS) {
             result.append("\nПроверка:\n\n");
             result.append(mixedStrategiesResult.text);
         }
 
-        return new Result(Status.TASK_SOLVED, result.toString());
+        return new Result(Status.SUCCESS, result.toString());
     }
 }

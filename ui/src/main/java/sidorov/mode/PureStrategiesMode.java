@@ -19,4 +19,9 @@ public class PureStrategiesMode extends Mode {
         }
         return logic;
     }
+
+    @Override
+    public ModeType getModeType() {
+        return ModeType.PURE_STRATEGIES;
+    }
 }

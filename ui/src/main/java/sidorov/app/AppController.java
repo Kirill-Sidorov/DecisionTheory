@@ -1,5 +1,7 @@
 package sidorov.app;
 
+import sidorov.common.Logic;
+import sidorov.common.WithInputData;
 import sidorov.common.result.Result;
 import sidorov.mode.MixedStrategiesMode;
 import sidorov.mode.Mode;
@@ -20,27 +22,31 @@ public class AppController {
 
     private Mode currentMode;
     private final UI UI;
-    private final Map<String, Mode> modeMap = new HashMap<>();
+    private final Map<ModeType, Mode> modeMap = new HashMap<>();
 
     public AppController() {
         UI = new UI(this::uploadData, this::solveTask, this::createChart);
 
-        modeMap.put(ModeType.MIXED_STRATEGIES.name(), new MixedStrategiesMode(UI));
-        modeMap.put(ModeType.PURE_STRATEGIES.name(), new PureStrategiesMode(UI));
-        modeMap.put(ModeType.REDUCTION.name(), new ReductionMode(UI));
-        modeMap.put(ModeType.SOLUTION_MATRIX_GAME_2x2.name(), new SolutionMatrixGame2x2Mode(UI));
-        modeMap.put(ModeType.SOLUTION_MATRIX_GAME_2xN_OR_Nx2.name(), new SolutionMatrixGame2xNorNx2Mode(UI));
+        Mode mode1 = new MixedStrategiesMode(UI);
+        Mode mode2 = new PureStrategiesMode(UI);
+        Mode mode3 = new ReductionMode(UI);
+        Mode mode4 = new SolutionMatrixGame2x2Mode(UI);
+        Mode mode5 = new SolutionMatrixGame2xNorNx2Mode(UI);
 
-        ModeType[] modeTypes = ModeType.values();
-        currentMode = modeMap.get(modeTypes[0].name());
-        UI.initialize(this::selectMode, modeTypes);
+        modeMap.put(mode1.getModeType(), mode1);
+        modeMap.put(mode2.getModeType(), mode2);
+        modeMap.put(mode3.getModeType(), mode3);
+        modeMap.put(mode4.getModeType(), mode4);
+        modeMap.put(mode5.getModeType(), mode5);
+
+        currentMode = mode1;
+        UI.initialize(this::selectMode, ModeType.values());
     }
 
     private void selectMode(ActionEvent event) {
-        if (modeMap.get(event.getActionCommand()) != null) {
-            currentMode = modeMap.get(event.getActionCommand());
-            currentMode.setNecessaryUIItems();
-        }
+        ModeType modeType = ModeType.valueOf(event.getActionCommand());
+        currentMode = modeMap.get(modeType);
+        currentMode.setNecessaryUIItems();
     }
 
     private void uploadData(ActionEvent event) {
@@ -48,7 +54,22 @@ public class AppController {
     }
 
     private void solveTask(ActionEvent event) {
-        new SolveTask(currentMode.getLogic(), this::processResult).execute();
+        Logic currentLogic = currentMode.getLogic();
+        if (currentLogic instanceof WithInputData) {
+            boolean success = false;
+            ValidateAndInput validateAndInput = new ValidateAndInput(UI);
+
+            switch (currentMode.getModeType()) {
+                case SOLUTION_MATRIX_GAME_2xN_OR_Nx2:
+                    success = validateAndInput.inputDataForMatrixGame2xNorNx2((WithInputData) currentLogic);
+                    break;
+            }
+
+            if (!success) {
+                return;
+            }
+        }
+        new SolveTask(currentLogic, this::processResult).execute();
     }
 
     private void createChart(ActionEvent event) {
@@ -57,7 +78,7 @@ public class AppController {
 
     private void processResult(Result result) {
         switch (result.status) {
-            case TASK_SOLVED:
+            case SUCCESS:
                 currentMode.handleTaskSolved(result);
                 break;
             case DATA_UPLOADED:

@@ -12,9 +12,16 @@ public abstract class Mode {
     }
 
     public abstract Logic getLogic();
+    public abstract ModeType getModeType();
 
     public void setNecessaryUIItems() {
-        resetUIItems();
+        UI.createChart.setVisible(false);
+        UI.textField1.setVisible(false);
+        UI.textField2.setVisible(false);
+        UI.createChart.setEnabled(false);
+        UI.textField1.setEnabled(false);
+        UI.textField2.setEnabled(false);
+
         UI.solveTaskButton.setEnabled(false);
     }
 
@@ -36,11 +43,5 @@ public abstract class Mode {
         UI.showErrorMessage(result.text);
         UI.solveTaskButton.setEnabled(false);
         UI.initialDataText.setText("");
-    }
-
-    protected void resetUIItems() {
-        UI.createChart.setVisible(false);
-        UI.textField1.setVisible(false);
-        UI.textField2.setVisible(false);
     }
 }

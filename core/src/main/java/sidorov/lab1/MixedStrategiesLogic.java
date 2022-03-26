@@ -101,6 +101,6 @@ public class MixedStrategiesLogic implements Logic {
             result.append(String.format("W = xMin = yMax = %.4f\n", xResult.limitValue));
         }
 
-        return new Result(Status.TASK_SOLVED, result.toString());
+        return new Result(Status.SUCCESS, result.toString());
     }
 }

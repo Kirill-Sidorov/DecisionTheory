@@ -1,7 +1,7 @@
 package sidorov.common.result;
 
 public enum Status {
-    TASK_SOLVED,
+    SUCCESS,
     DATA_UPLOADED,
     INFO,
     ERROR

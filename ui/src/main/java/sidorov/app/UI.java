@@ -65,14 +65,17 @@ public class UI extends JFrame {
         createChart = new JButton("Создать график");
         createChart.setBounds(600, 405, 140, 30);
         createChart.addActionListener(createChartTaskButtonActionListener);
+        createChart.setEnabled(false);
         createChart.setVisible(false);
 
         textField1 = new JTextField();
         textField1.setBounds(600, 440, 60, 30);
+        textField1.setEnabled(false);
         textField1.setVisible(false);
 
         textField2 = new JTextField();
         textField2.setBounds(680, 440, 60, 30);
+        textField2.setEnabled(false);
         textField2.setVisible(false);
 
         panelRadio = new JPanel(new GridLayout(0, 2, 0, 0));

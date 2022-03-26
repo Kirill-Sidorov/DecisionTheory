@@ -52,6 +52,6 @@ public class ReductionLogic implements Logic {
         result.append("Матрица B (строгая редукция):\n");
         result.append(matrix.toTextWithDeletedRowsAndColumns(strictReductionResult.deletedColumns, strictReductionResult.deletedRows));
         result.append("\n");
-        return new Result(Status.TASK_SOLVED, result.toString());
+        return new Result(Status.SUCCESS, result.toString());
     }
 }

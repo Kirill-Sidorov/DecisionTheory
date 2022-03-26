@@ -52,6 +52,6 @@ public class PureStrategiesLogic implements Logic {
         StringBuilder result = new StringBuilder();
         result.append(TextHelper.getSaddlePointsText(saddlePoints));
         result.append(String.format("V = h%d%d = %.4f", H.i + 1, H.j + 1, H.value));
-        return new Result(Status.TASK_SOLVED, result.toString());
+        return new Result(Status.SUCCESS, result.toString());
     }
 }

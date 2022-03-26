@@ -15,7 +15,7 @@ public class ResultWithChartData extends Result {
     }
 
     public ResultWithChartData(String text, List<Function> functions) {
-        super(Status.TASK_SOLVED, text);
+        super(Status.SUCCESS, text);
         this.functions = functions;
     }
 }
