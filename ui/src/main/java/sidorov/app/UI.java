@@ -1,4 +1,6 @@
-package sidorov;
+package sidorov.app;
+
+import sidorov.mode.ModeType;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -11,20 +13,27 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
 public class UI extends JFrame {
 
+    private final JPanel panelRadio;
+
     public final JTextArea initialDataText;
     public final JTextArea resultText;
     public final JButton uploadDataButton;
     public final JButton solveTaskButton;
+    public final JButton createChart;
 
-    public UI(ActionListener radioButtonsActionListener,
-              ActionListener uploadDataButtonActionListener,
-              ActionListener solveTaskButtonActionListener) {
+    public final JTextField textField1;
+    public final JTextField textField2;
+
+    public UI(ActionListener uploadDataButtonActionListener,
+              ActionListener solveTaskButtonActionListener,
+              ActionListener createChartTaskButtonActionListener) {
 
         setLayout(null);
 
@@ -53,17 +62,21 @@ public class UI extends JFrame {
         solveTaskButton.addActionListener(solveTaskButtonActionListener);
         solveTaskButton.setEnabled(false);
 
-        JPanel panelRadio = new JPanel(new GridLayout(0, 2, 0, 0));
+        createChart = new JButton("Создать график");
+        createChart.setBounds(600, 405, 140, 30);
+        createChart.addActionListener(createChartTaskButtonActionListener);
+        createChart.setVisible(false);
+
+        textField1 = new JTextField();
+        textField1.setBounds(600, 440, 60, 30);
+        textField1.setVisible(false);
+
+        textField2 = new JTextField();
+        textField2.setBounds(680, 440, 60, 30);
+        textField2.setVisible(false);
+
+        panelRadio = new JPanel(new GridLayout(0, 2, 0, 0));
         panelRadio.setBorder(BorderFactory.createTitledBorder("Задача"));
-        ButtonGroup buttonGroup = new ButtonGroup();
-        for (Mode mode : Mode.values()) {
-            JRadioButton radioButton = new JRadioButton(mode.text());
-            radioButton.setActionCommand(mode.name());
-            radioButton.addActionListener(radioButtonsActionListener);
-            panelRadio.add(radioButton);
-            buttonGroup.add(radioButton);
-        }
-        buttonGroup.getElements().nextElement().setSelected(true);
         panelRadio.setBounds(45, 400, 350, 150);
 
         JLabel label1 = new JLabel("Исходные данные");
@@ -77,6 +90,9 @@ public class UI extends JFrame {
         add(splitPane);
         add(uploadDataButton);
         add(solveTaskButton);
+        add(createChart);
+        add(textField1);
+        add(textField2);
         add(panelRadio);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -84,6 +100,21 @@ public class UI extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
+    }
+
+    public void initialize(ActionListener radioButtonsActionListener, ModeType[] modeTypes) {
+        panelRadio.removeAll();
+        ButtonGroup buttonGroup = new ButtonGroup();
+        for (ModeType modeType : modeTypes) {
+            JRadioButton radioButton = new JRadioButton(modeType.text);
+            radioButton.setActionCommand(modeType.name());
+            radioButton.addActionListener(radioButtonsActionListener);
+            panelRadio.add(radioButton);
+            buttonGroup.add(radioButton);
+        }
+        buttonGroup.getElements().nextElement().setSelected(true);
+        setFocusable(true);
+        setVisible(true);
     }
 
     public void showErrorMessage(String text) {

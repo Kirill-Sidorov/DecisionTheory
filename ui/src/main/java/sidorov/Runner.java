@@ -1,6 +1,7 @@
 package sidorov;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import sidorov.app.AppController;
 
 public class Runner {
     private Runner() {

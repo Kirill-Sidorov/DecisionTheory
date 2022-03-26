@@ -22,7 +22,7 @@ public class SolutionMatrixGame2x2Logic implements Logic {
     public Result uploadData() {
         ExcelReader excelReader;
         try {
-            excelReader = new ExcelReader(TaskSheet.SOLUTION_MATRIX_GAME_2X2);
+            excelReader = new ExcelReader(TaskSheet.SOLUTION_MATRIX_GAME_2x2);
         } catch (SheetNotFoundException e) {
             return new Result(Status.ERROR, "Лист с данными задания не найден");
         } catch (IOException e) {

@@ -4,7 +4,7 @@ import sidorov.common.Logic;
 import sidorov.common.result.Result;
 import sidorov.common.result.Status;
 
-import javax.swing.*;
+import javax.swing.SwingWorker;
 
 public class UploadTask extends SwingWorker<Result, Void> {
 
