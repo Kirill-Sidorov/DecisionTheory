@@ -45,6 +45,7 @@ public class StatisticalGamesLogic implements Logic {
         Element gamblerCriterion = statisticalGames.findGamblerCriterion();
         Element maximinCriterion = statisticalGames.findMaximinCriterion();
         int HurwitzCriterion = statisticalGames.findHurwitzCriterion(alpha);
+        SavageCriterionResult savageCriterionResult = statisticalGames.findSavageCriterion();
 
         StringBuilder result = new StringBuilder();
         result.append(String.format("Критерий азартного игрока:\nстратегия - %d, значение = %.1f (i = %d; j = %d)\n\n",
@@ -60,6 +61,12 @@ public class StatisticalGamesLogic implements Logic {
         result.append(String.format("Критерий Гурвица:\nстратегия - %d, при \u03B1 = %.3f\n\n",
                 HurwitzCriterion,
                 alpha));
+        result.append(String.format("Критерий Сэвиджа:\nматрица рисков\n%sстратегия - %d, значение = %.1f (i = %d; j = %d)\n\n",
+                savageCriterionResult.riskMatrix.toText(),
+                savageCriterionResult.strategicElement.i + 1,
+                savageCriterionResult.strategicElement.value,
+                savageCriterionResult.strategicElement.i + 1,
+                savageCriterionResult.strategicElement.j + 1));
 
         return new Result(Status.SUCCESS, result.toString());
     }

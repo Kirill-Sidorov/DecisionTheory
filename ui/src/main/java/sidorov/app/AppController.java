@@ -16,6 +16,7 @@ import sidorov.task.UploadTask;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class AppController {
 
@@ -43,8 +44,9 @@ public class AppController {
         modeMap.put(mode5.getModeType(), mode5);
         modeMap.put(mode6.getModeType(), mode6);
 
-        currentMode = mode1;
-        UI.initialize(this::selectMode, modeMap.keySet());
+        Set<ModeType> currentModeTypes = modeMap.keySet();
+        currentMode = modeMap.get(currentModeTypes.iterator().next());
+        UI.initialize(this::selectMode, currentModeTypes);
     }
 
     private void selectMode(ActionEvent event) {

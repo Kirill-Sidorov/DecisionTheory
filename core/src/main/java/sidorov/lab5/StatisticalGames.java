@@ -68,6 +68,40 @@ public class StatisticalGames {
         return indexMaxValue + 1;
     }
 
+    public SavageCriterionResult findSavageCriterion() {
+        List<Double> maxValueInColumns = new ArrayList<>();
+        for (int j = 0; j < matrix.numberColumns; j++) {
+            double maxInColumn = matrix.get(0, j);
+            for (int i = 1; i < matrix.numberRows; i++) {
+                if (maxInColumn < matrix.get(i, j)) {
+                    maxInColumn = matrix.get(i, j);
+                }
+            }
+            maxValueInColumns.add(maxInColumn);
+        }
+        List<List<Double>> riskMatrixList = new ArrayList<>();
+        for (int i = 0; i < matrix.numberRows; i++) {
+            riskMatrixList.add(new ArrayList<>());
+            for (int j = 0; j < matrix.numberColumns; j++) {
+                double r = maxValueInColumns.get(j) - matrix.get(i, j);
+                riskMatrixList.get(i).add(r);
+            }
+        }
+
+        Matrix riskMatrix = new Matrix(riskMatrixList);
+        List<Element> maxElementInRows = new ArrayList<>();
+        for (int i = 0; i < riskMatrix.numberRows; i++) {
+            Element maxInRow = riskMatrix.getElement(i, 0);
+            for (int j = 1; j < riskMatrix.numberColumns; j++) {
+                if (maxInRow.value < riskMatrix.get(i, j)) {
+                    maxInRow = riskMatrix.getElement(i, j);
+                }
+            }
+            maxElementInRows.add(maxInRow);
+        }
+        return new SavageCriterionResult(riskMatrix, getMinElement(maxElementInRows));
+    }
+
     public Element getMaxElement(List<Element> elementList) {
         Element maxElement = elementList.get(0);
         for (Element element : elementList) {
@@ -76,5 +110,15 @@ public class StatisticalGames {
             }
         }
         return maxElement;
+    }
+
+    public Element getMinElement(List<Element> elementList) {
+        Element minElement = elementList.get(0);
+        for (Element element : elementList) {
+            if (minElement.value > element.value) {
+                minElement = element;
+            }
+        }
+        return minElement;
     }
 }
