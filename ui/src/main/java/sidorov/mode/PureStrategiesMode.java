@@ -6,8 +6,6 @@ import sidorov.lab1.PureStrategiesLogic;
 
 public class PureStrategiesMode extends Mode {
 
-    private Logic logic;
-
     public PureStrategiesMode(UI UI) {
         super(UI);
     }

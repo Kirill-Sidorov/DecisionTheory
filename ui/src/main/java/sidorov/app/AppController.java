@@ -8,6 +8,7 @@ import sidorov.mode.PureStrategiesMode;
 import sidorov.mode.ReductionMode;
 import sidorov.mode.SolutionMatrixGame2x2Mode;
 import sidorov.mode.SolutionMatrixGame2xNorNx2Mode;
+import sidorov.mode.StatisticalGamesMode;
 import sidorov.task.CreateChartTask;
 import sidorov.task.SolveTask;
 import sidorov.task.UploadTask;
@@ -33,12 +34,14 @@ public class AppController {
         Mode mode3 = new ReductionMode(UI);
         Mode mode4 = new SolutionMatrixGame2x2Mode(UI);
         Mode mode5 = new SolutionMatrixGame2xNorNx2Mode(UI);
+        Mode mode6 = new StatisticalGamesMode(UI);
 
         modeMap.put(mode1.getModeType(), mode1);
         modeMap.put(mode2.getModeType(), mode2);
         modeMap.put(mode3.getModeType(), mode3);
         modeMap.put(mode4.getModeType(), mode4);
         modeMap.put(mode5.getModeType(), mode5);
+        modeMap.put(mode6.getModeType(), mode6);
 
         currentMode = mode1;
         UI.initialize(this::selectMode, modeMap.keySet());

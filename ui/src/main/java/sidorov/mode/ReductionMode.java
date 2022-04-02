@@ -6,8 +6,6 @@ import sidorov.lab2.ReductionLogic;
 
 public class ReductionMode extends Mode {
 
-    private Logic logic;
-
     public ReductionMode(UI UI) {
         super(UI);
     }

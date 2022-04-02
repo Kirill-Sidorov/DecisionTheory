@@ -6,6 +6,7 @@ import sidorov.common.Result;
 
 public abstract class Mode {
     protected final UI UI;
+    protected Logic logic;
 
     public Mode(final UI UI) {
         this.UI = UI;

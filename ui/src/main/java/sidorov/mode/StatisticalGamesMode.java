@@ -2,24 +2,24 @@ package sidorov.mode;
 
 import sidorov.app.UI;
 import sidorov.common.Logic;
-import sidorov.lab1.MixedStrategiesLogic;
+import sidorov.lab5.StatisticalGamesLogic;
 
-public class MixedStrategiesMode extends Mode {
+public class StatisticalGamesMode extends Mode {
 
-    public MixedStrategiesMode(UI UI) {
+    public StatisticalGamesMode(UI UI) {
         super(UI);
     }
 
     @Override
     public Logic getLogic() {
         if (logic == null) {
-            logic = new MixedStrategiesLogic();
+            logic = new StatisticalGamesLogic();
         }
         return logic;
     }
 
     @Override
     public ModeType getModeType() {
-        return ModeType.MIXED_STRATEGIES;
+        return ModeType.STATISTICAL_GAMES;
     }
 }

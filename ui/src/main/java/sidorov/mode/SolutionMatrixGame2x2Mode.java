@@ -6,8 +6,6 @@ import sidorov.lab3.SolutionMatrixGame2x2Logic;
 
 public class SolutionMatrixGame2x2Mode extends Mode {
 
-    private Logic logic;
-
     public SolutionMatrixGame2x2Mode(UI UI) {
         super(UI);
     }
