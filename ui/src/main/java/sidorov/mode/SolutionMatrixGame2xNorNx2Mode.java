@@ -32,6 +32,8 @@ public class SolutionMatrixGame2xNorNx2Mode extends Mode {
         UI.createChart.setVisible(true);
         UI.textField1.setVisible(true);
         UI.textField2.setVisible(true);
+        UI.labelTextField1.setVisible(true);
+        UI.labelTextField2.setVisible(true);
     }
 
     @Override

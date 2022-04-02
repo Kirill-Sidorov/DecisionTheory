@@ -33,7 +33,6 @@ public class Matrix {
 
     public String toText() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Матрица:\n");
         for (List<Double> row : matrix) {
             for (double value : row) {
                 stringBuilder.append(String.format("%6.1f", value));

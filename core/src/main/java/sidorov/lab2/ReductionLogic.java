@@ -2,7 +2,7 @@ package sidorov.lab2;
 
 import sidorov.common.Logic;
 import sidorov.common.Matrix;
-import sidorov.common.MatrixValidator;
+import sidorov.common.MatrixValidation;
 import sidorov.common.excelreader.ExcelReader;
 import sidorov.common.excelreader.SheetNotFoundException;
 import sidorov.common.excelreader.TaskSheet;
@@ -31,7 +31,7 @@ public class ReductionLogic implements Logic {
 
         List<List<Double>> matrixList = excelReader.getMatrixFromSheet();
 
-        MatrixValidator validator = new MatrixValidator(matrixList);
+        MatrixValidation validator = new MatrixValidation(matrixList);
         if (!validator.validateMatrix()) {
             return new Result(Status.ERROR, "Матрица невалидна");
         }

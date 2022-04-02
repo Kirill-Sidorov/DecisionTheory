@@ -2,7 +2,7 @@ package sidorov.lab3;
 
 import sidorov.common.Logic;
 import sidorov.common.Matrix;
-import sidorov.common.MatrixValidator;
+import sidorov.common.MatrixValidation;
 import sidorov.common.excelreader.ExcelReader;
 import sidorov.common.excelreader.SheetNotFoundException;
 import sidorov.common.excelreader.TaskSheet;
@@ -31,7 +31,7 @@ public class SolutionMatrixGame2x2Logic implements Logic {
 
         List<List<Double>> matrixList = excelReader.getMatrixFromSheet();
 
-        MatrixValidator validator = new MatrixValidator(matrixList);
+        MatrixValidation validator = new MatrixValidation(matrixList);
         if (!validator.validateThatMatrix2x2Size()) {
             return new Result(Status.ERROR, "Матрица невалидна или отлична от размера 2x2");
         }
@@ -60,8 +60,8 @@ public class SolutionMatrixGame2x2Logic implements Logic {
         Result mixedStrategiesResult = mixedStrategiesLogic.solveTask();
 
         StringBuilder result = new StringBuilder();
-        result.append(String.format("<p,q> \u2248 < (%.4f;%.4f)T, (%.4f;%.4f)T >\n", p1, 1 - p1, q1, 1 - q1));
-        result.append(String.format("W \u2248 %.4f\n", W));
+        result.append(String.format("<p,q> \u2248 < (%.3f;%.3f)T, (%.3f;%.3f)T >\n", p1, 1 - p1, q1, 1 - q1));
+        result.append(String.format("W \u2248 %.3f\n", W));
 
         if (mixedStrategiesResult.status == Status.SUCCESS) {
             result.append("\nПроверка:\n\n");

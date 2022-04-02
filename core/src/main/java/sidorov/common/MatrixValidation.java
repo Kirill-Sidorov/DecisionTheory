@@ -2,11 +2,11 @@ package sidorov.common;
 
 import java.util.List;
 
-public class MatrixValidator {
+public class MatrixValidation {
 
     private final List<List<Double>> matrix;
 
-    public MatrixValidator(List<List<Double>> matrix) {
+    public MatrixValidation(List<List<Double>> matrix) {
         this.matrix = matrix;
     }
 

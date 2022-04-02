@@ -31,7 +31,7 @@ public class PureStrategiesLogic implements Logic {
 
         List<List<Double>> matrixList = excelReader.getMatrixFromSheet();
 
-        MatrixValidator validator = new MatrixValidator(matrixList);
+        MatrixValidation validator = new MatrixValidation(matrixList);
         if (!validator.validateMatrix()) {
             return new Result(Status.ERROR, "Матрица невалидна");
         }
@@ -51,7 +51,7 @@ public class PureStrategiesLogic implements Logic {
 
         StringBuilder result = new StringBuilder();
         result.append(TextHelper.getSaddlePointsText(saddlePoints));
-        result.append(String.format("V = h%d%d = %.4f", H.i + 1, H.j + 1, H.value));
+        result.append(String.format("V = h%d%d = %.3f", H.i + 1, H.j + 1, H.value));
         return new Result(Status.SUCCESS, result.toString());
     }
 }

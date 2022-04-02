@@ -1,9 +1,10 @@
 package sidorov.lab1;
 
+import org.apache.commons.math3.util.Precision;
 import sidorov.common.Element;
 import sidorov.common.Logic;
 import sidorov.common.Matrix;
-import sidorov.common.MatrixValidator;
+import sidorov.common.MatrixValidation;
 import sidorov.common.excelreader.ExcelReader;
 import sidorov.common.excelreader.SheetNotFoundException;
 import sidorov.common.excelreader.TaskSheet;
@@ -55,7 +56,7 @@ public class MixedStrategiesLogic implements Logic {
         List<Double> loadedPVector = excelReader.getVectorFromSheet("p");
         List<Double> loadedQVector = excelReader.getVectorFromSheet("q");
 
-        MatrixValidator validator = new MatrixValidator(loadedMatrix);
+        MatrixValidation validator = new MatrixValidation(loadedMatrix);
         if (!validator.validateMatrix()) {
             return new Result(Status.ERROR, "Матрица невалидна");
         }
@@ -91,14 +92,14 @@ public class MixedStrategiesLogic implements Logic {
         MixedSecondStepResult yResult = mixedSecondStep.calcDataY(qVector);
 
         StringBuilder result = new StringBuilder();
-        result.append(String.format("V1 = %.4f (i = %d; j = %d)\n", V1.value, V1.i + 1, V1.j + 1));
-        result.append(String.format("V2 = %.4f (i = %d; j = %d)\n", V2.value, V2.i + 1, V2.j + 1));
-        result.append(String.format("Вектор x = %s\nxMin = %.4f\n", Arrays.toString(xResult.vector), xResult.limitValue));
-        result.append(String.format("Вектор y = %s\nyMax = %.4f\n", Arrays.toString(yResult.vector), yResult.limitValue));
+        result.append(String.format("V1 = %.3f (i = %d; j = %d)\n", V1.value, V1.i + 1, V1.j + 1));
+        result.append(String.format("V2 = %.3f (i = %d; j = %d)\n", V2.value, V2.i + 1, V2.j + 1));
+        result.append(String.format("Вектор x = %s\nxMin = %.1f\n", Arrays.toString(xResult.vector), xResult.limitValue));
+        result.append(String.format("Вектор y = %s\nyMax = %.1f\n", Arrays.toString(yResult.vector), yResult.limitValue));
 
-        if (xResult.limitValue == yResult.limitValue) {
+        if (Precision.round(xResult.limitValue, 1) == Precision.round(yResult.limitValue, 1)) {
             result.append("Так как xMin = yMax - ситуация <p,q> в смешанных стратегиях является седловой точкой в смешанных стратегиях.\n");
-            result.append(String.format("W = xMin = yMax = %.4f\n", xResult.limitValue));
+            result.append(String.format("W = xMin = yMax = %.1f\n", xResult.limitValue));
         }
 
         return new Result(Status.SUCCESS, result.toString());

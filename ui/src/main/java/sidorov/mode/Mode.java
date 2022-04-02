@@ -21,6 +21,8 @@ public abstract class Mode {
         UI.createChart.setEnabled(false);
         UI.textField1.setEnabled(false);
         UI.textField2.setEnabled(false);
+        UI.labelTextField1.setVisible(false);
+        UI.labelTextField2.setVisible(false);
 
         UI.solveTaskButton.setEnabled(false);
     }

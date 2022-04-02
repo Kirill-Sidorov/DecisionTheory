@@ -40,7 +40,7 @@ public class AppController {
         modeMap.put(mode5.getModeType(), mode5);
 
         currentMode = mode1;
-        UI.initialize(this::selectMode, ModeType.values());
+        UI.initialize(this::selectMode, modeMap.keySet());
     }
 
     private void selectMode(ActionEvent event) {

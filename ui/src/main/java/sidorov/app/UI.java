@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 public class UI extends JFrame {
 
@@ -30,6 +31,8 @@ public class UI extends JFrame {
 
     public final JTextField textField1;
     public final JTextField textField2;
+    public final JLabel labelTextField1;
+    public final JLabel labelTextField2;
 
     public UI(ActionListener uploadDataButtonActionListener,
               ActionListener solveTaskButtonActionListener,
@@ -69,14 +72,22 @@ public class UI extends JFrame {
         createChart.setVisible(false);
 
         textField1 = new JTextField();
-        textField1.setBounds(600, 440, 60, 30);
+        textField1.setBounds(630, 440, 30, 30);
         textField1.setEnabled(false);
         textField1.setVisible(false);
 
         textField2 = new JTextField();
-        textField2.setBounds(680, 440, 60, 30);
+        textField2.setBounds(710, 440, 30, 30);
         textField2.setEnabled(false);
         textField2.setVisible(false);
+
+        labelTextField1 = new JLabel("l/t =");
+        labelTextField1.setBounds(600, 440, 30, 30);
+        labelTextField1.setVisible(false);
+
+        labelTextField2 = new JLabel("s/u =");
+        labelTextField2.setBounds(680, 440, 30, 30);
+        labelTextField2.setVisible(false);
 
         panelRadio = new JPanel(new GridLayout(0, 2, 0, 0));
         panelRadio.setBorder(BorderFactory.createTitledBorder("Задача"));
@@ -96,6 +107,8 @@ public class UI extends JFrame {
         add(createChart);
         add(textField1);
         add(textField2);
+        add(labelTextField1);
+        add(labelTextField2);
         add(panelRadio);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -105,7 +118,7 @@ public class UI extends JFrame {
         setResizable(false);
     }
 
-    public void initialize(ActionListener radioButtonsActionListener, ModeType[] modeTypes) {
+    public void initialize(ActionListener radioButtonsActionListener, Set<ModeType> modeTypes) {
         panelRadio.removeAll();
         ButtonGroup buttonGroup = new ButtonGroup();
         for (ModeType modeType : modeTypes) {
