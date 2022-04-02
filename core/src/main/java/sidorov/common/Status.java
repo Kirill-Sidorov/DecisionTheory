@@ -1,4 +1,4 @@
-package sidorov.common.result;
+package sidorov.common;
 
 public enum Status {
     SUCCESS,

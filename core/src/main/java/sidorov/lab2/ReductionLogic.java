@@ -6,8 +6,8 @@ import sidorov.common.MatrixValidation;
 import sidorov.common.excelreader.ExcelReader;
 import sidorov.common.excelreader.SheetNotFoundException;
 import sidorov.common.excelreader.TaskSheet;
-import sidorov.common.result.Result;
-import sidorov.common.result.Status;
+import sidorov.common.Result;
+import sidorov.common.Status;
 import sidorov.lab2.reduction.Reduction;
 import sidorov.lab2.reduction.ReductionResult;
 

@@ -1,8 +1,12 @@
 package sidorov.common;
 
-import sidorov.common.result.Result;
-
 public interface Logic {
     Result uploadData();
     Result solveTask();
+    default Result setInputData(InputData data) {
+        return new Result(Status.ERROR, "Без входных данных");
+    }
+    default Result getChartData() {
+        return new Result(Status.ERROR, "Без графика");
+    }
 }

@@ -1,8 +1,8 @@
 package sidorov.task;
 
 import sidorov.common.Logic;
-import sidorov.common.result.Result;
-import sidorov.common.result.Status;
+import sidorov.common.Result;
+import sidorov.common.Status;
 
 import javax.swing.*;
 

@@ -8,8 +8,8 @@ import sidorov.common.MatrixValidation;
 import sidorov.common.excelreader.ExcelReader;
 import sidorov.common.excelreader.SheetNotFoundException;
 import sidorov.common.excelreader.TaskSheet;
-import sidorov.common.result.Result;
-import sidorov.common.result.Status;
+import sidorov.common.Result;
+import sidorov.common.Status;
 import sidorov.lab1.mixedstrategies.MixedFirstStep;
 import sidorov.lab1.mixedstrategies.MixedSecondStep;
 import sidorov.lab1.mixedstrategies.MixedSecondStepResult;
@@ -31,7 +31,12 @@ public class MixedStrategiesLogic implements Logic {
     }
 
     public MixedStrategiesLogic(Matrix matrix, List<Double> pVector, List<Double> qVector) {
-        if (matrix != null && pVector != null && qVector != null) {
+        if (matrix != null &&
+                pVector != null &&
+                qVector != null &&
+                pVector.size() == matrix.numberRows &&
+                qVector.size() == matrix.numberColumns) {
+
             this.matrix = matrix;
             this.pVector = pVector;
             this.qVector = qVector;

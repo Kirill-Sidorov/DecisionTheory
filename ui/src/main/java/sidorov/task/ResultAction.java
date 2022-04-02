@@ -1,6 +1,6 @@
 package sidorov.task;
 
-import sidorov.common.result.Result;
+import sidorov.common.Result;
 
 @FunctionalInterface
 public interface ResultAction {

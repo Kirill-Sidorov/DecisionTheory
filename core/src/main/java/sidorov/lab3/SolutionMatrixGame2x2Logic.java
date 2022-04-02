@@ -6,8 +6,8 @@ import sidorov.common.MatrixValidation;
 import sidorov.common.excelreader.ExcelReader;
 import sidorov.common.excelreader.SheetNotFoundException;
 import sidorov.common.excelreader.TaskSheet;
-import sidorov.common.result.Result;
-import sidorov.common.result.Status;
+import sidorov.common.Result;
+import sidorov.common.Status;
 import sidorov.lab1.MixedStrategiesLogic;
 
 import java.io.IOException;
@@ -63,9 +63,9 @@ public class SolutionMatrixGame2x2Logic implements Logic {
         result.append(String.format("<p,q> \u2248 < (%.3f;%.3f)T, (%.3f;%.3f)T >\n", p1, 1 - p1, q1, 1 - q1));
         result.append(String.format("W \u2248 %.3f\n", W));
 
-        if (mixedStrategiesResult.status == Status.SUCCESS) {
+        if (mixedStrategiesResult.status() == Status.SUCCESS) {
             result.append("\nПроверка:\n\n");
-            result.append(mixedStrategiesResult.text);
+            result.append(mixedStrategiesResult.text());
         }
 
         return new Result(Status.SUCCESS, result.toString());

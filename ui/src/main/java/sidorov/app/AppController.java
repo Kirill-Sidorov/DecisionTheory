@@ -1,8 +1,6 @@
 package sidorov.app;
 
-import sidorov.common.Logic;
-import sidorov.common.WithInputData;
-import sidorov.common.result.Result;
+import sidorov.common.Result;
 import sidorov.mode.MixedStrategiesMode;
 import sidorov.mode.Mode;
 import sidorov.mode.ModeType;
@@ -20,12 +18,15 @@ import java.util.Map;
 
 public class AppController {
 
-    private Mode currentMode;
     private final UI UI;
+    private final InputDataCheckup checkup;
     private final Map<ModeType, Mode> modeMap = new HashMap<>();
+
+    private Mode currentMode;
 
     public AppController() {
         UI = new UI(this::uploadData, this::solveTask, this::createChart);
+        checkup = new InputDataCheckup(UI);
 
         Mode mode1 = new MixedStrategiesMode(UI);
         Mode mode2 = new PureStrategiesMode(UI);
@@ -54,22 +55,9 @@ public class AppController {
     }
 
     private void solveTask(ActionEvent event) {
-        Logic currentLogic = currentMode.getLogic();
-        if (currentLogic instanceof WithInputData) {
-            boolean success = false;
-            ValidateAndInput validateAndInput = new ValidateAndInput(UI);
-
-            switch (currentMode.getModeType()) {
-                case SOLUTION_MATRIX_GAME_2xN_OR_Nx2:
-                    success = validateAndInput.inputDataForMatrixGame2xNorNx2((WithInputData) currentLogic);
-                    break;
-            }
-
-            if (!success) {
-                return;
-            }
+        if (checkup.validateDataAndInput(currentMode)) {
+            new SolveTask(currentMode.getLogic(), this::processResult).execute();
         }
-        new SolveTask(currentLogic, this::processResult).execute();
     }
 
     private void createChart(ActionEvent event) {
@@ -77,7 +65,7 @@ public class AppController {
     }
 
     private void processResult(Result result) {
-        switch (result.status) {
+        switch (result.status()) {
             case SUCCESS:
                 currentMode.handleTaskSolved(result);
                 break;

@@ -4,8 +4,8 @@ import sidorov.common.*;
 import sidorov.common.excelreader.ExcelReader;
 import sidorov.common.excelreader.SheetNotFoundException;
 import sidorov.common.excelreader.TaskSheet;
-import sidorov.common.result.Result;
-import sidorov.common.result.Status;
+import sidorov.common.Result;
+import sidorov.common.Status;
 import sidorov.lab1.purestrategies.PureFirstStep;
 import sidorov.lab1.purestrategies.PureFourthStep;
 import sidorov.lab1.purestrategies.PureSecondStep;
@@ -50,7 +50,11 @@ public class PureStrategiesLogic implements Logic {
         List<Element> saddlePoints = new PureFourthStep(matrix).execute(elementsX, elementsY);
 
         StringBuilder result = new StringBuilder();
-        result.append(TextHelper.getSaddlePointsText(saddlePoints));
+        result.append("Z = X * Y = { ");
+        for (Element point : saddlePoints) {
+            result.append(String.format("<%d;%d> ", point.i + 1, point.j + 1));
+        }
+        result.append("}\n");
         result.append(String.format("V = h%d%d = %.3f", H.i + 1, H.j + 1, H.value));
         return new Result(Status.SUCCESS, result.toString());
     }

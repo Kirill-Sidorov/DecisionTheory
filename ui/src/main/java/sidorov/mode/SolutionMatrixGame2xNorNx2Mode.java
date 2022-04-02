@@ -2,7 +2,7 @@ package sidorov.mode;
 
 import sidorov.app.UI;
 import sidorov.common.Logic;
-import sidorov.common.result.Result;
+import sidorov.common.Result;
 import sidorov.lab4.SolutionMatrixGame2xNorNx2Logic;
 
 public class SolutionMatrixGame2xNorNx2Mode extends Mode {

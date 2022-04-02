@@ -2,7 +2,7 @@ package sidorov.mode;
 
 import sidorov.app.UI;
 import sidorov.common.Logic;
-import sidorov.common.result.Result;
+import sidorov.common.Result;
 
 public abstract class Mode {
     protected final UI UI;
@@ -28,21 +28,21 @@ public abstract class Mode {
     }
 
     public void handleTaskSolved(Result result) {
-        UI.resultText.setText(result.text);
+        UI.resultText.setText(result.text());
     }
 
     public void handleDataUploaded(Result result) {
-        UI.initialDataText.setText(result.text);
+        UI.initialDataText.setText(result.text());
         UI.resultText.setText("");
         UI.solveTaskButton.setEnabled(true);
     }
 
     public void handleInfo(Result result) {
-        UI.showInfoMessage(result.text);
+        UI.showInfoMessage(result.text());
     }
 
     public void handleError(Result result) {
-        UI.showErrorMessage(result.text);
+        UI.showErrorMessage(result.text());
         UI.solveTaskButton.setEnabled(false);
         UI.initialDataText.setText("");
     }

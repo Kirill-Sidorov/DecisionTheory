@@ -5,16 +5,12 @@ import sidorov.common.Logic;
 import sidorov.common.Matrix;
 import sidorov.common.MatrixOperation;
 import sidorov.common.MatrixValidation;
-import sidorov.common.WithChart;
-import sidorov.common.WithInputData;
 import sidorov.common.excelreader.ExcelReader;
 import sidorov.common.excelreader.SheetNotFoundException;
 import sidorov.common.excelreader.TaskSheet;
-import sidorov.common.inputdata.InputData;
-import sidorov.common.inputdata.InputDataForMatrixGame2xNorNx2;
-import sidorov.common.result.Result;
-import sidorov.common.result.ResultWithChartData;
-import sidorov.common.result.Status;
+import sidorov.common.InputData;
+import sidorov.common.Result;
+import sidorov.common.Status;
 import sidorov.lab1.MixedStrategiesLogic;
 import sidorov.lab2.reduction.Reduction;
 import sidorov.lab2.reduction.ReductionResult;
@@ -24,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SolutionMatrixGame2xNorNx2Logic implements Logic, WithChart, WithInputData {
+public class SolutionMatrixGame2xNorNx2Logic implements Logic {
 
     private Matrix matrix = new Matrix();
     private Matrix initialMatrix = new Matrix();
@@ -143,12 +139,12 @@ public class SolutionMatrixGame2xNorNx2Logic implements Logic, WithChart, WithIn
             stringResult.append(String.format("\nПри p1 = %.3f\n", c));
             stringResult.append(String.format("Вектор p = %s\n", Arrays.toString(pVectorLimitC.toArray())));
             stringResult.append(String.format("Вектор q = %s\n", Arrays.toString(qVectorLimitC.toArray())));
-            stringResult.append(resultLimitC.text);
+            stringResult.append(resultLimitC.text());
 
             stringResult.append(String.format("\nПри p1 = %.3f\n", d));
             stringResult.append(String.format("Вектор p = %s\n", Arrays.toString(pVectorLimitD.toArray())));
             stringResult.append(String.format("Вектор q = %s\n", Arrays.toString(qVectorLimitD.toArray())));
-            stringResult.append(resultLimitD.text);
+            stringResult.append(resultLimitD.text());
 
             return new Result(Status.SUCCESS, stringResult.toString());
         } else {
@@ -188,14 +184,14 @@ public class SolutionMatrixGame2xNorNx2Logic implements Logic, WithChart, WithIn
             stringResult.append(String.format("Вектор p = %s\n", Arrays.toString(pVector.toArray())));
             stringResult.append(String.format("Вектор q = %s\n\n", Arrays.toString(qVector.toArray())));
             stringResult.append("Проверка:\n\n");
-            stringResult.append(result.text);
+            stringResult.append(result.text());
 
             return new Result(Status.SUCCESS, stringResult.toString());
         }
     }
 
     @Override
-    public ResultWithChartData getChartData() {
+    public Result getChartData() {
         List<Function> functions = new ArrayList<>();
         for (Integer j : existsColumnsAfterReduction) {
             double h1 = matrix.get(0, j);
@@ -203,22 +199,19 @@ public class SolutionMatrixGame2xNorNx2Logic implements Logic, WithChart, WithIn
             Function function = p -> ((h1 - h2) * p + h2);
             functions.add(function);
         }
-        return new ResultWithChartData("", functions);
+        return new Result(functions);
     }
 
     @Override
     public Result setInputData(InputData inputData) {
-        if (inputData instanceof InputDataForMatrixGame2xNorNx2) {
-            InputDataForMatrixGame2xNorNx2 data = (InputDataForMatrixGame2xNorNx2) inputData;
-            int reductionL = data.l - 1;
-            int reductionS = data.s - 1;
-            if (reductionL >= 0 && reductionS >= 0
-                    && existsColumnsAfterReduction.size() > reductionL && existsColumnsAfterReduction.size() > reductionS) {
-                l = existsColumnsAfterReduction.get(reductionL);
-                s = existsColumnsAfterReduction.get(reductionS);
-                return new Result(Status.SUCCESS, "Успешный ввод данных");
-            }
+        int reductionL = inputData.l() - 1;
+        int reductionS = inputData.s() - 1;
+        if (reductionL >= 0 && reductionS >= 0
+                && existsColumnsAfterReduction.size() > reductionL && existsColumnsAfterReduction.size() > reductionS) {
+            l = existsColumnsAfterReduction.get(reductionL);
+            s = existsColumnsAfterReduction.get(reductionS);
+            return new Result(Status.SUCCESS, "Успешный ввод данных");
         }
-        return new Result(Status.ERROR, "Данные невалидны");
+        return new Result(Status.ERROR, "Для текущих условий данные невалидны");
     }
 }

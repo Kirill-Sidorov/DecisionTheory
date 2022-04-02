@@ -2,14 +2,12 @@ package sidorov.task;
 
 import sidorov.app.ChartFrame;
 import sidorov.common.Logic;
-import sidorov.common.WithChart;
-import sidorov.common.result.Result;
-import sidorov.common.result.ResultWithChartData;
-import sidorov.common.result.Status;
+import sidorov.common.Result;
+import sidorov.common.Status;
 
 import javax.swing.SwingWorker;
 
-public class CreateChartTask extends SwingWorker<ResultWithChartData, Void> {
+public class CreateChartTask extends SwingWorker<Result, Void> {
 
     private final Logic logic;
     private final ResultAction errorAction;
@@ -20,19 +18,16 @@ public class CreateChartTask extends SwingWorker<ResultWithChartData, Void> {
     }
 
     @Override
-    protected ResultWithChartData doInBackground() {
-        if (logic instanceof WithChart) {
-            return ((WithChart) logic).getChartData();
-        }
-        return new ResultWithChartData(Status.ERROR, "Error");
+    protected Result doInBackground() {
+        return logic.getChartData();
     }
 
     @Override
     protected void done() {
         try {
-            ResultWithChartData result = get();
-            if (result.status == Status.SUCCESS) {
-                new ChartFrame(get().functions);
+            Result result = get();
+            if (result.status() == Status.SUCCESS) {
+                new ChartFrame(result.functions());
             }
         } catch (Exception ignored) {
             errorAction.processResult(new Result(Status.ERROR, "Ошибка при построении графика"));
