@@ -1,7 +1,8 @@
 package sidorov.lab1.purestrategies;
 
 import com.sun.istack.internal.Nullable;
-import sidorov.common.*;
+import sidorov.common.matrix.Element;
+import sidorov.common.matrix.Matrix;
 
 import java.util.ArrayList;
 import java.util.List;

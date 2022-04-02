@@ -1,7 +1,7 @@
 package sidorov.lab1.mixedstrategies;
 
 import org.apache.commons.math3.util.Precision;
-import sidorov.common.Matrix;
+import sidorov.common.matrix.Matrix;
 
 import java.util.List;
 

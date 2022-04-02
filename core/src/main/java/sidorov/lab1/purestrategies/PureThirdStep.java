@@ -1,7 +1,7 @@
 package sidorov.lab1.purestrategies;
 
-import sidorov.common.Element;
-import sidorov.common.Matrix;
+import sidorov.common.matrix.Element;
+import sidorov.common.matrix.Matrix;
 
 import java.util.ArrayList;
 import java.util.List;

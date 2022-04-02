@@ -2,9 +2,9 @@ package sidorov.lab4;
 
 import org.apache.commons.math3.util.Precision;
 import sidorov.common.Logic;
-import sidorov.common.Matrix;
-import sidorov.common.MatrixOperation;
-import sidorov.common.MatrixValidation;
+import sidorov.common.matrix.Matrix;
+import sidorov.common.matrix.MatrixOperation;
+import sidorov.common.matrix.MatrixValidation;
 import sidorov.common.excelreader.ExcelReader;
 import sidorov.common.excelreader.SheetNotFoundException;
 import sidorov.common.excelreader.TaskSheet;

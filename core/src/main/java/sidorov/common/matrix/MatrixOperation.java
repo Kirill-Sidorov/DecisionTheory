@@ -1,4 +1,4 @@
-package sidorov.common;
+package sidorov.common.matrix;
 
 import java.util.ArrayList;
 import java.util.List;

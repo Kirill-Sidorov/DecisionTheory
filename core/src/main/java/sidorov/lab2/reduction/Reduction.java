@@ -1,6 +1,6 @@
 package sidorov.lab2.reduction;
 
-import sidorov.common.Matrix;
+import sidorov.common.matrix.Matrix;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package sidorov.common;
+package sidorov.common.matrix;
 
 public class Element {
     public final int i;

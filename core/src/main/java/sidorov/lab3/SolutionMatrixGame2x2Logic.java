@@ -1,8 +1,8 @@
 package sidorov.lab3;
 
 import sidorov.common.Logic;
-import sidorov.common.Matrix;
-import sidorov.common.MatrixValidation;
+import sidorov.common.matrix.Matrix;
+import sidorov.common.matrix.MatrixValidation;
 import sidorov.common.excelreader.ExcelReader;
 import sidorov.common.excelreader.SheetNotFoundException;
 import sidorov.common.excelreader.TaskSheet;
