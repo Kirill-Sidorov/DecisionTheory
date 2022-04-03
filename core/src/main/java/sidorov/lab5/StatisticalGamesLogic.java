@@ -9,14 +9,20 @@ import sidorov.common.excelreader.TaskSheet;
 import sidorov.common.matrix.Element;
 import sidorov.common.matrix.Matrix;
 import sidorov.common.matrix.MatrixValidation;
+import sidorov.lab5.statisticalgames.ResultWithArrayAndStrategic;
+import sidorov.lab5.statisticalgames.SavageCriterionResult;
+import sidorov.lab5.statisticalgames.StatisticalGames;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class StatisticalGamesLogic implements Logic {
 
     private Matrix matrix = new Matrix();
     private double alpha = 0.3;
+    private double p[] = new double[]{0.14, 0.52, 0.34};
+    private double beta = 0.7;
 
     @Override
     public Result uploadData() {
@@ -46,6 +52,9 @@ public class StatisticalGamesLogic implements Logic {
         Element maximinCriterion = statisticalGames.findMaximinCriterion();
         int HurwitzCriterion = statisticalGames.findHurwitzCriterion(alpha);
         SavageCriterionResult savageCriterionResult = statisticalGames.findSavageCriterion();
+        ResultWithArrayAndStrategic bayesCriterionResult = statisticalGames.findBayesCriterion(p);
+        ResultWithArrayAndStrategic laplaceCriterionResult = statisticalGames.findLaplaceCriterion();
+        ResultWithArrayAndStrategic hodgesLehmanCriterionResult = statisticalGames.findHodgesLehmanCriterion(p, beta);
 
         StringBuilder result = new StringBuilder();
         result.append(String.format("Критерий азартного игрока:\nстратегия - %d, значение = %.1f (i = %d; j = %d)\n\n",
@@ -67,6 +76,15 @@ public class StatisticalGamesLogic implements Logic {
                 savageCriterionResult.strategicElement.value,
                 savageCriterionResult.strategicElement.i + 1,
                 savageCriterionResult.strategicElement.j + 1));
+        result.append(String.format("Критерий Байеса:\nмат. ожидания каждой строки - %s\nстратегия - %d\n\n",
+                Arrays.toString(bayesCriterionResult.array),
+                bayesCriterionResult.strategic));
+        result.append(String.format("Критерий Лапласа:\nсумма элементов в каждой сроке - %s\nстратегия - %d\n\n",
+                Arrays.toString(laplaceCriterionResult.array),
+                laplaceCriterionResult.strategic));
+        result.append(String.format("Критерий Ходжеса-Лемана:\nчисла Ходжеса-Лемана - %s\nстратегия - %d\n\n",
+                Arrays.toString(hodgesLehmanCriterionResult.array),
+                hodgesLehmanCriterionResult.strategic));
 
         return new Result(Status.SUCCESS, result.toString());
     }
