@@ -98,54 +98,55 @@ public class SolutionMatrixGame2xNorNx2Logic implements Logic {
             double h2s = matrix.get(1, s);
             double d = (matrix.get(0, k) - h2s) / (matrix.get(0, s) - h2s);
 
-            List<Double> pVectorLimitC = new ArrayList<>();
-            pVectorLimitC.add(Precision.round(c, 3));
-            pVectorLimitC.add(Precision.round(1 - c, 3));
-
+            List<List<Double>> pVectors = new ArrayList<>();
+            double step = (d - c) / 5;
+            double leftLimit = c;
+            while (leftLimit < (d - step)) {
+                List<Double> pVector = new ArrayList<>();
+                pVector.add(Precision.round(leftLimit, 3));
+                pVector.add(Precision.round(1 - leftLimit, 3));
+                pVectors.add(pVector);
+                leftLimit += step;
+            }
             List<Double> pVectorLimitD = new ArrayList<>();
             pVectorLimitD.add(Precision.round(d, 3));
             pVectorLimitD.add(Precision.round(1 - d, 3));
+            pVectors.add(pVectorLimitD);
 
-            List<Double> qVectorLimitC = new ArrayList<>();
+
+            List<Double> qVector = new ArrayList<>();
             for (int column = 0; column < matrix.numberColumns; column++) {
                 if (column == k) {
-                    qVectorLimitC.add(1d);
+                    qVector.add(1d);
                 } else {
-                    qVectorLimitC.add(0d);
+                    qVector.add(0d);
                 }
             }
-            List<Double> qVectorLimitD = qVectorLimitC;
-
-            if (isTransposed) {
-                List<Double> tempC = qVectorLimitC;
-                List<Double> tempD = qVectorLimitC;
-
-                qVectorLimitC = pVectorLimitC;
-                qVectorLimitD = pVectorLimitD;
-
-                pVectorLimitC = tempC;
-                pVectorLimitD = tempD;
-            }
-
-            MixedStrategiesLogic mixedStrategiesLogicLimitC = new MixedStrategiesLogic(initialMatrix, pVectorLimitC, qVectorLimitC);
-            Result resultLimitC = mixedStrategiesLogicLimitC.solveTask();
-
-            MixedStrategiesLogic mixedStrategiesLogicLimitD = new MixedStrategiesLogic(initialMatrix, pVectorLimitD, qVectorLimitD);
-            Result resultLimitD = mixedStrategiesLogicLimitD.solveTask();
 
             StringBuilder stringResult = new StringBuilder();
-
             stringResult.append(String.format("p1 \u2208 [%.3f; %.3f]\n\nПроверка:\n", c, d));
-            stringResult.append(String.format("\nПри p1 = %.3f\n", c));
-            stringResult.append(String.format("Вектор p = %s\n", Arrays.toString(pVectorLimitC.toArray())));
-            stringResult.append(String.format("Вектор q = %s\n", Arrays.toString(qVectorLimitC.toArray())));
-            stringResult.append(resultLimitC.text());
 
-            stringResult.append(String.format("\nПри p1 = %.3f\n", d));
-            stringResult.append(String.format("Вектор p = %s\n", Arrays.toString(pVectorLimitD.toArray())));
-            stringResult.append(String.format("Вектор q = %s\n", Arrays.toString(qVectorLimitD.toArray())));
-            stringResult.append(resultLimitD.text());
+            if (isTransposed) {
+                for (List<Double> pVector : pVectors) {
+                    MixedStrategiesLogic mixedStrategiesLogic = new MixedStrategiesLogic(initialMatrix, qVector, pVector);
+                    Result result = mixedStrategiesLogic.solveTask();
 
+                    stringResult.append(String.format("\nПри p1 = %.3f\n", pVector.get(0)));
+                    stringResult.append(String.format("Вектор p = %s\n", Arrays.toString(qVector.toArray())));
+                    stringResult.append(String.format("Вектор q = %s\n", Arrays.toString(pVector.toArray())));
+                    stringResult.append(result.text());
+                }
+            } else {
+                for (List<Double> pVector : pVectors) {
+                    MixedStrategiesLogic mixedStrategiesLogic = new MixedStrategiesLogic(initialMatrix, pVector, qVector);
+                    Result result = mixedStrategiesLogic.solveTask();
+
+                    stringResult.append(String.format("\nПри p1 = %.3f\n", pVector.get(0)));
+                    stringResult.append(String.format("Вектор p = %s\n", Arrays.toString(pVector.toArray())));
+                    stringResult.append(String.format("Вектор q = %s\n", Arrays.toString(qVector.toArray())));
+                    stringResult.append(result.text());
+                }
+            }
             return new Result(Status.SUCCESS, stringResult.toString());
         } else {
             double z = matrix.get(1, s) - matrix.get(1, l);
