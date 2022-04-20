@@ -26,6 +26,7 @@ public class SolutionMatrixGame2xNorNx2Mode extends Mode {
 
     @Override
     public void setNecessaryUIItems() {
+        super.setNecessaryUIItems();
         UI.solveTaskButton.setEnabled(false);
         UI.createChart.setVisible(true);
         UI.textField1.setVisible(true);

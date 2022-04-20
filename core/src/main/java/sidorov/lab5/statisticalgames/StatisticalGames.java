@@ -103,12 +103,12 @@ public class StatisticalGames {
         return new SavageCriterionResult(riskMatrix, getMinElement(maxElementInRows));
     }
 
-    public ResultWithArrayAndStrategic findBayesCriterion(double[] p) {
+    public ResultWithArrayAndStrategic findBayesCriterion(List<Double> pValues) {
         double[] MArray = new double[matrix.numberRows];
         for (int i = 0; i < matrix.numberRows; i++) {
             double M = 0;
             for (int j = 0; j < matrix.numberColumns; j++) {
-                M += p[j] * matrix.get(i, j);
+                M += pValues.get(j) * matrix.get(i, j);
             }
             MArray[i] = Precision.round(M, 3);
         }
@@ -145,7 +145,7 @@ public class StatisticalGames {
         return new ResultWithArrayAndStrategic(sumInRows, indexMax + 1);
     }
 
-    public ResultWithArrayAndStrategic findHodgesLehmanCriterion(double[] p, double beta) {
+    public ResultWithArrayAndStrategic findHodgesLehmanCriterion(List<Double> pValues, double beta) {
         double[] LArray = new double[matrix.numberRows];
         for (int i = 0; i < matrix.numberRows; i++) {
 
@@ -154,7 +154,7 @@ public class StatisticalGames {
 
             for (int j = 0; j < matrix.numberColumns; j++) {
                 double value = matrix.get(i, j);
-                M += p[j] * value;
+                M += pValues.get(j) * value;
                 if (min > value) {
                     min = value;
                 }

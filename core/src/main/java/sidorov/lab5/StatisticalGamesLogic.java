@@ -1,5 +1,7 @@
 package sidorov.lab5;
 
+import org.apache.commons.math3.util.Precision;
+import sidorov.common.InputData;
 import sidorov.common.Logic;
 import sidorov.common.Result;
 import sidorov.common.Status;
@@ -14,15 +16,21 @@ import sidorov.lab5.statisticalgames.SavageCriterionResult;
 import sidorov.lab5.statisticalgames.StatisticalGames;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class StatisticalGamesLogic implements Logic {
 
     private Matrix matrix = new Matrix();
-    private double alpha = 0.3;
-    private double p[] = new double[]{0.14, 0.52, 0.34};
-    private double beta = 0.7;
+    private double alpha = 0.5;
+    private double beta = 0.5;
+    private List<Double> pValues;
+
+    public StatisticalGamesLogic() {
+        pValues = new ArrayList<>();
+        pValues.add(0d);
+    }
 
     @Override
     public Result uploadData() {
@@ -36,13 +44,23 @@ public class StatisticalGamesLogic implements Logic {
         }
 
         List<List<Double>> matrixList = excelReader.getMatrixFromSheet();
+        List<Double> loadedPVector = excelReader.getVectorFromSheet("p");
 
         MatrixValidation validator = new MatrixValidation(matrixList);
         if (!validator.validateMatrix()) {
             return new Result(Status.ERROR, "Матрица невалидна");
         }
+        if (!validator.validateQVector(loadedPVector)) {
+            return new Result(Status.ERROR, "Количество вероятностей неравно количеству стратегий b");
+        }
+        double sum = loadedPVector.stream().mapToDouble(Double::doubleValue).sum();
+        if (Precision.round(sum, 3) != 1) {
+            return new Result(Status.ERROR, "Сумма вероятностей неравна 1");
+        }
         matrix = new Matrix(matrixList);
-        return new Result(Status.DATA_UPLOADED, matrix.toText());
+        pValues = loadedPVector;
+
+        return new Result(Status.DATA_UPLOADED, matrix.toText() + "\n\n" + Arrays.toString(pValues.toArray()));
     }
 
     @Override
@@ -52,9 +70,9 @@ public class StatisticalGamesLogic implements Logic {
         Element maximinCriterion = statisticalGames.findMaximinCriterion();
         int HurwitzCriterion = statisticalGames.findHurwitzCriterion(alpha);
         SavageCriterionResult savageCriterionResult = statisticalGames.findSavageCriterion();
-        ResultWithArrayAndStrategic bayesCriterionResult = statisticalGames.findBayesCriterion(p);
+        ResultWithArrayAndStrategic bayesCriterionResult = statisticalGames.findBayesCriterion(pValues);
         ResultWithArrayAndStrategic laplaceCriterionResult = statisticalGames.findLaplaceCriterion();
-        ResultWithArrayAndStrategic hodgesLehmanCriterionResult = statisticalGames.findHodgesLehmanCriterion(p, beta);
+        ResultWithArrayAndStrategic hodgesLehmanCriterionResult = statisticalGames.findHodgesLehmanCriterion(pValues, beta);
 
         StringBuilder result = new StringBuilder();
         result.append(String.format("Критерий азартного игрока:\nстратегия - %d, значение = %.1f (i = %d; j = %d)\n\n",
@@ -82,10 +100,18 @@ public class StatisticalGamesLogic implements Logic {
         result.append(String.format("Критерий Лапласа:\nсумма элементов в каждой сроке - %s\nстратегия - %d\n\n",
                 Arrays.toString(laplaceCriterionResult.array),
                 laplaceCriterionResult.strategic));
-        result.append(String.format("Критерий Ходжеса-Лемана:\nчисла Ходжеса-Лемана - %s\nстратегия - %d\n\n",
+        result.append(String.format("Критерий Ходжеса-Лемана:\nчисла Ходжеса-Лемана - %s\nстратегия - %d, при \u03B2 = %.3f\n\n",
                 Arrays.toString(hodgesLehmanCriterionResult.array),
-                hodgesLehmanCriterionResult.strategic));
+                hodgesLehmanCriterionResult.strategic,
+                beta));
 
         return new Result(Status.SUCCESS, result.toString());
+    }
+
+    @Override
+    public Result setInputData(InputData data) {
+        alpha = data.alpha();
+        beta = data.beta();
+        return new Result(Status.SUCCESS, "Успешный ввод данных");
     }
 }

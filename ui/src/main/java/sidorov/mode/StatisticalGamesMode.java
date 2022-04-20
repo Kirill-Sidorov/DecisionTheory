@@ -22,4 +22,13 @@ public class StatisticalGamesMode extends Mode {
     public ModeType getModeType() {
         return ModeType.STATISTICAL_GAMES;
     }
+
+    @Override
+    public void setNecessaryUIItems() {
+        super.setNecessaryUIItems();
+        UI.alphaSlider.setVisible(true);
+        UI.alphaSliderLabel.setVisible(true);
+        UI.betaSlider.setVisible(true);
+        UI.betaSliderLabel.setVisible(true);
+    }
 }

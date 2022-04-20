@@ -1,5 +1,6 @@
 package sidorov.app;
 
+import org.apache.commons.math3.util.Precision;
 import sidorov.common.InputData;
 import sidorov.common.Logic;
 import sidorov.common.Result;
@@ -17,6 +18,8 @@ public class InputDataCheckup {
         switch (mode.getModeType()) {
             case SOLUTION_MATRIX_GAME_2xN_OR_Nx2:
                 return inputDataForMatrixGame2xNorNx2(mode.getLogic());
+            case STATISTICAL_GAMES:
+                return inputDataForStatisticalGamesLogic(mode.getLogic());
         }
         return true;
     }
@@ -35,6 +38,18 @@ public class InputDataCheckup {
         }
 
         Result result = logic.setInputData(new InputData(l, s));
+        if (result.status() != Status.SUCCESS) {
+            UI.showErrorMessage(result.text());
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean inputDataForStatisticalGamesLogic(final Logic logic) {
+        int alphaValue = UI.alphaSlider.getValue();
+        int betaValue = UI.betaSlider.getValue();
+        Result result = logic.setInputData(new InputData(Precision.round(alphaValue * 0.001, 3), Precision.round(betaValue * 0.001, 3)));
         if (result.status() != Status.SUCCESS) {
             UI.showErrorMessage(result.text());
             return false;

@@ -24,7 +24,10 @@ public abstract class Mode {
         UI.textField2.setEnabled(false);
         UI.labelTextField1.setVisible(false);
         UI.labelTextField2.setVisible(false);
-
+        UI.alphaSlider.setVisible(false);
+        UI.alphaSliderLabel.setVisible(false);
+        UI.betaSlider.setVisible(false);
+        UI.betaSliderLabel.setVisible(false);
         UI.solveTaskButton.setEnabled(false);
     }
 
