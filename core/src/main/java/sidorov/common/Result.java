@@ -9,12 +9,20 @@ public class Result {
 
     private final Status status;
     private final String text;
+    private final int number;
 
     private List<Function> functions;
 
     public Result(Status status, String text) {
         this.status = status;
         this.text = text;
+        this.number = 0;
+    }
+
+    public Result(Status status, String text, int number) {
+        this.status = status;
+        this.text = text;
+        this.number = number;
     }
 
     public Result(List<Function> functions) {
@@ -36,5 +44,9 @@ public class Result {
         } else {
             return functions;
         }
+    }
+
+    public int number() {
+        return number;
     }
 }

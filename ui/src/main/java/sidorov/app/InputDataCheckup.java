@@ -7,6 +7,8 @@ import sidorov.common.Result;
 import sidorov.common.Status;
 import sidorov.mode.Mode;
 
+import java.util.Arrays;
+
 public class InputDataCheckup {
     private final UI UI;
 
@@ -49,7 +51,22 @@ public class InputDataCheckup {
     private boolean inputDataForStatisticalGamesLogic(final Logic logic) {
         int alphaValue = UI.alphaSlider.getValue();
         int betaValue = UI.betaSlider.getValue();
-        Result result = logic.setInputData(new InputData(Precision.round(alphaValue * 0.001, 3), Precision.round(betaValue * 0.001, 3)));
+        String[] stringPValues = UI.variableTextFieldsPanel.getValues();
+        double[] pValues = new double[stringPValues.length];
+        try {
+            for (int i = 0; i < pValues.length; i++) {
+                pValues[i] = Precision.round(Double.parseDouble(stringPValues[i]), 3);
+            }
+        } catch (NumberFormatException e) {
+            UI.showErrorMessage("Не удалось получить значение из поля ввода!");
+            return false;
+        }
+        if (Precision.round(Arrays.stream(pValues).sum(), 3) != 1) {
+            UI.showErrorMessage("Сумма вероятностей не равна 1");
+            return false;
+        }
+        InputData inputData = new InputData(Precision.round(alphaValue * 0.001, 3), Precision.round(betaValue * 0.001, 3), pValues);
+        Result result = logic.setInputData(inputData);
         if (result.status() != Status.SUCCESS) {
             UI.showErrorMessage(result.text());
             return false;

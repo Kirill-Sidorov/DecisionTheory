@@ -40,6 +40,8 @@ public class UI extends JFrame {
     public final JLabel alphaSliderLabel;
     public final JLabel betaSliderLabel;
 
+    public final VariableTextFieldsPanel variableTextFieldsPanel;
+
     public UI(ActionListener uploadDataButtonActionListener,
               ActionListener solveTaskButtonActionListener,
               ActionListener createChartTaskButtonActionListener) {
@@ -108,11 +110,11 @@ public class UI extends JFrame {
 
         // статистические игры
         alphaSlider = new JSlider(0, 1000);
-        alphaSlider.setBounds(100, 400, 130, 50);
+        alphaSlider.setBounds(100, 390, 130, 50);
         alphaSlider.setVisible(false);
 
         alphaSliderLabel = new JLabel("\u03B1 = 0,500");
-        alphaSliderLabel.setBounds(45, 401, 50, 50);
+        alphaSliderLabel.setBounds(45, 391, 50, 50);
         alphaSlider.addChangeListener(e -> {
             int value = ((JSlider)e.getSource()).getValue();
             alphaSliderLabel.setText(String.format("\u03B1 = %.3f", value * 0.001));
@@ -120,16 +122,21 @@ public class UI extends JFrame {
         alphaSliderLabel.setVisible(false);
 
         betaSlider = new JSlider(0, 1000);
-        betaSlider.setBounds(100, 450, 130, 50);
+        betaSlider.setBounds(100, 420, 130, 50);
         betaSlider.setVisible(false);
 
         betaSliderLabel = new JLabel("\u03B2 = 0,500");
-        betaSliderLabel.setBounds(45, 451, 50, 50);
+        betaSliderLabel.setBounds(45, 421, 50, 50);
         betaSlider.addChangeListener(e -> {
             int value = ((JSlider)e.getSource()).getValue();
             betaSliderLabel.setText(String.format("\u03B2 = %.3f", value * 0.001));
         });
         betaSliderLabel.setVisible(false);
+
+        variableTextFieldsPanel = new VariableTextFieldsPanel(new JPanel());
+        variableTextFieldsPanel.setBounds(45, 480, 190, 60);
+        variableTextFieldsPanel.createNewTextFields(5);
+        variableTextFieldsPanel.setVisible(false);
 
         add(label1);
         add(label2);
@@ -148,6 +155,7 @@ public class UI extends JFrame {
         add(alphaSliderLabel);
         add(betaSlider);
         add(betaSliderLabel);
+        add(variableTextFieldsPanel);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("ТПР");

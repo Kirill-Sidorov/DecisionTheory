@@ -16,17 +16,15 @@ public class StatisticalGames {
     }
 
     public Element findGamblerCriterion() {
-        Element[] maxElementInRows = new Element[matrix.numberRows];
+        Element maxElement = matrix.getElement(0, 0);
         for (int i = 0; i < matrix.numberRows; i++) {
-            Element maxInRow = matrix.getElement(i, 0);
             for (int j = 1; j < matrix.numberColumns; j++) {
-                if (maxInRow.value < matrix.get(i, j)) {
-                    maxInRow = matrix.getElement(i, j);
+                if (maxElement.value < matrix.get(i, j)) {
+                    maxElement = matrix.getElement(i, j);
                 }
             }
-            maxElementInRows[i] = maxInRow;
         }
-        return getMaxElement(maxElementInRows);
+        return maxElement;
     }
 
     public Element findMaximinCriterion() {
@@ -103,12 +101,12 @@ public class StatisticalGames {
         return new SavageCriterionResult(riskMatrix, getMinElement(maxElementInRows));
     }
 
-    public ResultWithArrayAndStrategic findBayesCriterion(List<Double> pValues) {
+    public ResultWithArrayAndStrategic findBayesCriterion(double[] pValues) {
         double[] MArray = new double[matrix.numberRows];
         for (int i = 0; i < matrix.numberRows; i++) {
             double M = 0;
             for (int j = 0; j < matrix.numberColumns; j++) {
-                M += pValues.get(j) * matrix.get(i, j);
+                M += pValues[j] * matrix.get(i, j);
             }
             MArray[i] = Precision.round(M, 3);
         }
@@ -145,7 +143,7 @@ public class StatisticalGames {
         return new ResultWithArrayAndStrategic(sumInRows, indexMax + 1);
     }
 
-    public ResultWithArrayAndStrategic findHodgesLehmanCriterion(List<Double> pValues, double beta) {
+    public ResultWithArrayAndStrategic findHodgesLehmanCriterion(double[] pValues, double beta) {
         double[] LArray = new double[matrix.numberRows];
         for (int i = 0; i < matrix.numberRows; i++) {
 
@@ -154,7 +152,7 @@ public class StatisticalGames {
 
             for (int j = 0; j < matrix.numberColumns; j++) {
                 double value = matrix.get(i, j);
-                M += pValues.get(j) * value;
+                M += pValues[j] * value;
                 if (min > value) {
                     min = value;
                 }

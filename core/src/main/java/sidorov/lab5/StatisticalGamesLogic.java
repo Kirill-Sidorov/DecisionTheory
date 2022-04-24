@@ -1,6 +1,5 @@
 package sidorov.lab5;
 
-import org.apache.commons.math3.util.Precision;
 import sidorov.common.InputData;
 import sidorov.common.Logic;
 import sidorov.common.Result;
@@ -16,7 +15,6 @@ import sidorov.lab5.statisticalgames.SavageCriterionResult;
 import sidorov.lab5.statisticalgames.StatisticalGames;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,12 +23,7 @@ public class StatisticalGamesLogic implements Logic {
     private Matrix matrix = new Matrix();
     private double alpha = 0.5;
     private double beta = 0.5;
-    private List<Double> pValues;
-
-    public StatisticalGamesLogic() {
-        pValues = new ArrayList<>();
-        pValues.add(0d);
-    }
+    private double[] pValues = new double[]{0};
 
     @Override
     public Result uploadData() {
@@ -44,27 +37,21 @@ public class StatisticalGamesLogic implements Logic {
         }
 
         List<List<Double>> matrixList = excelReader.getMatrixFromSheet();
-        List<Double> loadedPVector = excelReader.getVectorFromSheet("p");
 
         MatrixValidation validator = new MatrixValidation(matrixList);
         if (!validator.validateMatrix()) {
             return new Result(Status.ERROR, "Матрица невалидна");
         }
-        if (!validator.validateQVector(loadedPVector)) {
-            return new Result(Status.ERROR, "Количество вероятностей неравно количеству стратегий b");
-        }
-        double sum = loadedPVector.stream().mapToDouble(Double::doubleValue).sum();
-        if (Precision.round(sum, 3) != 1) {
-            return new Result(Status.ERROR, "Сумма вероятностей неравна 1");
-        }
         matrix = new Matrix(matrixList);
-        pValues = loadedPVector;
 
-        return new Result(Status.DATA_UPLOADED, matrix.toText() + "\n\n" + Arrays.toString(pValues.toArray()));
+        return new Result(Status.DATA_UPLOADED, matrix.toText(), matrix.numberColumns);
     }
 
     @Override
     public Result solveTask() {
+        if (pValues.length != matrix.numberColumns) {
+            return new Result(Status.ERROR, "Количество вероятностей неравно количеству столбцов");
+        }
         StatisticalGames statisticalGames = new StatisticalGames(matrix);
         Element gamblerCriterion = statisticalGames.findGamblerCriterion();
         Element maximinCriterion = statisticalGames.findMaximinCriterion();
@@ -112,6 +99,7 @@ public class StatisticalGamesLogic implements Logic {
     public Result setInputData(InputData data) {
         alpha = data.alpha();
         beta = data.beta();
+        pValues = data.pValues();
         return new Result(Status.SUCCESS, "Успешный ввод данных");
     }
 }
