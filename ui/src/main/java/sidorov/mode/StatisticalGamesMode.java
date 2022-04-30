@@ -36,13 +36,16 @@ public class StatisticalGamesMode extends Mode {
     @Override
     public void handleDataUploaded(Result result) {
         super.handleDataUploaded(result);
-        UI.variableTextFieldsPanel.createNewTextFields(result.number());
-        UI.variableTextFieldsPanel.setVisible(true);
+        UI.variableTextFieldsProbabilityPanel.createNewTextFields(result.number());
+        UI.variableTextFieldsRankPanel.createNewTextFields(result.number());
+        UI.variableTextFieldsProbabilityPanel.setVisible(true);
+        UI.variableTextFieldsRankPanel.setVisible(true);
     }
 
     @Override
     public void handleError(Result result) {
         super.handleError(result);
-        UI.variableTextFieldsPanel.setVisible(false);
+        UI.variableTextFieldsProbabilityPanel.setVisible(false);
+        UI.variableTextFieldsRankPanel.setVisible(false);
     }
 }

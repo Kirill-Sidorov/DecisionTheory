@@ -51,21 +51,41 @@ public class InputDataCheckup {
     private boolean inputDataForStatisticalGamesLogic(final Logic logic) {
         int alphaValue = UI.alphaSlider.getValue();
         int betaValue = UI.betaSlider.getValue();
-        String[] stringPValues = UI.variableTextFieldsPanel.getValues();
+        String[] stringPValues = UI.variableTextFieldsProbabilityPanel.getValues();
+        String[] stringRanks = UI.variableTextFieldsRankPanel.getValues();
         double[] pValues = new double[stringPValues.length];
+        int[] ranks = new int[stringRanks.length];
         try {
             for (int i = 0; i < pValues.length; i++) {
                 pValues[i] = Precision.round(Double.parseDouble(stringPValues[i]), 3);
             }
         } catch (NumberFormatException e) {
-            UI.showErrorMessage("Не удалось получить значение из поля ввода!");
+            UI.showErrorMessage("Не удалось получить значение из поля ввода вероятности P!");
             return false;
         }
         if (Precision.round(Arrays.stream(pValues).sum(), 3) != 1) {
             UI.showErrorMessage("Сумма вероятностей не равна 1");
             return false;
         }
-        InputData inputData = new InputData(Precision.round(alphaValue * 0.001, 3), Precision.round(betaValue * 0.001, 3), pValues);
+
+        try {
+            for (int i = 0; i < ranks.length; i++) {
+                ranks[i] = Integer.parseInt(stringRanks[i]);
+                if (ranks[i] < 1) {
+                    UI.showErrorMessage("Значение ранга должно быть больше 0!");
+                    return false;
+                }
+            }
+        } catch (NumberFormatException e) {
+            UI.showErrorMessage("Не удалось получить значение из поля ввода рангов R!");
+            return false;
+        }
+
+
+        InputData inputData = new InputData(Precision.round(alphaValue * 0.001, 3),
+                Precision.round(betaValue * 0.001, 3),
+                pValues,
+                ranks);
         Result result = logic.setInputData(inputData);
         if (result.status() != Status.SUCCESS) {
             UI.showErrorMessage(result.text());

@@ -1,6 +1,6 @@
 package sidorov.task;
 
-import sidorov.app.ChartFrame;
+import sidorov.customcomponents.ChartFrame;
 import sidorov.common.Logic;
 import sidorov.common.Result;
 import sidorov.common.Status;

@@ -1,5 +1,6 @@
 package sidorov.app;
 
+import sidorov.customcomponents.VariableTextFieldsPanel;
 import sidorov.mode.ModeType;
 
 import javax.swing.BorderFactory;
@@ -40,7 +41,8 @@ public class UI extends JFrame {
     public final JLabel alphaSliderLabel;
     public final JLabel betaSliderLabel;
 
-    public final VariableTextFieldsPanel variableTextFieldsPanel;
+    public final VariableTextFieldsPanel variableTextFieldsProbabilityPanel;
+    public final VariableTextFieldsPanel variableTextFieldsRankPanel;
 
     public UI(ActionListener uploadDataButtonActionListener,
               ActionListener solveTaskButtonActionListener,
@@ -52,13 +54,13 @@ public class UI extends JFrame {
         initialDataText.setLineWrap(true);
         initialDataText.setWrapStyleWord(true);
         initialDataText.setEditable(false);
-        initialDataText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        initialDataText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
         resultText = new JTextArea();
         resultText.setLineWrap(true);
         resultText.setWrapStyleWord(true);
         resultText.setEditable(false);
-        resultText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        resultText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(initialDataText), new JScrollPane(resultText));
         splitPane.setBounds(45, 30, 700, 350);
@@ -110,11 +112,11 @@ public class UI extends JFrame {
 
         // статистические игры
         alphaSlider = new JSlider(0, 1000);
-        alphaSlider.setBounds(100, 390, 130, 50);
+        alphaSlider.setBounds(100, 380, 130, 50);
         alphaSlider.setVisible(false);
 
         alphaSliderLabel = new JLabel("\u03B1 = 0,500");
-        alphaSliderLabel.setBounds(45, 391, 50, 50);
+        alphaSliderLabel.setBounds(45, 381, 50, 50);
         alphaSlider.addChangeListener(e -> {
             int value = ((JSlider)e.getSource()).getValue();
             alphaSliderLabel.setText(String.format("\u03B1 = %.3f", value * 0.001));
@@ -122,21 +124,26 @@ public class UI extends JFrame {
         alphaSliderLabel.setVisible(false);
 
         betaSlider = new JSlider(0, 1000);
-        betaSlider.setBounds(100, 420, 130, 50);
+        betaSlider.setBounds(100, 410, 130, 50);
         betaSlider.setVisible(false);
 
         betaSliderLabel = new JLabel("\u03B2 = 0,500");
-        betaSliderLabel.setBounds(45, 421, 50, 50);
+        betaSliderLabel.setBounds(45, 411, 50, 50);
         betaSlider.addChangeListener(e -> {
             int value = ((JSlider)e.getSource()).getValue();
             betaSliderLabel.setText(String.format("\u03B2 = %.3f", value * 0.001));
         });
         betaSliderLabel.setVisible(false);
 
-        variableTextFieldsPanel = new VariableTextFieldsPanel(new JPanel());
-        variableTextFieldsPanel.setBounds(45, 480, 190, 60);
-        variableTextFieldsPanel.createNewTextFields(5);
-        variableTextFieldsPanel.setVisible(false);
+        variableTextFieldsProbabilityPanel = new VariableTextFieldsPanel(new JPanel(), "P");
+        variableTextFieldsProbabilityPanel.setBounds(45, 450, 190, 55);
+        variableTextFieldsProbabilityPanel.setAutoscrolls(true);
+        variableTextFieldsProbabilityPanel.setVisible(false);
+
+        variableTextFieldsRankPanel = new VariableTextFieldsPanel(new JPanel(), "R");
+        variableTextFieldsRankPanel.setBounds(45, 510, 190, 55);
+        variableTextFieldsProbabilityPanel.setAutoscrolls(true);
+        variableTextFieldsRankPanel.setVisible(false);
 
         add(label1);
         add(label2);
@@ -155,7 +162,8 @@ public class UI extends JFrame {
         add(alphaSliderLabel);
         add(betaSlider);
         add(betaSliderLabel);
-        add(variableTextFieldsPanel);
+        add(variableTextFieldsProbabilityPanel);
+        add(variableTextFieldsRankPanel);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("ТПР");

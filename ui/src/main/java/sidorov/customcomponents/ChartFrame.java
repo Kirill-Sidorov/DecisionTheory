@@ -1,4 +1,4 @@
-package sidorov.app;
+package sidorov.customcomponents;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;

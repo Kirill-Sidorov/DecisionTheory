@@ -29,7 +29,8 @@ public abstract class Mode {
         UI.betaSlider.setVisible(false);
         UI.betaSliderLabel.setVisible(false);
         UI.solveTaskButton.setEnabled(false);
-        UI.variableTextFieldsPanel.setVisible(false);
+        UI.variableTextFieldsProbabilityPanel.setVisible(false);
+        UI.variableTextFieldsRankPanel.setVisible(false);
     }
 
     public void handleTaskSolved(Result result) {
