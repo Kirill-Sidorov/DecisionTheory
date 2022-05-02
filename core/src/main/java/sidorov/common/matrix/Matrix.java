@@ -56,4 +56,22 @@ public class Matrix {
         }
         return stringBuilder.toString();
     }
+
+    public String toTextAsTable(String[] rowNames, String[] columnNames) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(String.format("%10s", ""));
+        for (int i = 0; i < columnNames.length; i++) {
+            stringBuilder.append(String.format("%10s", columnNames[i]));
+        }
+        stringBuilder.append("\n");
+        for (int i = 0; i < numberRows; i++) {
+            stringBuilder.append(String.format("%10s", rowNames[i]));
+            for (int j = 0; j < numberColumns; j++) {
+                stringBuilder.append(String.format("%10.3f", matrix.get(i).get(j)));
+            }
+            stringBuilder.append("\n");
+        }
+        stringBuilder.append("\n");
+        return stringBuilder.toString();
+    }
 }

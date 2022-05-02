@@ -51,13 +51,13 @@ public class UI extends JFrame {
         setLayout(null);
 
         initialDataText = new JTextArea();
-        initialDataText.setLineWrap(true);
+        //initialDataText.setLineWrap(true); перенос строк
         initialDataText.setWrapStyleWord(true);
         initialDataText.setEditable(false);
         initialDataText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
         resultText = new JTextArea();
-        resultText.setLineWrap(true);
+        //resultText.setLineWrap(true); перенос строк
         resultText.setWrapStyleWord(true);
         resultText.setEditable(false);
         resultText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));

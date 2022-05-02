@@ -7,23 +7,26 @@
   "criteria": [
     "Халява",
     "Досуг",
-    "Качество"
+    "Качество",
+    "Преподавание",
+    "Родители",
+    "Престиж"
   ],
   "comparison_variants": [
     {
       "criterion": "Халява",
-      "variant": "РГУ",
+      "variant": "РГАТУ",
       "comparisons": [
-        {"name": "РГРТУ", "value": "6"},
-        {"name": "РГАТУ", "value": "1/3"}
+        {"name": "РГРТУ", "value": "18"},
+        {"name": "РГУ", "value": "3"}
       ]
     },
     {
       "criterion": "Досуг",
-      "variant": "РГУ",
+      "variant": "РГАТУ",
       "comparisons": [
-        {"name": "РГРТУ", "value": "1/5"},
-        {"name": "РГАТУ", "value": "3"}
+        {"name": "РГУ", "value": "3"},
+        {"name": "РГРТУ", "value": "3"}
       ]
     },
     {
@@ -33,13 +36,40 @@
         {"name": "РГРТУ", "value": "1/5"},
         {"name": "РГАТУ", "value": "3"}
       ]
+    },
+    {
+      "criterion": "Преподавание",
+      "variant": "РГУ",
+      "comparisons": [
+        {"name": "РГРТУ", "value": "1/5"},
+        {"name": "РГАТУ", "value": "3"}
+      ]
+    },
+    {
+      "criterion": "Родители",
+      "variant": "РГУ",
+      "comparisons": [
+        {"name": "РГРТУ", "value": "1/9"},
+        {"name": "РГАТУ", "value": "1"}
+      ]
+    },
+    {
+      "criterion": "Престиж",
+      "variant": "РГУ",
+      "comparisons": [
+        {"name": "РГРТУ", "value": "1/7"},
+        {"name": "РГАТУ", "value": "3"}
+      ]
     }
   ],
   "comparison_criteria": {
     "criterion": "Халява",
     "comparisons": [
       {"name": "Досуг", "value": "1/5"},
-      {"name": "Качество", "value": "3"}
+      {"name": "Качество", "value": "1/9"},
+      {"name": "Престиж", "value": "1/3"},
+      {"name": "Преподавание", "value": "1/5"},
+      {"name": "Родители", "value": "1"}
     ]
   }
 }
