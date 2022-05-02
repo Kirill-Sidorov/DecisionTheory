@@ -1,6 +1,7 @@
 package sidorov.app;
 
 import sidorov.common.Result;
+import sidorov.mode.BellmanZadehMode;
 import sidorov.mode.MixedStrategiesMode;
 import sidorov.mode.Mode;
 import sidorov.mode.ModeType;
@@ -36,6 +37,7 @@ public class AppController {
         Mode mode4 = new SolutionMatrixGame2x2Mode(UI);
         Mode mode5 = new SolutionMatrixGame2xNorNx2Mode(UI);
         Mode mode6 = new StatisticalGamesMode(UI);
+        Mode mode7 = new BellmanZadehMode(UI);
 
         modeMap.put(mode1.getModeType(), mode1);
         modeMap.put(mode2.getModeType(), mode2);
@@ -43,6 +45,7 @@ public class AppController {
         modeMap.put(mode4.getModeType(), mode4);
         modeMap.put(mode5.getModeType(), mode5);
         modeMap.put(mode6.getModeType(), mode6);
+        modeMap.put(mode7.getModeType(), mode7);
 
         Set<ModeType> currentModeTypes = modeMap.keySet();
         currentMode = modeMap.get(currentModeTypes.iterator().next());

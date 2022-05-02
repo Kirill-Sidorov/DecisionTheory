@@ -1,0 +1,45 @@
+{
+  "variants": [
+    "РГУ",
+    "РГРТУ",
+    "РГАТУ"
+  ],
+  "criteria": [
+    "Халява",
+    "Досуг",
+    "Качество"
+  ],
+  "comparison_variants": [
+    {
+      "criterion": "Халява",
+      "variant": "РГУ",
+      "comparisons": [
+        {"name": "РГРТУ", "value": "6"},
+        {"name": "РГАТУ", "value": "1/3"}
+      ]
+    },
+    {
+      "criterion": "Досуг",
+      "variant": "РГУ",
+      "comparisons": [
+        {"name": "РГРТУ", "value": "1/5"},
+        {"name": "РГАТУ", "value": "3"}
+      ]
+    },
+    {
+      "criterion": "Качество",
+      "variant": "РГУ",
+      "comparisons": [
+        {"name": "РГРТУ", "value": "1/5"},
+        {"name": "РГАТУ", "value": "3"}
+      ]
+    }
+  ],
+  "comparison_criteria": {
+    "criterion": "Халява",
+    "comparisons": [
+      {"name": "Досуг", "value": "1/5"},
+      {"name": "Качество", "value": "3"}
+    ]
+  }
+}
