@@ -10,7 +10,10 @@ import sidorov.common.matrix.Matrix;
 import sidorov.common.matrix.MatrixCreation;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BellmanZadehLogic implements Logic {
@@ -66,6 +69,78 @@ public class BellmanZadehLogic implements Logic {
 
     @Override
     public Result solveTask() {
-        return null;
+        double[] comparisonCriteriaRanks = new double[comparisonCriteria.numberColumns];
+        for (int i = 0; i < comparisonCriteriaRanks.length; i++) {
+            double sum = 0;
+            for (int j = 0; j < comparisonCriteria.numberRows; j++) {
+                sum += comparisonCriteria.get(j, i);
+            }
+            comparisonCriteriaRanks[i] = (double) 1 / sum;
+        }
+
+        List<List<Double>> equilibriumCriteria = new ArrayList<>();
+        double[] minEquilibriumCriteria = new double[orderVariants.length];
+        Arrays.fill(minEquilibriumCriteria, 1);
+
+        for (String criterion : orderCriteria) {
+            Matrix variantMatrix = comparisonVariants.get(criterion);
+            List<Double> rowEquilibriumCriterion = new ArrayList<>();
+            for (int j = 0; j < variantMatrix.numberColumns; j++) {
+                double sum = 0;
+                for (int i = 0; i < variantMatrix.numberRows; i++) {
+                    sum += variantMatrix.get(i, j);
+                }
+                double value = (double) 1 / sum;
+                if (value < minEquilibriumCriteria[j]) {
+                    minEquilibriumCriteria[j] = value;
+                }
+                rowEquilibriumCriterion.add(value);
+            }
+            equilibriumCriteria.add(rowEquilibriumCriterion);
+        }
+
+        StringBuilder result = new StringBuilder();
+        result.append("Ранги матрицы парных сравений критериев\n");
+        for (String orderCriterion : orderCriteria) {
+            result.append(String.format("%10s", orderCriterion));
+        }
+        result.append("\n");
+        for (double rank : comparisonCriteriaRanks) {
+            result.append(String.format("%10.3f", rank));
+        }
+
+        result.append("\n\nМатрица равновесных критериев:\n");
+        result.append(new Matrix(equilibriumCriteria).toTextAsTable(orderCriteria, orderVariants));
+        result.append(String.format("%10s", "Мин"));
+        for (double min : minEquilibriumCriteria) {
+            result.append(String.format("%10.3f", min));
+        }
+        result.append(String.format("\n%10s", "Ранги"));
+        for (int rank: findRanks(minEquilibriumCriteria)) {
+            result.append(String.format("%10d", rank));
+        }
+
+        return new Result(Status.SUCCESS, result.toString());
+    }
+
+    private int[] findRanks(double[] array) {
+        int[] result = new int[array.length];
+        Map<Double, Integer> valueIndexMap = new HashMap<>();
+        for (int i = 0; i < array.length; i++) {
+            valueIndexMap.put(array[i], i);
+        }
+        Arrays.sort(array);
+        double lastValue = array[0];
+        int lastRank = 1;
+        for (int i = array.length - 1; i >= 0; i--) {
+            int valueIndex = valueIndexMap.get(array[i]);
+            if (lastValue > array[i]) {
+                result[valueIndex] = lastRank;
+            } else {
+                lastValue = array[i];
+                result[valueIndex] = lastRank++;
+            }
+        }
+        return result;
     }
 }
