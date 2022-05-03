@@ -69,6 +69,7 @@ public class BellmanZadehLogic implements Logic {
 
     @Override
     public Result solveTask() {
+        // ранги матрицы парных сравнений
         double[] comparisonCriteriaRanks = new double[comparisonCriteria.numberColumns];
         for (int i = 0; i < comparisonCriteriaRanks.length; i++) {
             double sum = 0;
@@ -78,6 +79,7 @@ public class BellmanZadehLogic implements Logic {
             comparisonCriteriaRanks[i] = (double) 1 / sum;
         }
 
+        // равновесны критерии
         List<List<Double>> equilibriumCriteria = new ArrayList<>();
         double[] minEquilibriumCriteria = new double[orderVariants.length];
         Arrays.fill(minEquilibriumCriteria, 1);
@@ -99,6 +101,27 @@ public class BellmanZadehLogic implements Logic {
             equilibriumCriteria.add(rowEquilibriumCriterion);
         }
 
+        Matrix equilibriumCriteriaMatrix = new Matrix(equilibriumCriteria);
+
+        // неравновесные критерии
+        List<List<Double>> notEquilibriumCriteria = new ArrayList<>();
+        double[] minNotEquilibriumCriteria = new double[orderVariants.length];
+        Arrays.fill(minNotEquilibriumCriteria, 1);
+
+        for (int i = 0; i < equilibriumCriteriaMatrix.numberRows; i++) {
+            List<Double> notEquilibriumCriteriaRow = new ArrayList<>();
+            for (int j = 0; j < equilibriumCriteriaMatrix.numberColumns; j++) {
+                double value = Math.pow(equilibriumCriteriaMatrix.get(i, j), comparisonCriteriaRanks[i]);
+                if (value < minNotEquilibriumCriteria[j]) {
+                    minNotEquilibriumCriteria[j] = value;
+                }
+                notEquilibriumCriteriaRow.add(value);
+            }
+            notEquilibriumCriteria.add(notEquilibriumCriteriaRow);
+        }
+
+        Matrix notEquilibriumCriteriaMatrix = new Matrix(notEquilibriumCriteria);
+
         StringBuilder result = new StringBuilder();
         result.append("Ранги матрицы парных сравений критериев\n");
         for (String orderCriterion : orderCriteria) {
@@ -110,13 +133,24 @@ public class BellmanZadehLogic implements Logic {
         }
 
         result.append("\n\nМатрица равновесных критериев:\n");
-        result.append(new Matrix(equilibriumCriteria).toTextAsTable(orderCriteria, orderVariants));
+        result.append(equilibriumCriteriaMatrix.toTextAsTable(orderCriteria, orderVariants));
         result.append(String.format("%10s", "Мин"));
         for (double min : minEquilibriumCriteria) {
             result.append(String.format("%10.3f", min));
         }
         result.append(String.format("\n%10s", "Ранги"));
         for (int rank: findRanks(minEquilibriumCriteria)) {
+            result.append(String.format("%10d", rank));
+        }
+
+        result.append("\n\nМатрица неравновесных критериев:\n");
+        result.append(notEquilibriumCriteriaMatrix.toTextAsTable(orderCriteria, orderVariants));
+        result.append(String.format("%10s", "Мин"));
+        for (double min : minNotEquilibriumCriteria) {
+            result.append(String.format("%10.3f", min));
+        }
+        result.append(String.format("\n%10s", "Ранги"));
+        for (int rank: findRanks(minNotEquilibriumCriteria)) {
             result.append(String.format("%10d", rank));
         }
 
