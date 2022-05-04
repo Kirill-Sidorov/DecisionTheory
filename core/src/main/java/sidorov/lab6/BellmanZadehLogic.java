@@ -3,6 +3,9 @@ package sidorov.lab6;
 import sidorov.common.Logic;
 import sidorov.common.Result;
 import sidorov.common.Status;
+import sidorov.common.chart.ChartData;
+import sidorov.common.chart.Dot;
+import sidorov.common.chart.Function;
 import sidorov.common.jsonreader.JsonReader;
 import sidorov.common.jsonreader.lab6.BellmanZadehPojo;
 import sidorov.common.jsonreader.lab6.ComparisonVariant;
@@ -154,7 +157,28 @@ public class BellmanZadehLogic implements Logic {
             result.append(String.format("%10d", rank));
         }
 
-        return new Result(Status.SUCCESS, result.toString());
+        List<Function> equilibriumCriteriaFunctions = new ArrayList<>();
+        for (int i = 0; i < orderVariants.length; i++) {
+            Dot[] dots = new Dot[equilibriumCriteriaMatrix.numberRows];
+            for (int j = 0; j < equilibriumCriteriaMatrix.numberRows; j++) {
+                dots[j] = new Dot(j + 1, equilibriumCriteriaMatrix.get(j, i));
+            }
+            equilibriumCriteriaFunctions.add(new Function(dots, orderVariants[i]));
+        }
+
+        List<Function> notEquilibriumCriteriaFunctions = new ArrayList<>();
+        for (int i = 0; i < orderVariants.length; i++) {
+            Dot[] dots = new Dot[notEquilibriumCriteriaMatrix.numberRows];
+            for (int j = 0; j < notEquilibriumCriteriaMatrix.numberRows; j++) {
+                dots[j] = new Dot(j + 1, notEquilibriumCriteriaMatrix.get(j, i));
+            }
+            notEquilibriumCriteriaFunctions.add(new Function(dots, orderVariants[i]));
+        }
+
+        List<ChartData> chartDataList = new ArrayList<>();
+        chartDataList.add(new ChartData(equilibriumCriteriaFunctions, "", "", "Равновесные критерии"));
+        chartDataList.add(new ChartData(notEquilibriumCriteriaFunctions, "", "", "Неравновесные критерии"));
+        return new Result(Status.SUCCESS, result.toString(), chartDataList);
     }
 
     private int[] findRanks(double[] array) {

@@ -103,7 +103,7 @@ public class MixedStrategiesLogic implements Logic {
         result.append(String.format("Вектор y = %s\nyMax = %.1f\n", Arrays.toString(yResult.vector), yResult.limitValue));
 
         if (Precision.round(xResult.limitValue, 1) == Precision.round(yResult.limitValue, 1)) {
-            result.append("Так как xMin = yMax - ситуация <p,q> в смешанных стратегиях является седловой точкой в смешанных стратегиях.\n");
+            result.append("Так как xMin = yMax - ситуация <p,q> в смешанных стратегиях \nявляется седловой точкой в смешанных стратегиях.\n");
             result.append(String.format("W = xMin = yMax = %.1f\n", xResult.limitValue));
         }
 

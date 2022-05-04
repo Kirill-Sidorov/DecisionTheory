@@ -27,7 +27,7 @@ public class CreateChartTask extends SwingWorker<Result, Void> {
         try {
             Result result = get();
             if (result.status() == Status.SUCCESS) {
-                new ChartFrame(result.functions());
+                result.chartDataList().forEach(ChartFrame::new);
             }
         } catch (Exception ignored) {
             errorAction.processResult(new Result(Status.ERROR, "Ошибка при построении графика"));

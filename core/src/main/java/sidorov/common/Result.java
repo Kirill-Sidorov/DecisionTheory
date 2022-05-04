@@ -1,6 +1,6 @@
 package sidorov.common;
 
-import sidorov.lab4.Function;
+import sidorov.common.chart.ChartData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ public class Result {
     private final String text;
     private final int number;
 
-    private List<Function> functions;
+    private List<ChartData> chartDataList;
 
     public Result(Status status, String text) {
         this.status = status;
@@ -25,9 +25,14 @@ public class Result {
         this.number = number;
     }
 
-    public Result(List<Function> functions) {
-        this(Status.SUCCESS, "Данные для графика получены успешно");
-        this.functions = functions;
+    public Result(List<ChartData> chartDataList) {
+        this(Status.SUCCESS, "Данные для графиков получены успешно");
+        this.chartDataList = chartDataList;
+    }
+
+    public Result(Status status, String text, List<ChartData> chartDataList) {
+        this(status, text);
+        this.chartDataList = chartDataList;
     }
 
     public Status status() {
@@ -38,12 +43,13 @@ public class Result {
         return text;
     }
 
-    public List<Function> functions() {
-        if (functions == null) {
-            return new ArrayList<>();
-        } else {
-            return functions;
+    public List<ChartData> chartDataList() {
+        if ((chartDataList == null) || chartDataList.isEmpty()) {
+            List<ChartData> list = new ArrayList<>();
+            list.add(new ChartData(new ArrayList<>(), "", ""));
+            chartDataList = list;
         }
+        return chartDataList;
     }
 
     public int number() {

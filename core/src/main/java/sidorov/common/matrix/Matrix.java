@@ -60,8 +60,8 @@ public class Matrix {
     public String toTextAsTable(String[] rowNames, String[] columnNames) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(String.format("%10s", ""));
-        for (int i = 0; i < columnNames.length; i++) {
-            stringBuilder.append(String.format("%10s", columnNames[i]));
+        for (String columnName : columnNames) {
+            stringBuilder.append(String.format("%10s", columnName));
         }
         stringBuilder.append("\n");
         for (int i = 0; i < numberRows; i++) {

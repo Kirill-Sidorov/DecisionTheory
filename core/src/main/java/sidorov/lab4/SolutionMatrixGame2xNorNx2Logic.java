@@ -1,16 +1,19 @@
 package sidorov.lab4;
 
 import org.apache.commons.math3.util.Precision;
+import sidorov.common.InputData;
 import sidorov.common.Logic;
-import sidorov.common.matrix.Matrix;
-import sidorov.common.matrix.MatrixOperation;
-import sidorov.common.matrix.MatrixValidation;
+import sidorov.common.Result;
+import sidorov.common.Status;
+import sidorov.common.chart.ChartData;
+import sidorov.common.chart.Dot;
+import sidorov.common.chart.Function;
 import sidorov.common.excelreader.ExcelReader;
 import sidorov.common.excelreader.SheetNotFoundException;
 import sidorov.common.excelreader.TaskSheet;
-import sidorov.common.InputData;
-import sidorov.common.Result;
-import sidorov.common.Status;
+import sidorov.common.matrix.Matrix;
+import sidorov.common.matrix.MatrixOperation;
+import sidorov.common.matrix.MatrixValidation;
 import sidorov.lab1.MixedStrategiesLogic;
 import sidorov.lab2.reduction.Reduction;
 import sidorov.lab2.reduction.ReductionResult;
@@ -194,13 +197,23 @@ public class SolutionMatrixGame2xNorNx2Logic implements Logic {
     @Override
     public Result getChartData() {
         List<Function> functions = new ArrayList<>();
-        for (Integer j : existsColumnsAfterReduction) {
-            double h1 = matrix.get(0, j);
-            double h2 = matrix.get(1, j);
-            Function function = p -> ((h1 - h2) * p + h2);
-            functions.add(function);
+        for (int i = 0; i < existsColumnsAfterReduction.size(); i++) {
+            double h1 = matrix.get(0, existsColumnsAfterReduction.get(i));
+            double h2 = matrix.get(1, existsColumnsAfterReduction.get(i));
+
+            Dot[] dots = new Dot[11];
+
+            for (int p = 0; p < 11; p++) {
+                double x = p * 0.1;
+                double y = (h1 - h2) * x + h2;
+                dots[p] = new Dot(x, y);
+            }
+
+            functions.add(new Function(dots, "g" + (i + 1)));
         }
-        return new Result(functions);
+        List<ChartData> chartDataList = new ArrayList<>();
+        chartDataList.add(new ChartData(functions, "p1", "g(p1)"));
+        return new Result(chartDataList);
     }
 
     @Override
