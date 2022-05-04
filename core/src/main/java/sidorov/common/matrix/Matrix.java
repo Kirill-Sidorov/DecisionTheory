@@ -59,15 +59,15 @@ public class Matrix {
 
     public String toTextAsTable(String[] rowNames, String[] columnNames) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("%10s", ""));
+        stringBuilder.append(String.format("%15s", ""));
         for (String columnName : columnNames) {
-            stringBuilder.append(String.format("%10s", columnName));
+            stringBuilder.append(String.format("%15s", columnName));
         }
         stringBuilder.append("\n");
         for (int i = 0; i < numberRows; i++) {
-            stringBuilder.append(String.format("%10s", rowNames[i]));
+            stringBuilder.append(String.format("%15s", rowNames[i]));
             for (int j = 0; j < numberColumns; j++) {
-                stringBuilder.append(String.format("%10.3f", matrix.get(i).get(j)));
+                stringBuilder.append(String.format("%15.3f", matrix.get(i).get(j)));
             }
             stringBuilder.append("\n");
         }
