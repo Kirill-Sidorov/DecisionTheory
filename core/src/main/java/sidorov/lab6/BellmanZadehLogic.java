@@ -1,6 +1,5 @@
 package sidorov.lab6;
 
-import org.apache.commons.math3.util.Precision;
 import sidorov.common.Logic;
 import sidorov.common.Result;
 import sidorov.common.Status;
@@ -148,20 +147,12 @@ public class BellmanZadehLogic implements Logic {
         for (double min : minEquilibriumCriteria) {
             result.append(String.format("%15.3f", min));
         }
-        result.append(String.format("\n%15s", "Ранги"));
-        for (int rank: findRanks(minEquilibriumCriteria)) {
-            result.append(String.format("%15d", rank));
-        }
 
         result.append("\n\nМатрица неравновесных критериев:\n");
         result.append(notEquilibriumCriteriaMatrix.toTextAsTable(orderCriteria, orderVariants));
         result.append(String.format("%15s", "Мин"));
         for (double min : minNotEquilibriumCriteria) {
             result.append(String.format("%15.3f", min));
-        }
-        result.append(String.format("\n%15s", "Ранги"));
-        for (int rank: findRanks(minNotEquilibriumCriteria)) {
-            result.append(String.format("%15d", rank));
         }
 
         List<Function> equilibriumCriteriaFunctions = new ArrayList<>();
@@ -186,27 +177,5 @@ public class BellmanZadehLogic implements Logic {
         chartDataList.add(new ChartData(equilibriumCriteriaFunctions, "", "", "Равновесные критерии"));
         chartDataList.add(new ChartData(notEquilibriumCriteriaFunctions, "", "", "Неравновесные критерии"));
         return new Result(Status.SUCCESS, result.toString(), chartDataList);
-    }
-
-    private int[] findRanks(double[] array) {
-        int[] result = new int[array.length];
-        Map<Double, Integer> valueIndexMap = new HashMap<>();
-        for (int i = 0; i < array.length; i++) {
-            valueIndexMap.put(array[i], i);
-        }
-        Arrays.sort(array);
-        double lastValue = array[array.length - 1];
-        int lastRank = 0;
-        for (int i = array.length - 1; i >= 0; i--) {
-            int valueIndex = valueIndexMap.get(array[i]);
-            double valueI = Precision.round(array[i], 3);
-            if (lastValue == valueI) {
-                result[valueIndex] = lastRank;
-            } else {
-                lastValue = valueI;
-                result[valueIndex] = ++lastRank;
-            }
-        }
-        return result;
     }
 }
