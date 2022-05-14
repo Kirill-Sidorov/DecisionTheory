@@ -7,7 +7,8 @@ public enum ModeType {
     SOLUTION_MATRIX_GAME_2x2("Реш. матр. игры 2x2"),
     SOLUTION_MATRIX_GAME_2xN_OR_Nx2("Реш. матр. игры 2xN/Nx2"),
     STATISTICAL_GAMES("Статистические игры"),
-    BELLMAN_ZADEH("Беллмана – Заде");
+    BELLMAN_ZADEH("Беллмана – Заде"),
+    DIRECT_OUTPUT_METHOD("НО Прямой Вывод");
 
     public final String text;
 

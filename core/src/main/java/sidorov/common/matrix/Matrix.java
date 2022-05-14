@@ -35,7 +35,7 @@ public class Matrix {
         StringBuilder stringBuilder = new StringBuilder();
         for (List<Double> row : matrix) {
             for (double value : row) {
-                stringBuilder.append(String.format("%6.1f", value));
+                stringBuilder.append(String.format("%6.2f", value));
             }
             stringBuilder.append("\n");
         }

@@ -23,6 +23,22 @@ public class MatrixValidation {
         return false;
     }
 
+    public boolean validateMatrixWithSize(int rows, int columns) {
+        if (matrix != null && !matrix.isEmpty()) {
+            int firstRowLength = matrix.get(0).size();
+            if (matrix.size() != rows && firstRowLength != columns) {
+                return false;
+            }
+            for (List<Double> row : matrix) {
+                if (firstRowLength != row.size()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     public boolean validateThatMatrix2x2Size() {
         if (validateMatrix()) {
             return matrix.size() == 2 && matrix.get(0).size() == 2;

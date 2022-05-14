@@ -1,6 +1,10 @@
 package sidorov.common.excelreader;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
@@ -67,5 +71,55 @@ public class ExcelReader {
             }
         }
         return vector;
+    }
+
+    public List<List<Double>> getMatrixFromSheetByName(String name) {
+        String lowerCaseName = name.toLowerCase();
+        List<List<Double>> matrix = new ArrayList<>();
+        boolean isMatrixFind = false;
+        for (Row row : sheet) {
+            List<Double> rowValues = new ArrayList<>();
+            for (Cell cell : row) {
+                if (CellType.NUMERIC == cell.getCellType() && isMatrixFind) {
+                    rowValues.add(cell.getNumericCellValue());
+                    continue;
+                }
+                if (CellType.STRING == cell.getCellType()) {
+                    if (isMatrixFind) {
+                        return matrix;
+                    } else {
+                        isMatrixFind = cell.getStringCellValue().toLowerCase().contains(lowerCaseName);
+                    }
+                }
+            }
+            if (!rowValues.isEmpty()) {
+                matrix.add(rowValues);
+            }
+        }
+        return matrix;
+    }
+
+    public List<String> getStringSetFromSheetByName(String name) {
+        String lowerCaseName = name.toLowerCase();
+        List<String> set = new ArrayList<>();
+        for (Row row : sheet) {
+            for (Cell cell : row) {
+                if (CellType.STRING == cell.getCellType()
+                        && cell.getStringCellValue().toLowerCase().contains(lowerCaseName)) {
+                    boolean isFirstCell = true;
+                    for (Cell vectorCell : row) {
+                        if (isFirstCell) {
+                            isFirstCell = false;
+                            continue;
+                        }
+                        if (CellType.STRING == vectorCell.getCellType()) {
+                            set.add(vectorCell.getStringCellValue());
+                        }
+                    }
+                    return set;
+                }
+            }
+        }
+        return set;
     }
 }

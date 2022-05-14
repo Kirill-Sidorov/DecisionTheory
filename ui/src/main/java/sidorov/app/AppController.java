@@ -2,6 +2,7 @@ package sidorov.app;
 
 import sidorov.common.Result;
 import sidorov.mode.BellmanZadehMode;
+import sidorov.mode.DirectOutputMethodMode;
 import sidorov.mode.MixedStrategiesMode;
 import sidorov.mode.Mode;
 import sidorov.mode.ModeType;
@@ -21,14 +22,13 @@ import java.util.Set;
 
 public class AppController {
 
-    private final UI UI;
     private final InputDataCheckup checkup;
     private final Map<ModeType, Mode> modeMap = new HashMap<>();
 
     private Mode currentMode;
 
     public AppController() {
-        UI = new UI(this::uploadData, this::solveTask, this::createChart);
+        UI UI = new UI(this::uploadData, this::solveTask, this::createChart);
         checkup = new InputDataCheckup(UI);
 
         Mode mode1 = new MixedStrategiesMode(UI);
@@ -38,6 +38,7 @@ public class AppController {
         Mode mode5 = new SolutionMatrixGame2xNorNx2Mode(UI);
         Mode mode6 = new StatisticalGamesMode(UI);
         Mode mode7 = new BellmanZadehMode(UI);
+        Mode mode8 = new DirectOutputMethodMode(UI);
 
         modeMap.put(mode1.getModeType(), mode1);
         modeMap.put(mode2.getModeType(), mode2);
@@ -46,6 +47,7 @@ public class AppController {
         modeMap.put(mode5.getModeType(), mode5);
         modeMap.put(mode6.getModeType(), mode6);
         modeMap.put(mode7.getModeType(), mode7);
+        modeMap.put(mode8.getModeType(), mode8);
 
         Set<ModeType> currentModeTypes = modeMap.keySet();
         currentMode = modeMap.get(currentModeTypes.iterator().next());
