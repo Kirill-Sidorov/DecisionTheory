@@ -8,7 +8,8 @@ public enum ModeType {
     SOLUTION_MATRIX_GAME_2xN_OR_Nx2("Реш. матр. игры 2xN/Nx2"),
     STATISTICAL_GAMES("Статистические игры"),
     BELLMAN_ZADEH("Беллмана – Заде"),
-    DIRECT_OUTPUT_METHOD("НО Прямой Вывод");
+    DIRECT_OUTPUT_METHOD("НО Прямой вывод"),
+    REVERSE_OUTPUT_METHOD("НО Обратный вывод");
 
     public final String text;
 

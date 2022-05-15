@@ -8,6 +8,7 @@ import sidorov.mode.Mode;
 import sidorov.mode.ModeType;
 import sidorov.mode.PureStrategiesMode;
 import sidorov.mode.ReductionMode;
+import sidorov.mode.ReverseOutputMethodMode;
 import sidorov.mode.SolutionMatrixGame2x2Mode;
 import sidorov.mode.SolutionMatrixGame2xNorNx2Mode;
 import sidorov.mode.StatisticalGamesMode;
@@ -39,6 +40,7 @@ public class AppController {
         Mode mode6 = new StatisticalGamesMode(UI);
         Mode mode7 = new BellmanZadehMode(UI);
         Mode mode8 = new DirectOutputMethodMode(UI);
+        Mode mode9 = new ReverseOutputMethodMode(UI);
 
         modeMap.put(mode1.getModeType(), mode1);
         modeMap.put(mode2.getModeType(), mode2);
@@ -48,6 +50,7 @@ public class AppController {
         modeMap.put(mode6.getModeType(), mode6);
         modeMap.put(mode7.getModeType(), mode7);
         modeMap.put(mode8.getModeType(), mode8);
+        modeMap.put(mode9.getModeType(), mode9);
 
         Set<ModeType> currentModeTypes = modeMap.keySet();
         currentMode = modeMap.get(currentModeTypes.iterator().next());
