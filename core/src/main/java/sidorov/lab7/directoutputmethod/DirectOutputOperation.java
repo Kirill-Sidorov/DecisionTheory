@@ -1,6 +1,5 @@
 package sidorov.lab7.directoutputmethod;
 
-import sidorov.common.matrix.Element;
 import sidorov.common.matrix.Matrix;
 
 import java.util.ArrayList;
@@ -19,8 +18,9 @@ public class DirectOutputOperation {
 
     public DirectOutputResult execute(Operation first, Operation last) {
         List<List<Double>> matrix = new ArrayList<>();
-        Element[] maxInColumns = new Element[matrixR.numberColumns];
-        Arrays.fill(maxInColumns, new Element(0, 0, 0));
+        boolean[][] scores = new boolean[matrixR.numberColumns][matrixZ.numberRows];
+        double[] maxInColumns = new double[matrixR.numberColumns];
+        Arrays.fill(maxInColumns, 0d);
         for (int i = 0; i < matrixZ.numberRows; i++) {
             List<Double> row = new ArrayList<>();
             for (int k = 0; k < matrixR.numberColumns; k++) {
@@ -33,19 +33,25 @@ public class DirectOutputOperation {
                 }
 
                 row.add(value);
-                if (maxInColumns[k].value < value) {
-                    maxInColumns[k] = new Element(i, k, value);
+
+                if (maxInColumns[k] < value) {
+                    maxInColumns[k] = value;
+                    Arrays.fill(scores[k], false);
+                    scores[k][i] = true;
+                } else {
+                    scores[k][i] = (maxInColumns[k] == value);
                 }
             }
             matrix.add(row);
         }
-        return new DirectOutputResult(new Matrix(matrix), maxInColumns);
+        return new DirectOutputResult(new Matrix(matrix), scores);
     }
 
     public DirectOutputResult sumProd() {
         List<List<Double>> matrix = new ArrayList<>();
-        Element[] maxInColumns = new Element[matrixR.numberColumns];
-        Arrays.fill(maxInColumns, new Element(0, 0, 0));
+        boolean[][] scores = new boolean[matrixR.numberColumns][matrixZ.numberRows];
+        double[] maxInColumns = new double[matrixR.numberColumns];
+        Arrays.fill(maxInColumns, 0d);
         for (int i = 0; i < matrixZ.numberRows; i++) {
             List<Double> row = new ArrayList<>();
             for (int k = 0; k < matrixR.numberColumns; k++) {
@@ -56,12 +62,17 @@ public class DirectOutputOperation {
                 }
                 double value = 1 / (1 + Math.exp(sum * -1));
                 row.add(value);
-                if (maxInColumns[k].value < value) {
-                    maxInColumns[k] = new Element(i, k, value);
+
+                if (maxInColumns[k] < value) {
+                    maxInColumns[k] = value;
+                    Arrays.fill(scores[k], false);
+                    scores[k][i] = true;
+                } else {
+                    scores[k][i] = (maxInColumns[k] == value);
                 }
             }
             matrix.add(row);
         }
-        return new DirectOutputResult(new Matrix(matrix), maxInColumns);
+        return new DirectOutputResult(new Matrix(matrix), scores);
     }
 }

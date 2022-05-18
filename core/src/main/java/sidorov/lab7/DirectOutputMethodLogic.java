@@ -6,7 +6,6 @@ import sidorov.common.Status;
 import sidorov.common.excelreader.ExcelReader;
 import sidorov.common.excelreader.SheetNotFoundException;
 import sidorov.common.excelreader.TaskSheet;
-import sidorov.common.matrix.Element;
 import sidorov.common.matrix.Matrix;
 import sidorov.common.matrix.MatrixValidation;
 import sidorov.lab7.directoutputmethod.DirectOutputOperation;
@@ -84,55 +83,64 @@ public class DirectOutputMethodLogic implements Logic {
         DirectOutputResult maxAverage = directOutputOperation.execute((a, b) -> 0.5 * (a + b), Math::max);
         DirectOutputResult sumProd = directOutputOperation.sumProd();
 
+        boolean[][][] allScores = {
+                maxMin.scores,
+                maxProd.scores,
+                minMax.scores,
+                maxMax.scores,
+                minMin.scores,
+                maxAverage.scores,
+                sumProd.scores
+        };
+
+        int[][] total = new int[setZ.size()][setX.size()];
+        for (boolean[][] scores : allScores) {
+            for (int i = 0; i < scores.length; i++) {
+                for (int j = 0; j < scores[i].length; j++) {
+                    if (scores[i][j]) {
+                        total[i][j]++;
+                    }
+                }
+            }
+        }
+
         StringBuilder stringResult = new StringBuilder();
 
-        stringResult.append("\nmaxMin\n");
-        stringResult.append(maxMin.matrix.toText());
-        stringResult.append("\n");
-        for (Element element : maxMin.maxInColumns) {
-            stringResult.append(element.value).append(" ");
-        }
+        String[] arraySetX = setX.toArray(new String[0]);
+        String[] arraySetZ = setZ.toArray(new String[0]);
 
-        stringResult.append("\nmaxProd\n");
-        stringResult.append(maxProd.matrix.toText());
-        stringResult.append("\n");
-        for (Element element : maxProd.maxInColumns) {
-            stringResult.append(element.value).append(" ");
-        }
+        stringResult.append("maxMin:\n");
+        stringResult.append(maxMin.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n");
 
-        stringResult.append("\nminMax\n");
-        stringResult.append(minMax.matrix.toText());
-        stringResult.append("\n");
-        for (Element element : minMax.maxInColumns) {
-            stringResult.append(element.value).append(" ");
-        }
+        stringResult.append("\nmaxProd:\n");
+        stringResult.append(maxProd.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n");
 
-        stringResult.append("\nmaxMax\n");
-        stringResult.append(maxMax.matrix.toText());
-        stringResult.append("\n");
-        for (Element element : maxMax.maxInColumns) {
-            stringResult.append(element.value).append(" ");
-        }
+        stringResult.append("\nminMax:\n");
+        stringResult.append(minMax.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n");
 
-        stringResult.append("\nminMin\n");
-        stringResult.append(minMin.matrix.toText());
-        stringResult.append("\n");
-        for (Element element : minMin.maxInColumns) {
-            stringResult.append(element.value).append(" ");
-        }
+        stringResult.append("\nmaxMax:\n");
+        stringResult.append(maxMax.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n");
 
-        stringResult.append("\nmaxAverage\n");
-        stringResult.append(maxAverage.matrix.toText());
-        stringResult.append("\n");
-        for (Element element : maxAverage.maxInColumns) {
-            stringResult.append(element.value).append(" ");
-        }
+        stringResult.append("\nminMin:\n");
+        stringResult.append(minMin.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n");
 
-        stringResult.append("\nsumProd\n");
-        stringResult.append(sumProd.matrix.toText());
+        stringResult.append("\nmaxAverage:\n");
+        stringResult.append(maxAverage.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n");
+
+        stringResult.append("\nsumProd:\n");
+        stringResult.append(sumProd.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n\n");
+
+        stringResult.append(String.format("Итог:\n%10s", ""));
+        for (String columnName : arraySetZ) {
+            stringResult.append(String.format("%10.10s", columnName));
+        }
         stringResult.append("\n");
-        for (Element element : sumProd.maxInColumns) {
-            stringResult.append(element.value).append(" ");
+        for (int i = 0; i < total.length; i++) {
+            stringResult.append(String.format("%10.10s", arraySetX[i]));
+            for (int value : total[i]) {
+                stringResult.append(String.format("%10d", value));
+            }
+            stringResult.append("\n");
         }
 
         return new Result(Status.SUCCESS, stringResult.toString());
