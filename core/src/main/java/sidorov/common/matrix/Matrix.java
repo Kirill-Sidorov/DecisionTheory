@@ -74,4 +74,22 @@ public class Matrix {
         stringBuilder.append("\n");
         return stringBuilder.toString();
     }
+
+    public String toTextAsTableWithScores(String[] rowNames, String[] columnNames, boolean[][] scores) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(String.format("%10s", ""));
+        for (String columnName : columnNames) {
+            stringBuilder.append(String.format("%10.10s", columnName));
+        }
+        stringBuilder.append("\n");
+        for (int i = 0; i < numberRows; i++) {
+            stringBuilder.append(String.format("%10.10s", rowNames[i]));
+            for (int j = 0; j < numberColumns; j++) {
+                stringBuilder.append(String.format(scores[j][i] ? "%10.3f!" : "%10.3f ", matrix.get(i).get(j)));
+            }
+            stringBuilder.append("\n");
+        }
+        stringBuilder.append("\n");
+        return stringBuilder.toString();
+    }
 }

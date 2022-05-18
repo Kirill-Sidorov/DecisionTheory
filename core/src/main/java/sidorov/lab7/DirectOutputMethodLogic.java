@@ -110,25 +110,25 @@ public class DirectOutputMethodLogic implements Logic {
         String[] arraySetZ = setZ.toArray(new String[0]);
 
         stringResult.append("maxMin:\n");
-        stringResult.append(maxMin.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n");
+        stringResult.append(maxMin.matrix.toTextAsTableWithScores(arraySetX, arraySetZ, maxMin.scores)).append("\n");
 
         stringResult.append("\nmaxProd:\n");
-        stringResult.append(maxProd.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n");
+        stringResult.append(maxProd.matrix.toTextAsTableWithScores(arraySetX, arraySetZ, maxProd.scores)).append("\n");
 
         stringResult.append("\nminMax:\n");
-        stringResult.append(minMax.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n");
+        stringResult.append(minMax.matrix.toTextAsTableWithScores(arraySetX, arraySetZ, minMax.scores)).append("\n");
 
         stringResult.append("\nmaxMax:\n");
-        stringResult.append(maxMax.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n");
+        stringResult.append(maxMax.matrix.toTextAsTableWithScores(arraySetX, arraySetZ, maxMax.scores)).append("\n");
 
         stringResult.append("\nminMin:\n");
-        stringResult.append(minMin.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n");
+        stringResult.append(minMin.matrix.toTextAsTableWithScores(arraySetX, arraySetZ, minMin.scores)).append("\n");
 
         stringResult.append("\nmaxAverage:\n");
-        stringResult.append(maxAverage.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n");
+        stringResult.append(maxAverage.matrix.toTextAsTableWithScores(arraySetX, arraySetZ, maxAverage.scores)).append("\n");
 
         stringResult.append("\nsumProd:\n");
-        stringResult.append(sumProd.matrix.toTextAsTable(arraySetX, arraySetZ)).append("\n\n");
+        stringResult.append(sumProd.matrix.toTextAsTableWithScores(arraySetX, arraySetZ, sumProd.scores)).append("\n\n");
 
         stringResult.append(String.format("Итог:\n%10s", ""));
         for (String columnName : arraySetZ) {
