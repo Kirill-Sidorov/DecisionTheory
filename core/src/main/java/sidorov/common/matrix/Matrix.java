@@ -92,4 +92,15 @@ public class Matrix {
         stringBuilder.append("\n");
         return stringBuilder.toString();
     }
+
+    public String toTextWithMinValues(double minValue, double delta) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (List<Double> row : matrix) {
+            for (double value : row) {
+                stringBuilder.append(String.format((minValue == value && value < delta) ? "%5.2f!" : "%5.2f ", value));
+            }
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
 }
