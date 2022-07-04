@@ -1,6 +1,5 @@
 package sidorov.common.matrix;
 
-import com.sun.istack.internal.Nullable;
 import org.apache.commons.math3.util.Precision;
 import sidorov.common.jsonreader.lab6.Comparison;
 
@@ -19,7 +18,6 @@ public class MatrixCreation {
         this.MATRIX_SIZE = elements.length;
     }
 
-    @Nullable
     public Matrix createComparisonMatrix(String variant, Comparison[] comparisons) {
 
         if (comparisons.length != MATRIX_SIZE - 1) {

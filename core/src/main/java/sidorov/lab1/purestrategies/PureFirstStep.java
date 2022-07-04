@@ -1,6 +1,5 @@
 package sidorov.lab1.purestrategies;
 
-import com.sun.istack.internal.Nullable;
 import sidorov.common.matrix.Element;
 import sidorov.common.matrix.Matrix;
 
@@ -15,7 +14,6 @@ public class PureFirstStep {
         this.matrix = matrix;
     }
 
-    @Nullable
     public Element execute() {
         for (int i = 0; i < matrix.numberRows; i++) {
 
