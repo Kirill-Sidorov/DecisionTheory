@@ -50,7 +50,7 @@ public class ChartFrame extends JFrame {
 
         setContentPane(chartPanel);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setTitle("Ãðàôèê");
+        setTitle("Ð“Ñ€Ð°Ñ„Ð¸Ðº");
         setSize(600, 400);
         setLocationRelativeTo(null);
         setVisible(true);

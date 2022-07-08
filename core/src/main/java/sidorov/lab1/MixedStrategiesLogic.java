@@ -52,9 +52,9 @@ public class MixedStrategiesLogic implements Logic {
         try {
             excelReader = new ExcelReader(TaskSheet.MIXED_STRATEGIES);
         } catch (SheetNotFoundException e) {
-            return new Result(Status.ERROR, "Лист с данными задания не найден");
+            return new Result(Status.ERROR, "Р›РёСЃС‚ СЃ РґР°РЅРЅС‹РјРё Р·Р°РґР°РЅРёСЏ РЅРµ РЅР°Р№РґРµРЅ");
         } catch (IOException e) {
-            return new Result(Status.ERROR, "Не удалось загрузить данные из файла");
+            return new Result(Status.ERROR, "РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р°");
         }
 
         List<List<Double>> loadedMatrix = excelReader.getMatrixFromSheet();
@@ -63,13 +63,13 @@ public class MixedStrategiesLogic implements Logic {
 
         MatrixValidation validator = new MatrixValidation(loadedMatrix);
         if (!validator.validateMatrix()) {
-            return new Result(Status.ERROR, "Матрица невалидна");
+            return new Result(Status.ERROR, "РњР°С‚СЂРёС†Р° РЅРµРІР°Р»РёРґРЅР°");
         }
         if (!validator.validatePVector(loadedPVector)) {
-            return new Result(Status.ERROR, "Вектор p невалидин");
+            return new Result(Status.ERROR, "Р’РµРєС‚РѕСЂ p РЅРµРІР°Р»РёРґРёРЅ");
         }
         if (!validator.validateQVector(loadedQVector)) {
-            return new Result(Status.ERROR, "Вектор q невалидин");
+            return new Result(Status.ERROR, "Р’РµРєС‚РѕСЂ q РЅРµРІР°Р»РёРґРёРЅ");
         }
 
         matrix = new Matrix(loadedMatrix);
@@ -78,8 +78,8 @@ public class MixedStrategiesLogic implements Logic {
 
         StringBuilder result = new StringBuilder();
         result.append(matrix.toText());
-        result.append(String.format("Вектор p = %s\n", Arrays.toString(pVector.toArray())));
-        result.append(String.format("Вектор q = %s\n", Arrays.toString(qVector.toArray())));
+        result.append(String.format("Р’РµРєС‚РѕСЂ p = %s\n", Arrays.toString(pVector.toArray())));
+        result.append(String.format("Р’РµРєС‚РѕСЂ q = %s\n", Arrays.toString(qVector.toArray())));
 
         return new Result(Status.DATA_UPLOADED, result.toString());
     }
@@ -99,11 +99,11 @@ public class MixedStrategiesLogic implements Logic {
         StringBuilder result = new StringBuilder();
         result.append(String.format("V1 = %.3f (i = %d; j = %d)\n", V1.value, V1.i + 1, V1.j + 1));
         result.append(String.format("V2 = %.3f (i = %d; j = %d)\n", V2.value, V2.i + 1, V2.j + 1));
-        result.append(String.format("Вектор x = %s\nxMin = %.1f\n", Arrays.toString(xResult.vector), xResult.limitValue));
-        result.append(String.format("Вектор y = %s\nyMax = %.1f\n", Arrays.toString(yResult.vector), yResult.limitValue));
+        result.append(String.format("Р’РµРєС‚РѕСЂ x = %s\nxMin = %.1f\n", Arrays.toString(xResult.vector), xResult.limitValue));
+        result.append(String.format("Р’РµРєС‚РѕСЂ y = %s\nyMax = %.1f\n", Arrays.toString(yResult.vector), yResult.limitValue));
 
         if (Precision.round(xResult.limitValue, 1) == Precision.round(yResult.limitValue, 1)) {
-            result.append("Так как xMin = yMax - ситуация <p,q> в смешанных стратегиях \nявляется седловой точкой в смешанных стратегиях.\n");
+            result.append("РўР°Рє РєР°Рє xMin = yMax - СЃРёС‚СѓР°С†РёСЏ <p,q> РІ СЃРјРµС€Р°РЅРЅС‹С… СЃС‚СЂР°С‚РµРіРёСЏС… \nСЏРІР»СЏРµС‚СЃСЏ СЃРµРґР»РѕРІРѕР№ С‚РѕС‡РєРѕР№ РІ СЃРјРµС€Р°РЅРЅС‹С… СЃС‚СЂР°С‚РµРіРёСЏС….\n");
             result.append(String.format("W = xMin = yMax = %.1f\n", xResult.limitValue));
         }
 

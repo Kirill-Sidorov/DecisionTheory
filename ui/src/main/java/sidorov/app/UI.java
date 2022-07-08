@@ -51,13 +51,13 @@ public class UI extends JFrame {
         setLayout(null);
 
         initialDataText = new JTextArea();
-        //initialDataText.setLineWrap(true); перенос строк
+        //initialDataText.setLineWrap(true); РїРµСЂРµРЅРѕСЃ СЃС‚СЂРѕРє
         initialDataText.setWrapStyleWord(true);
         initialDataText.setEditable(false);
         initialDataText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
         resultText = new JTextArea();
-        //resultText.setLineWrap(true); перенос строк
+        //resultText.setLineWrap(true); РїРµСЂРµРЅРѕСЃ СЃС‚СЂРѕРє
         resultText.setWrapStyleWord(true);
         resultText.setEditable(false);
         resultText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
@@ -66,23 +66,23 @@ public class UI extends JFrame {
         splitPane.setBounds(45, 30, 700, 350);
         splitPane.setResizeWeight(0.5);
 
-        uploadDataButton = new JButton("Загрузить данные");
+        uploadDataButton = new JButton("Р—Р°РіСЂСѓР·РёС‚СЊ РґР°РЅРЅС‹Рµ");
         uploadDataButton.setBounds(250, 405, 140, 30);
         uploadDataButton.addActionListener(uploadDataButtonActionListener);
 
-        solveTaskButton = new JButton("Решить задачу");
+        solveTaskButton = new JButton("Р РµС€РёС‚СЊ Р·Р°РґР°С‡Сѓ");
         solveTaskButton.setBounds(250, 440, 140, 30);
         solveTaskButton.addActionListener(solveTaskButtonActionListener);
         solveTaskButton.setEnabled(false);
 
-        JLabel label1 = new JLabel("Исходные данные");
-        JLabel label2 = new JLabel("Результат");
+        JLabel label1 = new JLabel("РСЃС…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ");
+        JLabel label2 = new JLabel("Р РµР·СѓР»СЊС‚Р°С‚");
 
         label1.setBounds(50, 5, 150, 15);
         label2.setBounds(400, 5, 150, 15);
 
-        // матричная игра 2xN/Nx2
-        createChart = new JButton("Создать график");
+        // РјР°С‚СЂРёС‡РЅР°СЏ РёРіСЂР° 2xN/Nx2
+        createChart = new JButton("РЎРѕР·РґР°С‚СЊ РіСЂР°С„РёРє");
         createChart.setBounds(45, 405, 140, 30);
         createChart.addActionListener(createChartTaskButtonActionListener);
         createChart.setEnabled(false);
@@ -107,10 +107,10 @@ public class UI extends JFrame {
         labelTextField2.setVisible(false);
 
         panelRadio = new JPanel(new GridLayout(0, 2, 0, 0));
-        panelRadio.setBorder(BorderFactory.createTitledBorder("Задача"));
+        panelRadio.setBorder(BorderFactory.createTitledBorder("Р—Р°РґР°С‡Р°"));
         panelRadio.setBounds(400, 400, 350, 150);
 
-        // статистические игры
+        // СЃС‚Р°С‚РёСЃС‚РёС‡РµСЃРєРёРµ РёРіСЂС‹
         alphaSlider = new JSlider(0, 1000);
         alphaSlider.setBounds(100, 380, 130, 50);
         alphaSlider.setVisible(false);
@@ -166,7 +166,7 @@ public class UI extends JFrame {
         add(variableTextFieldsRankPanel);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("ТПР");
+        setTitle("РўРџР ");
         setSize(800, 600);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -188,10 +188,10 @@ public class UI extends JFrame {
     }
 
     public void showErrorMessage(String text) {
-        JOptionPane.showMessageDialog(this, text, "Ошибка", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, text, "РћС€РёР±РєР°", JOptionPane.ERROR_MESSAGE);
     }
 
     public void showInfoMessage(String text) {
-        JOptionPane.showMessageDialog(this, text, "Сообщение", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, text, "РЎРѕРѕР±С‰РµРЅРёРµ", JOptionPane.INFORMATION_MESSAGE);
     }
 }

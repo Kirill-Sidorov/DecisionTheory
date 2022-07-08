@@ -35,7 +35,7 @@ public class InputDataCheckup {
             l = Integer.parseInt(text1);
             s = Integer.parseInt(text2);
         } catch (NumberFormatException e) {
-            UI.showErrorMessage("Значения в полях ввода должны быть целочисленными!");
+            UI.showErrorMessage("Р—РЅР°С‡РµРЅРёСЏ РІ РїРѕР»СЏС… РІРІРѕРґР° РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ С†РµР»РѕС‡РёСЃР»РµРЅРЅС‹РјРё!");
             return false;
         }
 
@@ -60,11 +60,11 @@ public class InputDataCheckup {
                 pValues[i] = Precision.round(Double.parseDouble(stringPValues[i]), 3);
             }
         } catch (NumberFormatException e) {
-            UI.showErrorMessage("Не удалось получить значение из поля ввода вероятности P!");
+            UI.showErrorMessage("РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕР»СѓС‡РёС‚СЊ Р·РЅР°С‡РµРЅРёРµ РёР· РїРѕР»СЏ РІРІРѕРґР° РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё P!");
             return false;
         }
         if (Precision.round(Arrays.stream(pValues).sum(), 3) != 1) {
-            UI.showErrorMessage("Сумма вероятностей не равна 1");
+            UI.showErrorMessage("РЎСѓРјРјР° РІРµСЂРѕСЏС‚РЅРѕСЃС‚РµР№ РЅРµ СЂР°РІРЅР° 1");
             return false;
         }
 
@@ -72,12 +72,12 @@ public class InputDataCheckup {
             for (int i = 0; i < ranks.length; i++) {
                 ranks[i] = Integer.parseInt(stringRanks[i]);
                 if (ranks[i] < 1) {
-                    UI.showErrorMessage("Значение ранга должно быть больше 0!");
+                    UI.showErrorMessage("Р—РЅР°С‡РµРЅРёРµ СЂР°РЅРіР° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ 0!");
                     return false;
                 }
             }
         } catch (NumberFormatException e) {
-            UI.showErrorMessage("Не удалось получить значение из поля ввода рангов R!");
+            UI.showErrorMessage("РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕР»СѓС‡РёС‚СЊ Р·РЅР°С‡РµРЅРёРµ РёР· РїРѕР»СЏ РІРІРѕРґР° СЂР°РЅРіРѕРІ R!");
             return false;
         }
 

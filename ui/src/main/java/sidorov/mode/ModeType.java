@@ -1,15 +1,15 @@
 package sidorov.mode;
 
 public enum ModeType {
-    PURE_STRATEGIES("Чистые стратегии"),
-    MIXED_STRATEGIES("Смешанные стратегии"),
-    REDUCTION("Редукция"),
-    SOLUTION_MATRIX_GAME_2x2("Реш. матр. игры 2x2"),
-    SOLUTION_MATRIX_GAME_2xN_OR_Nx2("Реш. матр. игры 2xN/Nx2"),
-    STATISTICAL_GAMES("Статистические игры"),
-    BELLMAN_ZADEH("Беллмана – Заде"),
-    DIRECT_OUTPUT_METHOD("НО Прямой вывод"),
-    REVERSE_OUTPUT_METHOD("НО Обратный вывод");
+    PURE_STRATEGIES("Р§РёСЃС‚С‹Рµ СЃС‚СЂР°С‚РµРіРёРё"),
+    MIXED_STRATEGIES("РЎРјРµС€Р°РЅРЅС‹Рµ СЃС‚СЂР°С‚РµРіРёРё"),
+    REDUCTION("Р РµРґСѓРєС†РёСЏ"),
+    SOLUTION_MATRIX_GAME_2x2("Р РµС€. РјР°С‚СЂ. РёРіСЂС‹ 2x2"),
+    SOLUTION_MATRIX_GAME_2xN_OR_Nx2("Р РµС€. РјР°С‚СЂ. РёРіСЂС‹ 2xN/Nx2"),
+    STATISTICAL_GAMES("РЎС‚Р°С‚РёСЃС‚РёС‡РµСЃРєРёРµ РёРіСЂС‹"),
+    BELLMAN_ZADEH("Р‘РµР»Р»РјР°РЅР° вЂ“ Р—Р°РґРµ"),
+    DIRECT_OUTPUT_METHOD("РќРћ РџСЂСЏРјРѕР№ РІС‹РІРѕРґ"),
+    REVERSE_OUTPUT_METHOD("РќРћ РћР±СЂР°С‚РЅС‹Р№ РІС‹РІРѕРґ");
 
     public final String text;
 

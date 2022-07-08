@@ -37,9 +37,9 @@ public class ReverseOutputMethodLogic implements Logic {
         try {
             excelReader = new ExcelReader(TaskSheet.REVERSE_OUTPUT_METHOD);
         } catch (SheetNotFoundException e) {
-            return new Result(Status.ERROR, "Лист с данными задания не найден");
+            return new Result(Status.ERROR, "Р›РёСЃС‚ СЃ РґР°РЅРЅС‹РјРё Р·Р°РґР°РЅРёСЏ РЅРµ РЅР°Р№РґРµРЅ");
         } catch (IOException e) {
-            return new Result(Status.ERROR, "Не удалось загрузить данные из файла");
+            return new Result(Status.ERROR, "РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р°");
         }
 
         setX = excelReader.getStringSetFromSheetByName("X");
@@ -49,17 +49,17 @@ public class ReverseOutputMethodLogic implements Logic {
         b = excelReader.getVectorFromSheet("b");
 
         if (setX.size() != 3) {
-            return new Result(Status.ERROR, "Множество X неравно 3");
+            return new Result(Status.ERROR, "РњРЅРѕР¶РµСЃС‚РІРѕ X РЅРµСЂР°РІРЅРѕ 3");
         }
         if (setY.size() != 3) {
-            return new Result(Status.ERROR, "Множество Y неравно 3");
+            return new Result(Status.ERROR, "РњРЅРѕР¶РµСЃС‚РІРѕ Y РЅРµСЂР°РІРЅРѕ 3");
         }
         MatrixValidation validatorMr = new MatrixValidation(listMatrixR);
         if (!validatorMr.validateMatrixWithSize(setX.size(), setY.size())) {
-            return new Result(Status.ERROR, "Матрица Mr невалидна, либо не соответствует множествам Y и Z (размеру 3x3)");
+            return new Result(Status.ERROR, "РњР°С‚СЂРёС†Р° Mr РЅРµРІР°Р»РёРґРЅР°, Р»РёР±Рѕ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РјРЅРѕР¶РµСЃС‚РІР°Рј Y Рё Z (СЂР°Р·РјРµСЂСѓ 3x3)");
         }
         if (b.size() != 3) {
-            return new Result(Status.ERROR, "Вектор b неравен 3");
+            return new Result(Status.ERROR, "Р’РµРєС‚РѕСЂ b РЅРµСЂР°РІРµРЅ 3");
         }
 
         matrixR = new Matrix(listMatrixR);
@@ -71,7 +71,7 @@ public class ReverseOutputMethodLogic implements Logic {
         StringBuilder result = new StringBuilder();
         result.append(String.format("X = %s\n", Arrays.toString(setX.toArray())));
         result.append(String.format("Y = %s\n", Arrays.toString(setY.toArray())));
-        result.append(String.format("Матрица Mr:\n%s\n", matrixR.toText()));
+        result.append(String.format("РњР°С‚СЂРёС†Р° Mr:\n%s\n", matrixR.toText()));
         result.append("b = ");
         result.append(Arrays.toString(b.toArray(new Double[0])));
         result.append(String.format("\nq = %d\nm = %d\ndelta* = %1.2f", q, m, deltaLimit));

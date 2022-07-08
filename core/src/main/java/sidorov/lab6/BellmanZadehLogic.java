@@ -32,7 +32,7 @@ public class BellmanZadehLogic implements Logic {
         try {
             bellmanZadehPojo = new JsonReader().loadBellmanZadehData();
         } catch (IOException e) {
-            return new Result(Status.ERROR, "Ошибка при получении данных из json файла!");
+            return new Result(Status.ERROR, "РћС€РёР±РєР° РїСЂРё РїРѕР»СѓС‡РµРЅРёРё РґР°РЅРЅС‹С… РёР· json С„Р°Р№Р»Р°!");
         }
 
         orderVariants = bellmanZadehPojo.getVariants();
@@ -44,14 +44,14 @@ public class BellmanZadehLogic implements Logic {
         for (ComparisonVariant comparisonVariant : bellmanZadehPojo.getComparisonVariants()) {
             Matrix matrix = matrixCreation.createComparisonMatrix(comparisonVariant.getVariant(), comparisonVariant.getComparisons());
             if (matrix == null) {
-                return new Result(Status.ERROR, "Не удалось создать матрицу для критерия - " + comparisonVariant.getCriterion());
+                return new Result(Status.ERROR, "РќРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ РјР°С‚СЂРёС†Сѓ РґР»СЏ РєСЂРёС‚РµСЂРёСЏ - " + comparisonVariant.getCriterion());
             }
             comparisonVariants.put(comparisonVariant.getCriterion(), matrix);
         }
 
         for (String criterion : orderCriteria) {
             if (!comparisonVariants.containsKey(criterion)) {
-                return new Result(Status.ERROR, "Не найдено сравнений для критерия - " + criterion);
+                return new Result(Status.ERROR, "РќРµ РЅР°Р№РґРµРЅРѕ СЃСЂР°РІРЅРµРЅРёР№ РґР»СЏ РєСЂРёС‚РµСЂРёСЏ - " + criterion);
             }
         }
 
@@ -60,7 +60,7 @@ public class BellmanZadehLogic implements Logic {
                 bellmanZadehPojo.getComparisonCriteria().getCriterion(),
                 bellmanZadehPojo.getComparisonCriteria().getComparisons());
         if (matrix == null) {
-            return new Result(Status.ERROR, "Не удалось создать матрицу парных сравнений критериев");
+            return new Result(Status.ERROR, "РќРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ РјР°С‚СЂРёС†Сѓ РїР°СЂРЅС‹С… СЃСЂР°РІРЅРµРЅРёР№ РєСЂРёС‚РµСЂРёРµРІ");
         } else {
             comparisonCriteria = matrix;
         }
@@ -70,7 +70,7 @@ public class BellmanZadehLogic implements Logic {
             result.append(String.format("%s\n", criterion));
             result.append(comparisonVariants.get(criterion).toTextAsTable(orderVariants, orderVariants));
         }
-        result.append("Матрица парных сравнений критериев:\n\n");
+        result.append("РњР°С‚СЂРёС†Р° РїР°СЂРЅС‹С… СЃСЂР°РІРЅРµРЅРёР№ РєСЂРёС‚РµСЂРёРµРІ:\n\n");
         result.append(comparisonCriteria.toTextAsTable(orderCriteria, orderCriteria));
 
         return new Result(Status.DATA_UPLOADED, result.toString());
@@ -78,7 +78,7 @@ public class BellmanZadehLogic implements Logic {
 
     @Override
     public Result solveTask() {
-        // ранги матрицы парных сравнений
+        // СЂР°РЅРіРё РјР°С‚СЂРёС†С‹ РїР°СЂРЅС‹С… СЃСЂР°РІРЅРµРЅРёР№
         double[] comparisonCriteriaRanks = new double[comparisonCriteria.numberColumns];
         for (int i = 0; i < comparisonCriteriaRanks.length; i++) {
             double sum = 0;
@@ -88,7 +88,7 @@ public class BellmanZadehLogic implements Logic {
             comparisonCriteriaRanks[i] = (double) 1 / sum;
         }
 
-        // равновесны критерии
+        // СЂР°РІРЅРѕРІРµСЃРЅС‹ РєСЂРёС‚РµСЂРёРё
         List<List<Double>> equilibriumCriteria = new ArrayList<>();
         double[] minEquilibriumCriteria = new double[orderVariants.length];
         Arrays.fill(minEquilibriumCriteria, 1);
@@ -112,7 +112,7 @@ public class BellmanZadehLogic implements Logic {
 
         Matrix equilibriumCriteriaMatrix = new Matrix(equilibriumCriteria);
 
-        // неравновесные критерии
+        // РЅРµСЂР°РІРЅРѕРІРµСЃРЅС‹Рµ РєСЂРёС‚РµСЂРёРё
         List<List<Double>> notEquilibriumCriteria = new ArrayList<>();
         double[] minNotEquilibriumCriteria = new double[orderVariants.length];
         Arrays.fill(minNotEquilibriumCriteria, 1);
@@ -132,7 +132,7 @@ public class BellmanZadehLogic implements Logic {
         Matrix notEquilibriumCriteriaMatrix = new Matrix(notEquilibriumCriteria);
 
         StringBuilder result = new StringBuilder();
-        result.append("Ранги матрицы парных сравений критериев\n");
+        result.append("Р Р°РЅРіРё РјР°С‚СЂРёС†С‹ РїР°СЂРЅС‹С… СЃСЂР°РІРµРЅРёР№ РєСЂРёС‚РµСЂРёРµРІ\n");
         for (String orderCriterion : orderCriteria) {
             result.append(String.format("%15s", orderCriterion));
         }
@@ -141,16 +141,16 @@ public class BellmanZadehLogic implements Logic {
             result.append(String.format("%15.3f", rank));
         }
 
-        result.append("\n\nМатрица равновесных критериев:\n");
+        result.append("\n\nРњР°С‚СЂРёС†Р° СЂР°РІРЅРѕРІРµСЃРЅС‹С… РєСЂРёС‚РµСЂРёРµРІ:\n");
         result.append(equilibriumCriteriaMatrix.toTextAsTable(orderCriteria, orderVariants));
-        result.append(String.format("%15s", "Мин"));
+        result.append(String.format("%15s", "РњРёРЅ"));
         for (double min : minEquilibriumCriteria) {
             result.append(String.format("%15.3f", min));
         }
 
-        result.append("\n\nМатрица неравновесных критериев:\n");
+        result.append("\n\nРњР°С‚СЂРёС†Р° РЅРµСЂР°РІРЅРѕРІРµСЃРЅС‹С… РєСЂРёС‚РµСЂРёРµРІ:\n");
         result.append(notEquilibriumCriteriaMatrix.toTextAsTable(orderCriteria, orderVariants));
-        result.append(String.format("%15s", "Мин"));
+        result.append(String.format("%15s", "РњРёРЅ"));
         for (double min : minNotEquilibriumCriteria) {
             result.append(String.format("%15.3f", min));
         }
@@ -174,8 +174,8 @@ public class BellmanZadehLogic implements Logic {
         }
 
         List<ChartData> chartDataList = new ArrayList<>();
-        chartDataList.add(new ChartData(equilibriumCriteriaFunctions, "", "", "Равновесные критерии"));
-        chartDataList.add(new ChartData(notEquilibriumCriteriaFunctions, "", "", "Неравновесные критерии"));
+        chartDataList.add(new ChartData(equilibriumCriteriaFunctions, "", "", "Р Р°РІРЅРѕРІРµСЃРЅС‹Рµ РєСЂРёС‚РµСЂРёРё"));
+        chartDataList.add(new ChartData(notEquilibriumCriteriaFunctions, "", "", "РќРµСЂР°РІРЅРѕРІРµСЃРЅС‹Рµ РєСЂРёС‚РµСЂРёРё"));
         return new Result(Status.SUCCESS, result.toString(), chartDataList);
     }
 }

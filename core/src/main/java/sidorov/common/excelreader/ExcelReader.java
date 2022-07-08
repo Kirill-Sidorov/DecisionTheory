@@ -7,15 +7,15 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ExcelReader {
 
-    private final String path = "C:\\Users\\user\\IdeaProjects\\DecisionTheory\\core\\src\\main\\resources\\data.xlsx";
+    private final String path = "data.xlsx";
 
     private Sheet sheet;
 
@@ -24,7 +24,7 @@ public class ExcelReader {
     }
 
     public void loadSheet(TaskSheet taskSheet) throws IOException, SheetNotFoundException {
-        FileInputStream inputStream = new FileInputStream(new File(path));
+        FileInputStream inputStream = new FileInputStream(Paths.get(path).toAbsolutePath().toString());
         Workbook workbook = new XSSFWorkbook(inputStream);
         inputStream.close();
         if (workbook.getNumberOfSheets() < taskSheet.ordinal()) {

@@ -36,9 +36,9 @@ public class DirectOutputMethodLogic implements Logic {
         try {
             excelReader = new ExcelReader(TaskSheet.DIRECT_OUTPUT_METHOD);
         } catch (SheetNotFoundException e) {
-            return new Result(Status.ERROR, "Лист с данными задания не найден");
+            return new Result(Status.ERROR, "Р›РёСЃС‚ СЃ РґР°РЅРЅС‹РјРё Р·Р°РґР°РЅРёСЏ РЅРµ РЅР°Р№РґРµРЅ");
         } catch (IOException e) {
-            return new Result(Status.ERROR, "Не удалось загрузить данные из файла");
+            return new Result(Status.ERROR, "РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р°");
         }
 
         setX = excelReader.getStringSetFromSheetByName("X");
@@ -50,11 +50,11 @@ public class DirectOutputMethodLogic implements Logic {
 
         MatrixValidation validatorMz = new MatrixValidation(listMatrixZ);
         if (!validatorMz.validateMatrixWithSize(setX.size(), setY.size())) {
-            return new Result(Status.ERROR, "Матрица Mz невалидна, либо не соответствует множествам X и Y");
+            return new Result(Status.ERROR, "РњР°С‚СЂРёС†Р° Mz РЅРµРІР°Р»РёРґРЅР°, Р»РёР±Рѕ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РјРЅРѕР¶РµСЃС‚РІР°Рј X Рё Y");
         }
         MatrixValidation validatorMr = new MatrixValidation(listMatrixR);
         if (!validatorMr.validateMatrixWithSize(setY.size(), setZ.size())) {
-            return new Result(Status.ERROR, "Матрица Mr невалидна, либо не соответствует множествам Y и Z");
+            return new Result(Status.ERROR, "РњР°С‚СЂРёС†Р° Mr РЅРµРІР°Р»РёРґРЅР°, Р»РёР±Рѕ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РјРЅРѕР¶РµСЃС‚РІР°Рј Y Рё Z");
         }
 
         matrixZ = new Matrix(listMatrixZ);
@@ -64,8 +64,8 @@ public class DirectOutputMethodLogic implements Logic {
         result.append(String.format("X = %s\n", Arrays.toString(setX.toArray())));
         result.append(String.format("Y = %s\n", Arrays.toString(setY.toArray())));
         result.append(String.format("Z = %s\n\n", Arrays.toString(setZ.toArray())));
-        result.append(String.format("Матрица Mz:\n%s\n", matrixZ.toText()));
-        result.append(String.format("Матрица Mr:\n%s\n", matrixR.toText()));
+        result.append(String.format("РњР°С‚СЂРёС†Р° Mz:\n%s\n", matrixZ.toText()));
+        result.append(String.format("РњР°С‚СЂРёС†Р° Mr:\n%s\n", matrixR.toText()));
 
         return new Result(Status.DATA_UPLOADED, result.toString());
     }
@@ -130,7 +130,7 @@ public class DirectOutputMethodLogic implements Logic {
         stringResult.append("\nsumProd:\n");
         stringResult.append(sumProd.matrix.toTextAsTableWithScores(arraySetX, arraySetZ, sumProd.scores)).append("\n\n");
 
-        stringResult.append(String.format("Итог:\n%10s", ""));
+        stringResult.append(String.format("РС‚РѕРі:\n%10s", ""));
         for (String columnName : arraySetZ) {
             stringResult.append(String.format("%10.10s", columnName));
         }

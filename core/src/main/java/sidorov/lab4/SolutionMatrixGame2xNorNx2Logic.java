@@ -44,9 +44,9 @@ public class SolutionMatrixGame2xNorNx2Logic implements Logic {
         try {
             excelReader = new ExcelReader(TaskSheet.SOLUTION_MATRIX_GAME_2xN_OR_Nx2);
         } catch (SheetNotFoundException e) {
-            return new Result(Status.ERROR, "Лист с данными задания не найден");
+            return new Result(Status.ERROR, "Р›РёСЃС‚ СЃ РґР°РЅРЅС‹РјРё Р·Р°РґР°РЅРёСЏ РЅРµ РЅР°Р№РґРµРЅ");
         } catch (IOException e) {
-            return new Result(Status.ERROR, "Не удалось загрузить данные из файла");
+            return new Result(Status.ERROR, "РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р°");
         }
 
         List<List<Double>> matrixList = excelReader.getMatrixFromSheet();
@@ -55,7 +55,7 @@ public class SolutionMatrixGame2xNorNx2Logic implements Logic {
         if (validator.validateThatMatrixNx2Size()) {
             isTransposed = true;
         } else if (!validator.validateThatMatrix2xNSize()) {
-            return new Result(Status.ERROR, "Матрица невалидна или отлична от размера 2xN или Nx2");
+            return new Result(Status.ERROR, "РњР°С‚СЂРёС†Р° РЅРµРІР°Р»РёРґРЅР° РёР»Рё РѕС‚Р»РёС‡РЅР° РѕС‚ СЂР°Р·РјРµСЂР° 2xN РёР»Рё Nx2");
         }
         matrix = new Matrix(matrixList);
         initialMatrix = matrix;
@@ -81,13 +81,13 @@ public class SolutionMatrixGame2xNorNx2Logic implements Logic {
         }
 
         StringBuilder result = new StringBuilder();
-        result.append("Исходная матрица:\n");
+        result.append("РСЃС…РѕРґРЅР°СЏ РјР°С‚СЂРёС†Р°:\n");
         result.append(initialMatrix.toText());
         if (isTransposed) {
-            result.append("Матрица после транспонирования и умножения на -1:\n");
+            result.append("РњР°С‚СЂРёС†Р° РїРѕСЃР»Рµ С‚СЂР°РЅСЃРїРѕРЅРёСЂРѕРІР°РЅРёСЏ Рё СѓРјРЅРѕР¶РµРЅРёСЏ РЅР° -1:\n");
             result.append(matrix.toText());
         }
-        result.append("Матрица после редукции:\n");
+        result.append("РњР°С‚СЂРёС†Р° РїРѕСЃР»Рµ СЂРµРґСѓРєС†РёРё:\n");
         result.append(matrix.toTextWithDeletedRowsAndColumns(reductionResult.deletedColumns, reductionResult.deletedRows));
         result.append("\n");
         return new Result(Status.DATA_UPLOADED, result.toString());
@@ -127,16 +127,16 @@ public class SolutionMatrixGame2xNorNx2Logic implements Logic {
             }
 
             StringBuilder stringResult = new StringBuilder();
-            stringResult.append(String.format("p1 \u2208 [%.3f; %.3f]\n\nПроверка:\n", c, d));
+            stringResult.append(String.format("p1 \u2208 [%.3f; %.3f]\n\nРџСЂРѕРІРµСЂРєР°:\n", c, d));
 
             if (isTransposed) {
                 for (List<Double> pVector : pVectors) {
                     MixedStrategiesLogic mixedStrategiesLogic = new MixedStrategiesLogic(initialMatrix, qVector, pVector);
                     Result result = mixedStrategiesLogic.solveTask();
 
-                    stringResult.append(String.format("\nПри p1 = %.3f\n", pVector.get(0)));
-                    stringResult.append(String.format("Вектор p = %s\n", Arrays.toString(qVector.toArray())));
-                    stringResult.append(String.format("Вектор q = %s\n", Arrays.toString(pVector.toArray())));
+                    stringResult.append(String.format("\nРџСЂРё p1 = %.3f\n", pVector.get(0)));
+                    stringResult.append(String.format("Р’РµРєС‚РѕСЂ p = %s\n", Arrays.toString(qVector.toArray())));
+                    stringResult.append(String.format("Р’РµРєС‚РѕСЂ q = %s\n", Arrays.toString(pVector.toArray())));
                     stringResult.append(result.text());
                 }
             } else {
@@ -144,9 +144,9 @@ public class SolutionMatrixGame2xNorNx2Logic implements Logic {
                     MixedStrategiesLogic mixedStrategiesLogic = new MixedStrategiesLogic(initialMatrix, pVector, qVector);
                     Result result = mixedStrategiesLogic.solveTask();
 
-                    stringResult.append(String.format("\nПри p1 = %.3f\n", pVector.get(0)));
-                    stringResult.append(String.format("Вектор p = %s\n", Arrays.toString(pVector.toArray())));
-                    stringResult.append(String.format("Вектор q = %s\n", Arrays.toString(qVector.toArray())));
+                    stringResult.append(String.format("\nРџСЂРё p1 = %.3f\n", pVector.get(0)));
+                    stringResult.append(String.format("Р’РµРєС‚РѕСЂ p = %s\n", Arrays.toString(pVector.toArray())));
+                    stringResult.append(String.format("Р’РµРєС‚РѕСЂ q = %s\n", Arrays.toString(qVector.toArray())));
                     stringResult.append(result.text());
                 }
             }
@@ -185,9 +185,9 @@ public class SolutionMatrixGame2xNorNx2Logic implements Logic {
 
             StringBuilder stringResult = new StringBuilder();
             stringResult.append(String.format("W = %.1f\n", W));
-            stringResult.append(String.format("Вектор p = %s\n", Arrays.toString(pVector.toArray())));
-            stringResult.append(String.format("Вектор q = %s\n\n", Arrays.toString(qVector.toArray())));
-            stringResult.append("Проверка:\n\n");
+            stringResult.append(String.format("Р’РµРєС‚РѕСЂ p = %s\n", Arrays.toString(pVector.toArray())));
+            stringResult.append(String.format("Р’РµРєС‚РѕСЂ q = %s\n\n", Arrays.toString(qVector.toArray())));
+            stringResult.append("РџСЂРѕРІРµСЂРєР°:\n\n");
             stringResult.append(result.text());
 
             return new Result(Status.SUCCESS, stringResult.toString());
@@ -224,8 +224,8 @@ public class SolutionMatrixGame2xNorNx2Logic implements Logic {
                 && existsColumnsAfterReduction.size() > reductionL && existsColumnsAfterReduction.size() > reductionS) {
             l = existsColumnsAfterReduction.get(reductionL);
             s = existsColumnsAfterReduction.get(reductionS);
-            return new Result(Status.SUCCESS, "Успешный ввод данных");
+            return new Result(Status.SUCCESS, "РЈСЃРїРµС€РЅС‹Р№ РІРІРѕРґ РґР°РЅРЅС‹С…");
         }
-        return new Result(Status.ERROR, "Для текущих условий данные невалидны");
+        return new Result(Status.ERROR, "Р”Р»СЏ С‚РµРєСѓС‰РёС… СѓСЃР»РѕРІРёР№ РґР°РЅРЅС‹Рµ РЅРµРІР°Р»РёРґРЅС‹");
     }
 }

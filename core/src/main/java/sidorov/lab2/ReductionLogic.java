@@ -24,16 +24,16 @@ public class ReductionLogic implements Logic {
         try {
             excelReader = new ExcelReader(TaskSheet.REDUCTION);
         } catch (SheetNotFoundException e) {
-            return new Result(Status.ERROR, "Лист с данными задания не найден");
+            return new Result(Status.ERROR, "Р›РёСЃС‚ СЃ РґР°РЅРЅС‹РјРё Р·Р°РґР°РЅРёСЏ РЅРµ РЅР°Р№РґРµРЅ");
         } catch (IOException e) {
-            return new Result(Status.ERROR, "Не удалось загрузить данные из файла");
+            return new Result(Status.ERROR, "РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р°");
         }
 
         List<List<Double>> matrixList = excelReader.getMatrixFromSheet();
 
         MatrixValidation validator = new MatrixValidation(matrixList);
         if (!validator.validateMatrix()) {
-            return new Result(Status.ERROR, "Матрица невалидна");
+            return new Result(Status.ERROR, "РњР°С‚СЂРёС†Р° РЅРµРІР°Р»РёРґРЅР°");
         }
         matrix = new Matrix(matrixList);
         return new Result(Status.DATA_UPLOADED, matrix.toText());
@@ -46,10 +46,10 @@ public class ReductionLogic implements Logic {
         ReductionResult completeReductionResult = reduction.perform(false);
 
         StringBuilder result = new StringBuilder();
-        result.append("Матрица A (полная редукция):\n");
+        result.append("РњР°С‚СЂРёС†Р° A (РїРѕР»РЅР°СЏ СЂРµРґСѓРєС†РёСЏ):\n");
         result.append(matrix.toTextWithDeletedRowsAndColumns(completeReductionResult.deletedColumns, completeReductionResult.deletedRows));
         result.append("\n");
-        result.append("Матрица B (строгая редукция):\n");
+        result.append("РњР°С‚СЂРёС†Р° B (СЃС‚СЂРѕРіР°СЏ СЂРµРґСѓРєС†РёСЏ):\n");
         result.append(matrix.toTextWithDeletedRowsAndColumns(strictReductionResult.deletedColumns, strictReductionResult.deletedRows));
         result.append("\n");
         return new Result(Status.SUCCESS, result.toString());

@@ -26,7 +26,7 @@ public class SolveTask extends SwingWorker<Result, Void> {
         try {
             action.processResult(get());
         } catch (Exception e) {
-            action.processResult(new Result(Status.ERROR, "Ошибка при выполнении задачи"));
+            action.processResult(new Result(Status.ERROR, "РћС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РґР°С‡Рё"));
         }
     }
 }

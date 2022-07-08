@@ -27,16 +27,16 @@ public class PureStrategiesLogic implements Logic {
         try {
             excelReader = new ExcelReader(TaskSheet.PURE_STRATEGIES);
         } catch (SheetNotFoundException e) {
-            return new Result(Status.ERROR, "Лист с данными задания не найден");
+            return new Result(Status.ERROR, "Р›РёСЃС‚ СЃ РґР°РЅРЅС‹РјРё Р·Р°РґР°РЅРёСЏ РЅРµ РЅР°Р№РґРµРЅ");
         } catch (IOException e) {
-            return new Result(Status.ERROR, "Не удалось загрузить данные из файла");
+            return new Result(Status.ERROR, "РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р°");
         }
 
         List<List<Double>> matrixList = excelReader.getMatrixFromSheet();
 
         MatrixValidation validator = new MatrixValidation(matrixList);
         if (!validator.validateMatrix()) {
-            return new Result(Status.ERROR, "Матрица невалидна");
+            return new Result(Status.ERROR, "РњР°С‚СЂРёС†Р° РЅРµРІР°Р»РёРґРЅР°");
         }
         matrix = new Matrix(matrixList);
         return new Result(Status.DATA_UPLOADED, matrix.toText());
@@ -46,7 +46,7 @@ public class PureStrategiesLogic implements Logic {
     public Result solveTask() {
         Element H = new PureFirstStep(matrix).execute();
         if (H == null) {
-            return new Result(Status.INFO, "Игра не имеет решений в чистых стратегиях");
+            return new Result(Status.INFO, "РРіСЂР° РЅРµ РёРјРµРµС‚ СЂРµС€РµРЅРёР№ РІ С‡РёСЃС‚С‹С… СЃС‚СЂР°С‚РµРіРёСЏС…");
         }
         List<Element> elementsY = new PureSecondStep(matrix).execute(H);
         List<Element> elementsX = new PureThirdStep(matrix).execute(H);

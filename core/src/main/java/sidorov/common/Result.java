@@ -26,7 +26,7 @@ public class Result {
     }
 
     public Result(List<ChartData> chartDataList) {
-        this(Status.SUCCESS, "Данные для графиков получены успешно");
+        this(Status.SUCCESS, "Р”Р°РЅРЅС‹Рµ РґР»СЏ РіСЂР°С„РёРєРѕРІ РїРѕР»СѓС‡РµРЅС‹ СѓСЃРїРµС€РЅРѕ");
         this.chartDataList = chartDataList;
     }
 

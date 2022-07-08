@@ -4,9 +4,9 @@ public interface Logic {
     Result uploadData();
     Result solveTask();
     default Result setInputData(InputData data) {
-        return new Result(Status.ERROR, "Без входных данных");
+        return new Result(Status.ERROR, "Р‘РµР· РІС…РѕРґРЅС‹С… РґР°РЅРЅС‹С…");
     }
     default Result getChartData() {
-        return new Result(Status.ERROR, "Без графика");
+        return new Result(Status.ERROR, "Р‘РµР· РіСЂР°С„РёРєР°");
     }
 }

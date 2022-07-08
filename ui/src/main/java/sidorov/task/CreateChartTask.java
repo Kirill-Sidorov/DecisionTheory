@@ -30,7 +30,7 @@ public class CreateChartTask extends SwingWorker<Result, Void> {
                 result.chartDataList().forEach(ChartFrame::new);
             }
         } catch (Exception ignored) {
-            errorAction.processResult(new Result(Status.ERROR, "Ошибка при построении графика"));
+            errorAction.processResult(new Result(Status.ERROR, "РћС€РёР±РєР° РїСЂРё РїРѕСЃС‚СЂРѕРµРЅРёРё РіСЂР°С„РёРєР°"));
         }
     }
 }

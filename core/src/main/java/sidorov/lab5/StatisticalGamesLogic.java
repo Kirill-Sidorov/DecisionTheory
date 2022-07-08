@@ -33,16 +33,16 @@ public class StatisticalGamesLogic implements Logic {
         try {
             excelReader = new ExcelReader(TaskSheet.STATISTICAL_GAMES);
         } catch (SheetNotFoundException e) {
-            return new Result(Status.ERROR, "Лист с данными задания не найден");
+            return new Result(Status.ERROR, "Р›РёСЃС‚ СЃ РґР°РЅРЅС‹РјРё Р·Р°РґР°РЅРёСЏ РЅРµ РЅР°Р№РґРµРЅ");
         } catch (IOException e) {
-            return new Result(Status.ERROR, "Не удалось загрузить данные из файла");
+            return new Result(Status.ERROR, "РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р°");
         }
 
         List<List<Double>> matrixList = excelReader.getMatrixFromSheet();
 
         MatrixValidation validator = new MatrixValidation(matrixList);
         if (!validator.validateMatrix()) {
-            return new Result(Status.ERROR, "Матрица невалидна");
+            return new Result(Status.ERROR, "РњР°С‚СЂРёС†Р° РЅРµРІР°Р»РёРґРЅР°");
         }
         matrix = new Matrix(matrixList);
 
@@ -52,10 +52,10 @@ public class StatisticalGamesLogic implements Logic {
     @Override
     public Result solveTask() {
         if (pValues.length != matrix.numberColumns) {
-            return new Result(Status.ERROR, "Количество вероятностей неравно количеству столбцов");
+            return new Result(Status.ERROR, "РљРѕР»РёС‡РµСЃС‚РІРѕ РІРµСЂРѕСЏС‚РЅРѕСЃС‚РµР№ РЅРµСЂР°РІРЅРѕ РєРѕР»РёС‡РµСЃС‚РІСѓ СЃС‚РѕР»Р±С†РѕРІ");
         }
         if (ranks.length != matrix.numberColumns) {
-            return new Result(Status.ERROR, "Количество рангов неравно количеству столбцов");
+            return new Result(Status.ERROR, "РљРѕР»РёС‡РµСЃС‚РІРѕ СЂР°РЅРіРѕРІ РЅРµСЂР°РІРЅРѕ РєРѕР»РёС‡РµСЃС‚РІСѓ СЃС‚РѕР»Р±С†РѕРІ");
         }
 
         double[] rankProbability = new double[ranks.length];
@@ -98,43 +98,43 @@ public class StatisticalGamesLogic implements Logic {
         }
 
         StringBuilder result = new StringBuilder();
-        result.append(String.format("Критерий азартного игрока:\nстратегия - %d, значение = %.1f (i = %d; j = %d)\n\n",
+        result.append(String.format("РљСЂРёС‚РµСЂРёР№ Р°Р·Р°СЂС‚РЅРѕРіРѕ РёРіСЂРѕРєР°:\nСЃС‚СЂР°С‚РµРіРёСЏ - %d, Р·РЅР°С‡РµРЅРёРµ = %.1f (i = %d; j = %d)\n\n",
                 gamblerCriterion.i + 1,
                 gamblerCriterion.value,
                 gamblerCriterion.i + 1,
                 gamblerCriterion.j + 1));
-        result.append(String.format("Максиминный критерий (критерий Вальда):\nстратегия - %d, значение = %.1f (i = %d; j = %d)\n\n",
+        result.append(String.format("РњР°РєСЃРёРјРёРЅРЅС‹Р№ РєСЂРёС‚РµСЂРёР№ (РєСЂРёС‚РµСЂРёР№ Р’Р°Р»СЊРґР°):\nСЃС‚СЂР°С‚РµРіРёСЏ - %d, Р·РЅР°С‡РµРЅРёРµ = %.1f (i = %d; j = %d)\n\n",
                 maximinCriterion.i + 1,
                 maximinCriterion.value,
                 maximinCriterion.i + 1,
                 maximinCriterion.j + 1));
-        result.append(String.format("Критерий Гурвица:\nстратегия - %d, при \u03B1 = %.3f\n\n",
+        result.append(String.format("РљСЂРёС‚РµСЂРёР№ Р“СѓСЂРІРёС†Р°:\nСЃС‚СЂР°С‚РµРіРёСЏ - %d, РїСЂРё \u03B1 = %.3f\n\n",
                 HurwitzCriterion,
                 alpha));
-        result.append(String.format("Критерий Сэвиджа:\nматрица рисков\n%sстратегия - %d, значение = %.1f (i = %d; j = %d)\n\n",
+        result.append(String.format("РљСЂРёС‚РµСЂРёР№ РЎСЌРІРёРґР¶Р°:\nРјР°С‚СЂРёС†Р° СЂРёСЃРєРѕРІ\n%sСЃС‚СЂР°С‚РµРіРёСЏ - %d, Р·РЅР°С‡РµРЅРёРµ = %.1f (i = %d; j = %d)\n\n",
                 savageCriterionResult.riskMatrix.toText(),
                 savageCriterionResult.strategicElement.i + 1,
                 savageCriterionResult.strategicElement.value,
                 savageCriterionResult.strategicElement.i + 1,
                 savageCriterionResult.strategicElement.j + 1));
-        result.append(String.format("Критерий Байеса (для вероятностей):\nмат. ожидания каждой строки - %s\nстратегия - %d\n\n",
+        result.append(String.format("РљСЂРёС‚РµСЂРёР№ Р‘Р°Р№РµСЃР° (РґР»СЏ РІРµСЂРѕСЏС‚РЅРѕСЃС‚РµР№):\nРјР°С‚. РѕР¶РёРґР°РЅРёСЏ РєР°Р¶РґРѕР№ СЃС‚СЂРѕРєРё - %s\nСЃС‚СЂР°С‚РµРіРёСЏ - %d\n\n",
                 Arrays.toString(bayesCriterionResult1.array),
                 bayesCriterionResult1.strategic));
-        result.append(String.format("Критерий Байеса (для рангов):\nмат. ожидания каждой строки - %s\nстратегия - %d\n\n",
+        result.append(String.format("РљСЂРёС‚РµСЂРёР№ Р‘Р°Р№РµСЃР° (РґР»СЏ СЂР°РЅРіРѕРІ):\nРјР°С‚. РѕР¶РёРґР°РЅРёСЏ РєР°Р¶РґРѕР№ СЃС‚СЂРѕРєРё - %s\nСЃС‚СЂР°С‚РµРіРёСЏ - %d\n\n",
                 Arrays.toString(bayesCriterionResult2.array),
                 bayesCriterionResult2.strategic));
-        result.append(String.format("Критерий Лапласа:\nсумма элементов в каждой сроке - %s\nстратегия - %d\n\n",
+        result.append(String.format("РљСЂРёС‚РµСЂРёР№ Р›Р°РїР»Р°СЃР°:\nСЃСѓРјРјР° СЌР»РµРјРµРЅС‚РѕРІ РІ РєР°Р¶РґРѕР№ СЃСЂРѕРєРµ - %s\nСЃС‚СЂР°С‚РµРіРёСЏ - %d\n\n",
                 Arrays.toString(laplaceCriterionResult.array),
                 laplaceCriterionResult.strategic));
-        result.append(String.format("Критерий Ходжеса-Лемана (для вероятностей):\nчисла Ходжеса-Лемана - %s\nстратегия - %d, при \u03B2 = %.3f\n\n",
+        result.append(String.format("РљСЂРёС‚РµСЂРёР№ РҐРѕРґР¶РµСЃР°-Р›РµРјР°РЅР° (РґР»СЏ РІРµСЂРѕСЏС‚РЅРѕСЃС‚РµР№):\nС‡РёСЃР»Р° РҐРѕРґР¶РµСЃР°-Р›РµРјР°РЅР° - %s\nСЃС‚СЂР°С‚РµРіРёСЏ - %d, РїСЂРё \u03B2 = %.3f\n\n",
                 Arrays.toString(hodgesLehmanCriterionResult1.array),
                 hodgesLehmanCriterionResult1.strategic,
                 beta));
-        result.append(String.format("Критерий Ходжеса-Лемана (для рангов):\nчисла Ходжеса-Лемана - %s\nстратегия - %d, при \u03B2 = %.3f\n\n",
+        result.append(String.format("РљСЂРёС‚РµСЂРёР№ РҐРѕРґР¶РµСЃР°-Р›РµРјР°РЅР° (РґР»СЏ СЂР°РЅРіРѕРІ):\nС‡РёСЃР»Р° РҐРѕРґР¶РµСЃР°-Р›РµРјР°РЅР° - %s\nСЃС‚СЂР°С‚РµРіРёСЏ - %d, РїСЂРё \u03B2 = %.3f\n\n",
                 Arrays.toString(hodgesLehmanCriterionResult2.array),
                 hodgesLehmanCriterionResult2.strategic,
                 beta));
-        result.append(String.format("\nИтог, необходимо выбрать стратегию - %d\n\n", maxIndex + 1));
+        result.append(String.format("\nРС‚РѕРі, РЅРµРѕР±С…РѕРґРёРјРѕ РІС‹Р±СЂР°С‚СЊ СЃС‚СЂР°С‚РµРіРёСЋ - %d\n\n", maxIndex + 1));
 
 
         return new Result(Status.SUCCESS, result.toString());
@@ -146,6 +146,6 @@ public class StatisticalGamesLogic implements Logic {
         beta = data.beta();
         pValues = data.pValues();
         ranks = data.ranks();
-        return new Result(Status.SUCCESS, "Успешный ввод данных");
+        return new Result(Status.SUCCESS, "РЈСЃРїРµС€РЅС‹Р№ РІРІРѕРґ РґР°РЅРЅС‹С…");
     }
 }
