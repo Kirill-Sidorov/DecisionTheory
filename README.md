@@ -1,6 +1,8 @@
 # DecisionTheory
 Programs for solving problems in decision theory.
 
+The input data for the program is in file **"data.xlsx"**.
+
 Available languages:
 * russian.
 
@@ -26,6 +28,13 @@ The program is adapted only for screens with a display resolution of 1920x1080!
 If you need to run the program on a computer with a display larger than FullHd, then you need to adjust the sizes of interface elements in the "UI" class.
 
 ### Images
+![start page](https://github.com/Kirill-Sidorov/DecisionTheory/blob/readmedata/images/reduction_example.jpg)
+|:--:| 
+| *Image 1 - Matrix reduction example* |
+![compare](https://github.com/Kirill-Sidorov/DecisionTheory/blob/readmedata/images/statistical_games_example.jpg)
+| *Image 2 - Statistical games example* |
+![storage manager](https://github.com/Kirill-Sidorov/DecisionTheory/blob/readmedata/images/matrix_game_solution_example.jpg)
+| *Image 3 - Matrix game solution example* |
 
 ### Installation
 1. Clone the repository.
